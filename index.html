@@ -13,11 +13,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Kalku">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 <style>
 @property --hue { syntax:"<number>"; inherits:true; initial-value:14; }
 :root{
@@ -100,7 +101,7 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 @keyframes flash{0%{opacity:.35}100%{opacity:0}}
 
 /* Écrans */
-.screen{max-width:26rem;margin:0 auto;min-height:100dvh;padding:.7rem .9rem calc(.8rem + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:.55rem}
+.screen{max-width:26rem;margin:0 auto;min-height:100dvh;padding:calc(.7rem + env(safe-area-inset-top)) .9rem calc(.8rem + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:.55rem}
 .screen.enter{animation:screenin .4s cubic-bezier(.2,.8,.2,1) both}
 @keyframes screenin{0%{opacity:0;transform:translateY(14px) scale(.98)}100%{opacity:1;transform:none}}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;min-height:2.6rem}
@@ -353,7 +354,7 @@ input.name{width:100%;border:2px solid var(--line);border-radius:.8rem;padding:.
 .sheet h3{margin:0;font-size:1.2rem;font-weight:800}
 .sheet p{margin:.4rem 0 0;color:var(--soft);font-weight:600}
 .sheet .row{display:grid;gap:.5rem;margin-top:.9rem}
-.toast{position:fixed;left:50%;top:calc(.8rem + env(safe-area-inset-top));transform:translateX(-50%) translateY(-20px);background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radius:1rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:30;max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;top:calc(1rem + env(safe-area-inset-top));transform:translateX(-50%) translateY(-20px);background:var(--ink);color:var(--bg);padding:.7rem 1.1rem;border-radius:1rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:30;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ===== Relief, lumière, effets ===== */
@@ -395,9 +396,18 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 .bagi b{color:var(--coin)}
 .strip{display:flex;gap:.5rem;align-items:center;justify-content:center;flex:1}
 .strip .cur{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.25rem .65rem;font-size:.9rem;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
-.row4 .sq{padding:.6rem .15rem .5rem;font-size:.78rem}
-.row4 .sq .ico{font-size:1.45rem}
+.row4{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem}
+.row4 .sq{padding:.55rem .1rem .45rem;font-size:.68rem}
+.row4 .sq .ico{font-size:1.35rem}
+.board{display:flex;flex-direction:column;gap:.35rem}
+.brow{display:flex;align-items:center;gap:.6rem;background:var(--panel);border:1px solid var(--line);border-radius:.9rem;padding:.55rem .7rem;font-weight:700}
+.brow.me{border-color:var(--accent);box-shadow:0 0 0 2px var(--tile-glow)}
+.brow .rk{width:1.8rem;text-align:center;font-weight:800;color:var(--soft)}
+.brow .rk.top{color:var(--gold)}
+.brow .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .nm small{display:block;color:var(--soft);font-weight:600;font-size:.78rem}
+.brow .sc{text-align:right;font-variant-numeric:tabular-nums;font-size:.9rem}
+.acc input{margin-bottom:.35rem}
 .chest-ico.ready{animation:chestshake 1.6s ease-in-out infinite}
 @keyframes chestshake{0%,60%,100%{transform:none}65%{transform:rotate(-12deg) scale(1.1)}75%{transform:rotate(12deg) scale(1.1)}85%{transform:rotate(-6deg)}}
 .sheet p{white-space:pre-line}
@@ -527,6 +537,7 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
       <button class="sq" id="hRoulette" type="button"><span class="ico">🎡</span><span id="hRouletteT"></span><span class="badge" id="hTixBadge" hidden>0</span></button>
       <button class="sq" id="hShop" type="button"><span class="ico">🛍</span><span id="hShopT"></span></button>
       <button class="sq" id="hTroph" type="button"><span class="ico">🏆</span><span id="hTrophT"></span><span class="badge" id="hTrophBadge" hidden>0</span></button>
+      <button class="sq" id="hBoard" type="button"><span class="ico">🏅</span><span id="hBoardT"></span></button>
     </div>
   </div>
   <div class="foot"><span id="hFoot"></span></div>
@@ -640,6 +651,14 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
   <div class="scroll" id="trophyList"></div>
 </main>
 
+<!-- CLASSEMENT -->
+<main class="screen" id="scr-board" hidden>
+  <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="bdTitle"></div><span style="width:2.5rem"></span></div>
+  <div class="segl" style="flex:none"><button type="button" id="bdDaily" aria-pressed="true"></button><button type="button" id="bdBlitz" aria-pressed="false"></button></div>
+  <p class="note" id="bdNote"></p>
+  <div class="scroll board" id="bdList"></div>
+</main>
+
 <!-- PROFIL / RÉGLAGES -->
 <main class="screen" id="scr-profile" hidden>
   <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="prTitle"></div><span style="width:2.5rem"></span></div>
@@ -654,6 +673,22 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
       </div>
     </div>
     <div class="grid4" id="pStats"></div>
+
+    <section class="grp acc" id="grpAcc">
+      <h3><span class="gi">☁️</span><span id="grpAccT"></span></h3>
+      <p class="rnote" id="accNote"></p>
+      <div id="accForm" class="pick" style="flex-direction:column;align-items:stretch;gap:.3rem" hidden>
+        <input class="name" id="accEmail" type="email" autocomplete="email" inputmode="email" autocapitalize="none">
+        <input class="name" id="accPass" type="password" autocomplete="current-password">
+        <div class="chips"><button class="buy" id="accSignIn" type="button"></button><button class="buy" id="accSignUp" type="button" style="background:var(--op);color:var(--op-ink)"></button></div>
+        <p class="rnote" id="accErr" style="color:var(--bad);padding:0" hidden></p>
+      </div>
+      <div id="accLogged" hidden>
+        <div class="row"><span class="ri">✅</span><span class="rl" id="accWho"></span></div>
+        <button class="row" type="button" id="accSync"><span class="ri">🔄</span><span class="rl"></span><span class="chev">›</span></button>
+        <button class="row" type="button" id="accOut"><span class="ri">🚪</span><span class="rl"></span><span class="chev">›</span></button>
+      </div>
+    </section>
 
     <section class="grp">
       <h3><span class="gi">🎨</span><span id="grpLook"></span></h3>
@@ -670,6 +705,8 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
       <h3><span class="gi">🔊</span><span id="grpSound"></span></h3>
       <div class="row"><span class="ri">🔔</span><span class="rl" id="rlSound"></span><button class="sw" id="pSound" type="button" role="switch" aria-checked="true"><i></i></button></div>
       <div class="row"><span class="ri">♫</span><span class="rl" id="rlMusicOn"></span><button class="sw" id="pMusicOn" type="button" role="switch" aria-checked="true"><i></i></button></div>
+      <button class="row" type="button" id="sndTest"><span class="ri">🔈</span><span class="rl"></span><span class="chev">›</span></button>
+      <p class="rnote" id="sndMsg" hidden></p>
     </section>
 
     <section class="grp">
@@ -700,6 +737,7 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 <script>
 // ===== Réglages à remplir avant diffusion =====
 const SHARE_URL = "";
+const SUPABASE_URL = "", SUPABASE_ANON_KEY = "";   // comptes en ligne : URL et clé « anon » du projet Supabase. Vides = tout reste local.
 const PAYMENT_LINKS = { p150: "", p400: "", p1000: "", g20: "", g60: "", g150: "" };
 const CODE_HASHES = { /* codes de test, à retirer avant diffusion : */ "3da659ea":{"coins":1000000,"gems":1000,"tickets":100}, "0aea1c5a":{"coins":1000000,"gems":1000,"tickets":100}, "2eaf5fb6":{"coins":1000000,"gems":1000,"tickets":100}, "bcc68893":150, "3561b139":150, "cd62c73e":150, "da9f1880":150, "85a7b645":400, "e3be2205":400, "2b79f167":400, "2bc023bc":400, "4b002982":1000, "b9f95cf2":1000, "97f8e4f3":1000, "7298c07f":1000, "95f887c3":{"gems":20}, "a4dcccaf":{"gems":20}, "195e7c49":{"gems":20}, "66df24cf":{"gems":20} };
 const LAUNCH = Date.UTC(2026, 8, 15);
@@ -847,7 +885,10 @@ const I18N = {
       homeIdle:["Une cible t’attend. Elle n’est pas patiente.","Tu as des tickets. Je dis ça, je ne dis rien.","Ma tenue du jour te plaît ? Je ne l’ai pas choisie, mais je l’assume."],
       themeSet:["Nouveau décor ! Je m’y sens déjà chez moi.","Ambiance changée. Mes yeux s’adaptent, ça pique un peu."]
     },
-    home:{ tag:"Trois cibles, quatre opérations, un cerveau.", daily:"Du jour", dailyNew:"Puzzle #{n}, pas encore joué", dailyDone:"{s}/9 aujourd’hui, prochain dans {t}", dailyGo:"Cible {i}/3 en cours", dailyNext:"Partie {k}/5 prête, {s}/9 jusqu’ici", dailyWait:"Partie {k}/5 dans {t}", dailyAll:"5 parties jouées, {s}/45. Prochain puzzle dans {t}", blitz:"Blitz", blitzSub:"Record : niveau {l}, {s} pts", blitzNew:"50 secondes, des cibles qui s’enchaînent", roulette:"Roulette", shop:"Boutique", trophies:"Trophées", foot:"Le même puzzle pour tout le monde, chaque jour." },
+    snd:{ test:"Tester le son", ok:"Le son sort. Si tu n’entends rien, l’iPhone est en mode silencieux (cloche barrée en haut de l’écran) ou le volume média est à zéro.", ko:"Le moteur audio est bloqué ({s}). Touche encore une fois l’écran, puis réessaie.", none:"Pas de moteur audio sur ce navigateur." },
+    acc:{ title:"Compte", off:"Les comptes en ligne ne sont pas encore branchés sur cette version : ta partie vit sur cet appareil, avec le code de sauvegarde pour la déplacer.", intro:"Un compte sauvegarde ta partie en ligne, la retrouve sur un autre appareil et t’inscrit au classement.", email:"E-mail", pass:"Mot de passe (6 caractères minimum)", signIn:"Se connecter", signUp:"Créer le compte", who:"Connecté : {e}", sync:"Sauvegarder maintenant", out:"Se déconnecter", synced:"Sauvegarde en ligne à jour.", restoreTitle:"Une sauvegarde existe déjà", restoreText:"Sur le compte : niveau {l}, {c} pièces.\nSur cet appareil : niveau {ll}, {lc} pièces.\nLaquelle garder ?", useCloud:"Celle du compte", useLocal:"Celle de l’appareil", badLogin:"E-mail ou mot de passe refusé.", weakPass:"Mot de passe trop court.", exists:"Un compte existe déjà avec cet e-mail.", netErr:"Pas de réponse du serveur. Réessaie.", welcome:"Compte créé. Ta partie est maintenant en ligne." },
+    board:{ title:"Classement", daily:"Du jour", blitz:"Blitz", noteOn:"Puzzle #{n}. Étoiles, puis temps, puis annulations et erreurs.", noteOff:"Connecte-toi dans Profil pour apparaître ici.", empty:"Personne pour l’instant. Sois le premier.", you:"toi", loading:"Chargement…", unavailable:"Classement indisponible sur cette version." },
+    home:{ tag:"Trois cibles, quatre opérations, un cerveau.", daily:"Du jour", dailyNew:"Puzzle #{n}, pas encore joué", dailyDone:"{s}/9 aujourd’hui, prochain dans {t}", dailyGo:"Cible {i}/3 en cours", dailyNext:"Partie {k}/5 prête, {s}/9 jusqu’ici", dailyWait:"Partie {k}/5 dans {t}", dailyAll:"5 parties jouées, {s}/45. Prochain puzzle dans {t}", blitz:"Blitz", blitzSub:"Record : niveau {l}, {s} pts", blitzNew:"50 secondes, des cibles qui s’enchaînent", roulette:"Roulette", shop:"Boutique", trophies:"Trophées", board:"Classement", foot:"Le même puzzle pour tout le monde, chaque jour." },
     ru:{ title:"La roulette", spin:"Tourner (1 🎟)", spinning:"Ça tourne…", noTix:"Plus de tickets", buy:"Acheter 1 ticket (5 ◆)", note:"Les tickets se gagnent avec les trophées, les niveaux et les 9/9. Chaque objet a une rareté : bronze, argent, or, diamant. Quand une rareté n’a plus d’objet à offrir, elle donne des pièces ou des gemmes.", won:"Gagné", dup:"Déjà possédé : converti en", newItem:"Nouveau !", odds:"Chances" },
     tr:{ title:"Trophées", note:"Chaque trophée rapporte des tickets ou des gemmes. Les gemmes ◆ sont la monnaie rare : elles achètent des tickets et se gagnent surtout ici." },
     pr:{ title:"Profil et réglages", name:"Ton pseudo", look:"Apparence", soundG:"Son", langG:"Langue", saveG:"Sauvegarde", skin:"Tenue de Bip", more:"Plus en boutique", ph:"Ton pseudo", themes:"Thème du plateau", music:"Style musical", buttons:"Style des boutons", audio:"Son et langue", sound:"Effets", musicOn:"Musique", save:"Sauvegarde", saveNote:"Ta partie vit sur cet appareil. Le code de sauvegarde la transporte vers un autre téléphone. Un vrai compte en ligne demandera un serveur.", export:"Copier mon code", import:"Coller un code", importGo:"Restaurer ce code", exported:"Code copié. Garde-le au chaud.", imported:"Sauvegarde restaurée.", badCode:"Code illisible", danger:"Zone rouge", reset:"Tout effacer", resetAsk:"Tout effacer ?", resetText:"Pièces, tenues, trophées, niveaux : tout part. Le puzzle du jour reste le même.", lockedItem:"À gagner à la roulette", best:"Meilleur Blitz", bestTime:"9/9 le plus rapide", played:"Parties", spins:"Tours de roulette" },
@@ -944,7 +985,10 @@ const I18N = {
       homeIdle:["A target is waiting. It isn’t patient.","You have tickets. Just saying.","Like today’s outfit? I didn’t pick it, but I own it."],
       themeSet:["New scenery! Already feels like home.","Scenery changed. My eyes are adjusting, it stings a bit."]
     },
-    home:{ tag:"Three targets, four operations, one brain.", daily:"Daily", dailyNew:"Puzzle #{n}, not played yet", dailyDone:"{s}/9 today, next in {t}", dailyGo:"Target {i}/3 in progress", dailyNext:"Game {k}/5 ready, {s}/9 so far", dailyWait:"Game {k}/5 in {t}", dailyAll:"5 games played, {s}/45. Next puzzle in {t}", blitz:"Blitz", blitzSub:"Best: level {l}, {s} pts", blitzNew:"50 seconds, back-to-back targets", roulette:"Wheel", shop:"Shop", trophies:"Trophies", foot:"The same puzzle for everyone, every day." },
+    snd:{ test:"Test the sound", ok:"Sound is playing. If you hear nothing, the iPhone is in silent mode (crossed bell at the top of the screen) or the media volume is at zero.", ko:"The audio engine is blocked ({s}). Tap the screen once more, then try again.", none:"No audio engine in this browser." },
+    acc:{ title:"Account", off:"Online accounts are not wired on this version yet: your game lives on this device, with the save code to move it.", intro:"An account saves your game online, restores it on another device and enters you in the leaderboard.", email:"E-mail", pass:"Password (6 characters minimum)", signIn:"Sign in", signUp:"Create account", who:"Signed in: {e}", sync:"Save now", out:"Sign out", synced:"Online save is up to date.", restoreTitle:"A save already exists", restoreText:"On the account: level {l}, {c} coins.\nOn this device: level {ll}, {lc} coins.\nWhich one to keep?", useCloud:"The account’s", useLocal:"This device’s", badLogin:"E-mail or password refused.", weakPass:"Password too short.", exists:"An account already exists with this e-mail.", netErr:"No answer from the server. Try again.", welcome:"Account created. Your game is online now." },
+    board:{ title:"Leaderboard", daily:"Daily", blitz:"Blitz", noteOn:"Puzzle #{n}. Stars, then time, then undos and errors.", noteOff:"Sign in from Profile to appear here.", empty:"Nobody yet. Be the first.", you:"you", loading:"Loading…", unavailable:"Leaderboard unavailable on this version." },
+    home:{ tag:"Three targets, four operations, one brain.", daily:"Daily", dailyNew:"Puzzle #{n}, not played yet", dailyDone:"{s}/9 today, next in {t}", dailyGo:"Target {i}/3 in progress", dailyNext:"Game {k}/5 ready, {s}/9 so far", dailyWait:"Game {k}/5 in {t}", dailyAll:"5 games played, {s}/45. Next puzzle in {t}", blitz:"Blitz", blitzSub:"Best: level {l}, {s} pts", blitzNew:"50 seconds, back-to-back targets", roulette:"Wheel", shop:"Shop", trophies:"Trophies", board:"Ranking", foot:"The same puzzle for everyone, every day." },
     ru:{ title:"The wheel", spin:"Spin (1 🎟)", spinning:"Spinning…", noTix:"No tickets left", buy:"Buy 1 ticket (5 ◆)", note:"Tickets come from trophies, levels and 9/9 days. Every item has a rarity: bronze, silver, gold, diamond. When a rarity has no item left to give, it pays coins or gems instead.", won:"You won", dup:"Already owned: converted to", newItem:"New!", odds:"Odds" },
     tr:{ title:"Trophies", note:"Every trophy pays tickets or gems. Gems ◆ are the rare currency: they buy tickets and are mostly earned here." },
     pr:{ title:"Profile and settings", name:"Your nickname", look:"Appearance", soundG:"Sound", langG:"Language", saveG:"Save", skin:"Bip’s outfit", more:"More in the shop", ph:"Your nickname", themes:"Board theme", music:"Music style", buttons:"Button style", audio:"Sound and language", sound:"Effects", musicOn:"Music", save:"Save", saveNote:"Your game lives on this device. The save code carries it to another phone. A real online account will need a server.", export:"Copy my code", import:"Paste a code", importGo:"Restore this code", exported:"Code copied. Keep it safe.", imported:"Save restored.", badCode:"Unreadable code", danger:"Red zone", reset:"Erase everything", resetAsk:"Erase everything?", resetText:"Coins, outfits, trophies, levels: all gone. Today’s puzzle stays the same.", lockedItem:"Win it on the wheel", best:"Best Blitz", bestTime:"Fastest 9/9", played:"Games", spins:"Wheel spins" },
@@ -1077,7 +1121,7 @@ function solve(nums, target){
 const Snd = {
   ctx: null, on: (store.get("kalku:sound") ?? true),
   ensure(){ try{ if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if (this.ctx.state === "suspended" || this.ctx.state === "interrupted"){ const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } }catch(e){} },
-  tone(f, d, type, vol, slide){ if (!this.on || !this.ctx) return; try{ const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+  tone(f, d, type, vol, slide){ if (!this.on || !this.ctx) return; vol = Math.min(.35, vol * 1.7); try{ const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
     o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(slide, t + d);
     g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g).connect(this.ctx.destination); o.start(t); o.stop(t + d + .02); }catch(e){} },
   seq(fs, d, type, vol, gap){ fs.forEach((f, i) => setTimeout(() => this.tone(f, d, type, vol), i * gap)); },
@@ -1181,7 +1225,8 @@ const silent = new Audio("data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEA
 let audioUnlocked = false;
 function unlockAudio(){
   Snd.ensure();
-  if (!audioUnlocked){ try{ const p = silent.play(); if (p && p.catch) p.catch(() => {}); audioUnlocked = true; }catch(e){} }
+  try{ const c = Snd.ctx; if (c){ const b = c.createBuffer(1, 1, 22050); const src = c.createBufferSource(); src.buffer = b; src.connect(c.destination); src.start(0); } }catch(e){}
+  if (!audioUnlocked){ try{ const p = silent.play(); if (p && p.then) p.then(() => { audioUnlocked = true; }).catch(() => {}); }catch(e){} }
   if (Music.on) Music.start();
 }
 ["pointerup","touchend","click","keydown"].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true }));
@@ -1283,7 +1328,7 @@ let lang = (store.get("kalku:lang") || (navigator.language || "en").slice(0,2)) 
 let T = I18N[lang];
 const TIER = [1,3,6,10,15,20,26,33,41,50];
 const titleFor = lvl => { let i = 0; TIER.forEach((t, k) => { if (lvl >= t) i = k; }); return T.titles[i]; };
-function saveWallet(){ store.set("kalku:wallet", wallet); renderCurrencies(); }
+function saveWallet(){ store.set("kalku:wallet", wallet); renderCurrencies(); if (typeof Cloud !== "undefined" && Cloud.user) Cloud.save(false); }
 function renderCurrencies(){
   [["hCoins", wallet.coins], ["gCoinsV", wallet.coins], ["hGems", wallet.gems], ["hTickets", wallet.tickets], ["ruTix", wallet.tickets]].forEach(([id, v]) => { const el = $(id); if (el) el.textContent = nfc(v); });
   document.querySelectorAll(".coinsV").forEach(el => el.textContent = nf(wallet.coins));
@@ -1311,7 +1356,7 @@ async function levelUp(lv){
   if (lv % 5 === 0){ wallet.gems += 3; saveWallet(); lines.push(`+3 ◆ ${T.lv.gems}`); }
   const un = UNLOCKS[lv]; if (un && !wallet.owned.includes(un)){ wallet.owned.push(un); saveWallet(); lines.push(`${T.unlockedSkin} : ${T.skins[un]}`); }
   if (lv % 3 === 0) lines.push(`${T.lv.chest} : ${levelChest(lv)}`);
-  Bip.line2("levelUp", "laugh", 4200, { n: lv }); renderCurrencies();
+  Bip.line2("levelUp", "laugh", 4200, { n: lv }); renderCurrencies(); Cloud.pushProfile();
   await sheet(tpl(T.lv.title, { n: lv }) + "  " + titleFor(lv), `${T.lv.rewards}\n${lines.join("\n")}`, T.lv.ok, "", true);
   setTimeout(checkAch, 400);
 }
@@ -1641,6 +1686,7 @@ function dailyFinish(fresh){
     if (!daily.undos) wallet.c.noUndo++;
     dayMeta.games[daily.game] = { game: daily.game, stars: total, time: daily.elapsed, undos: daily.undos, errors: daily.errors }; saveMeta();
     saveWallet(); if (fresh) setTimeout(() => addXp(rw.xp), 2400); else addXp(rw.xp); setTimeout(checkAch, fresh ? 4500 : 300);
+    Cloud.pushDaily(); Cloud.save(true);
   }
   showOnly("dailyResult"); if (fresh) $("dailyResult").dataset.anim = "1"; else delete $("dailyResult").dataset.anim;
   $("rtitle").textContent = T.done; $("rtotal").textContent = total;
@@ -1748,7 +1794,7 @@ function blitzEnd(){
   const k = blitz.x2 ? 2 : 1; const room = Math.max(0, BLITZ_COIN_DAY_CAP * k - wallet.blitzCoins); const earned = Math.min(room, Math.floor(blitz.score / BLITZ_COIN_DIV) * k);
   wallet.blitzCoins += earned; if (earned){ wallet.coins += earned; wallet.c.coinsEarned += earned; }
   const xpRoom = Math.max(0, XP_BLITZ_CAP * k - wallet.blitzXp), xpGain = Math.min(xpRoom, (Math.floor(blitz.score / XP_BLITZ_DIV) + blitz.xpCombo) * k); wallet.blitzXp += xpGain;
-  wallet.c.blitzBest = Math.max(wallet.c.blitzBest, lvl); saveWallet();
+  wallet.c.blitzBest = Math.max(wallet.c.blitzBest, lvl); saveWallet(); Cloud.pushBlitz(lvl, blitz.score);
   document.body.classList.remove("quake"); void document.body.offsetWidth; if (!reduceMotion) document.body.classList.add("quake"); buzz([60,40,60]);
   blitz.result = { lvl, score: blitz.score, best: nb.score, coins: earned, capped: room === 0, undos: blitz.undos || 0, errors: blitz.errors || 0 };
   $("blitzResult").dataset.anim = "1"; renderBlitzResult();
@@ -1767,6 +1813,76 @@ function renderBlitzResult(){
   $("againBlitz").textContent = T.again; $("shareBlitz").textContent = T.share;
 }
 function blitzShare(){ const r = blitz.result || { lvl: blitz.level - 1, score: blitz.score, undos: 0, errors: 0 }; return `Kalku ${T.blitz}  ${T.level.toLowerCase()} ${r.lvl}  ${nf(r.score)} ${T.pts} ⚡  ↶${r.undos || 0} ✗${r.errors || 0}\n${SHARE_URL || location.origin + location.pathname}`; }
+
+// ===== Comptes en ligne (Supabase) =====
+const Cloud = {
+  sb: null, user: null, timer: null,
+  ready(){ return !!this.sb; },
+  init(){
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) return;
+    try{
+      this.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      this.sb.auth.getSession().then(({ data }) => { this.user = (data && data.session && data.session.user) || null; renderAccount(); }).catch(() => {});
+      this.sb.auth.onAuthStateChange((ev, sess) => { this.user = (sess && sess.user) || null; renderAccount(); });
+    }catch(e){ this.sb = null; }
+  },
+  snapshot(){ return { v: 1, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, m: dayMeta, at: Date.now() }; },
+  async signUp(email, pass){ const { data, error } = await this.sb.auth.signUp({ email, password: pass, options: { data: { name: wallet.name || null } } }); if (error) throw error; this.user = data.user; if (!data.session) { const r = await this.sb.auth.signInWithPassword({ email, password: pass }); if (r.error) throw r.error; this.user = r.data.user; } await this.save(true); await this.pushProfile(); toast(T.acc.welcome); },
+  async signIn(email, pass){ const { data, error } = await this.sb.auth.signInWithPassword({ email, password: pass }); if (error) throw error; this.user = data.user; await this.afterLogin(); },
+  async signOut(){ try{ await this.sb.auth.signOut(); }catch(e){} this.user = null; renderAccount(); },
+  async afterLogin(){
+    let remote = null; try{ const { data } = await this.sb.from("saves").select("data").eq("id", this.user.id).maybeSingle(); remote = data && data.data; }catch(e){}
+    if (remote && remote.w){
+      const ok = await sheet(T.acc.restoreTitle, tpl(T.acc.restoreText, { l: remote.w.level || 1, c: nf(remote.w.coins || 0), ll: wallet.level, lc: nf(wallet.coins) }), T.acc.useCloud, T.acc.useLocal);
+      if (ok){ store.set("kalku:wallet", remote.w); if (remote.s) store.set("kalku:stats", remote.s); if (remote.b) store.set("kalku:blitz", remote.b); if (remote.d && remote.d.idx !== undefined) store.set("kalku:day:" + today, remote.d); if (remote.m) store.set("kalku:daymeta:" + today, remote.m); location.reload(); return; }
+    }
+    await this.save(true); await this.pushProfile();
+  },
+  save(now){
+    if (!this.user) return Promise.resolve(); clearTimeout(this.timer);
+    const doit = async () => { try{ await this.sb.from("saves").upsert({ id: this.user.id, data: this.snapshot(), updated_at: new Date().toISOString() }); }catch(e){} };
+    if (now) return doit(); this.timer = setTimeout(doit, 3000); return Promise.resolve();
+  },
+  async pushProfile(){ if (!this.user) return; try{ await this.sb.from("profiles").upsert({ id: this.user.id, name: wallet.name || null, skin: wallet.skin, level: wallet.level, updated_at: new Date().toISOString() }); }catch(e){} },
+  async pushDaily(){ if (!this.user) return; const total = daily.stars.reduce((a, s) => a + (s || 0), 0); try{ await this.sb.from("daily_scores").upsert({ user_id: this.user.id, day: today, game: daily.game, stars: total, time_ms: daily.elapsed, undos: daily.undos, errors: daily.errors, name: wallet.name || null, level: wallet.level }); }catch(e){} },
+  async pushBlitz(lvl, score){ if (!this.user) return; try{ const { data } = await this.sb.from("blitz_scores").select("score").eq("user_id", this.user.id).maybeSingle(); if (!data || score > data.score) await this.sb.from("blitz_scores").upsert({ user_id: this.user.id, level: lvl, score, name: wallet.name || null, updated_at: new Date().toISOString() }); }catch(e){} },
+  async topDaily(){ const { data } = await this.sb.from("daily_scores").select("user_id,name,level,stars,time_ms,undos,errors").eq("day", today).eq("game", 0).order("stars", { ascending: false }).order("time_ms", { ascending: true }).order("undos", { ascending: true }).order("errors", { ascending: true }).limit(50); return data || []; },
+  async topBlitz(){ const { data } = await this.sb.from("blitz_scores").select("user_id,name,level,score").order("score", { ascending: false }).limit(50); return data || []; }
+};
+function renderAccount(){
+  const on = Cloud.ready(); $("grpAccT").textContent = T.acc.title;
+  $("accNote").textContent = on ? (Cloud.user ? "" : T.acc.intro) : T.acc.off;
+  $("accForm").hidden = !on || !!Cloud.user; $("accLogged").hidden = !on || !Cloud.user;
+  $("accEmail").placeholder = T.acc.email; $("accPass").placeholder = T.acc.pass; $("accSignIn").textContent = T.acc.signIn; $("accSignUp").textContent = T.acc.signUp;
+  $("accSync").querySelector(".rl").textContent = T.acc.sync; $("accOut").querySelector(".rl").textContent = T.acc.out;
+  if (Cloud.user) $("accWho").textContent = tpl(T.acc.who, { e: Cloud.user.email || "" });
+}
+function accError(e){ const m = String(e && e.message || e || ""); const el = $("accErr"); el.hidden = false; el.textContent = /invalid|credentials/i.test(m) ? T.acc.badLogin : /password/i.test(m) ? T.acc.weakPass : /already|registered|exists/i.test(m) ? T.acc.exists : m ? m : T.acc.netErr; Snd.bad(); }
+$("accSignIn").addEventListener("click", async () => { $("accErr").hidden = true; const e = $("accEmail").value.trim(), p = $("accPass").value; if (!e || !p) return; $("accSignIn").disabled = true; try{ await Cloud.signIn(e, p); Snd.buy(); }catch(err){ accError(err); } $("accSignIn").disabled = false; renderAccount(); });
+$("accSignUp").addEventListener("click", async () => { $("accErr").hidden = true; const e = $("accEmail").value.trim(), p = $("accPass").value; if (!e || !p) return; if (p.length < 6){ accError({ message: "password" }); return; } $("accSignUp").disabled = true; try{ await Cloud.signUp(e, p); Snd.fanfare(); confettiRain(60); }catch(err){ accError(err); } $("accSignUp").disabled = false; renderAccount(); });
+$("accSync").addEventListener("click", async () => { await Cloud.save(true); await Cloud.pushProfile(); toast(T.acc.synced); Snd.buy(); });
+$("accOut").addEventListener("click", async () => { await Cloud.signOut(); toast(T.acc.out); });
+
+// ===== Classement en ligne =====
+let boardTab = "daily";
+async function renderRanking(){
+  $("bdTitle").textContent = T.board.title; $("bdDaily").textContent = T.board.daily; $("bdBlitz").textContent = T.board.blitz;
+  $("bdDaily").setAttribute("aria-pressed", String(boardTab === "daily")); $("bdBlitz").setAttribute("aria-pressed", String(boardTab === "blitz"));
+  const list = $("bdList"); list.innerHTML = "";
+  if (!Cloud.ready()){ $("bdNote").textContent = T.board.unavailable; return; }
+  $("bdNote").textContent = (boardTab === "daily" ? tpl(T.board.noteOn, { n: puzzleNo }) : "") + (Cloud.user ? "" : "  " + T.board.noteOff);
+  const ld = document.createElement("p"); ld.className = "note"; ld.textContent = T.board.loading; list.appendChild(ld);
+  let rows = []; try{ rows = boardTab === "daily" ? await Cloud.topDaily() : await Cloud.topBlitz(); }catch(e){}
+  list.innerHTML = ""; if (!rows.length){ const p = document.createElement("p"); p.className = "note"; p.textContent = T.board.empty; list.appendChild(p); return; }
+  rows.forEach((r, i) => {
+    const row = document.createElement("div"); row.className = "brow" + (Cloud.user && r.user_id === Cloud.user.id ? " me" : "");
+    const rk = document.createElement("span"); rk.className = "rk" + (i < 3 ? " top" : ""); rk.textContent = i < 3 ? ["🥇","🥈","🥉"][i] : (i + 1);
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = (r.name || (lang === "fr" ? "Joueur" : "Player")) + (Cloud.user && r.user_id === Cloud.user.id ? ` (${T.board.you})` : ""); const sm = document.createElement("small"); sm.textContent = `${T.lvl} ${r.level || 1}`; nm.appendChild(sm);
+    const sc = document.createElement("span"); sc.className = "sc"; sc.textContent = boardTab === "daily" ? `${r.stars}/9  ${fmtTime(r.time_ms)}  ↶${r.undos} ✗${r.errors}` : `${T.level} ${r.level}  ${nf(r.score)} ${T.pts}`;
+    row.append(rk, nm, sc); list.appendChild(row);
+  });
+}
+$("bdDaily").addEventListener("click", () => { boardTab = "daily"; renderRanking(); }); $("bdBlitz").addEventListener("click", () => { boardTab = "blitz"; renderRanking(); });
 
 // ===== Boutique =====
 function rarBadge(r){ if (!r) return ""; return `<span class="rar ${r}">${T.rarity[r]}</span>`; }
@@ -1937,15 +2053,20 @@ function renderProfile(){
   $("rlBtn").textContent = T.pr.buttons; $("rvBtn").textContent = T.btns[wallet.btn]; chips($("pButtons"), BTNS, wallet.btns, wallet.btn, T.btns, id => { wallet.btn = id; saveWallet(); applyBtn(); });
   $("rlMusic").textContent = T.pr.music; $("rvMusic").textContent = T.musics[wallet.music]; chips($("pMusic"), MUSICS, wallet.musics, wallet.music, T.musics, id => { wallet.music = id; saveWallet(); applyMusic(); });
   $("rlSkin").textContent = T.pr.skin; $("rvSkin").textContent = T.skins[wallet.skin];
-  $("rlSound").textContent = T.pr.sound; $("pSound").setAttribute("aria-checked", String(Snd.on)); $("rlMusicOn").textContent = T.pr.musicOn; $("pMusicOn").setAttribute("aria-checked", String(Music.on));
+  $("rlSound").textContent = T.pr.sound; $("pSound").setAttribute("aria-checked", String(Snd.on)); $("sndTest").querySelector(".rl").textContent = T.snd.test; $("rlMusicOn").textContent = T.pr.musicOn; $("pMusicOn").setAttribute("aria-checked", String(Music.on));
   document.querySelectorAll("#scr-profile [data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   $("prSaveNote").textContent = T.pr.saveNote; $("exportBtn").querySelector(".rl").textContent = T.pr.export; $("importBtn").querySelector(".rl").textContent = T.pr.import; $("importGo").textContent = T.pr.importGo; $("codeArea").placeholder = T.pr.import;
   $("resetBtn").querySelector(".rl").textContent = T.pr.reset; $("prFoot").textContent = `Kalku #${puzzleNo}`;
 }
 document.querySelectorAll("#scr-profile .row[data-pick]").forEach(r => r.addEventListener("click", () => { const box = $(r.dataset.pick); const open = box.hidden; document.querySelectorAll("#scr-profile .pick").forEach(p => { if (p.id !== "importBox") p.hidden = true; }); document.querySelectorAll("#scr-profile .row[data-pick]").forEach(x => x.setAttribute("aria-expanded", "false")); box.hidden = !open; r.setAttribute("aria-expanded", String(open)); Snd.tap(); }));
 $("rowSkin").addEventListener("click", () => { shopTab = "skins"; go("shop"); });
-$("pName").addEventListener("input", () => { wallet.name = $("pName").value.trim().slice(0, 16); saveWallet(); });
+$("pName").addEventListener("input", () => { wallet.name = $("pName").value.trim().slice(0, 16); saveWallet(); clearTimeout(window._pn); window._pn = setTimeout(() => Cloud.pushProfile(), 1500); });
 $("pSound").addEventListener("click", () => { Snd.on = !Snd.on; store.set("kalku:sound", Snd.on); if (Snd.on){ Snd.ensure(); Snd.tap(); } renderProfile(); });
+$("sndTest").addEventListener("click", () => {
+  const was = Snd.on; Snd.on = true; unlockAudio(); const c = Snd.ctx; const m = $("sndMsg"); m.hidden = false;
+  if (!c){ m.textContent = T.snd.none; Snd.on = was; return; }
+  setTimeout(() => { if (c.state === "running"){ Snd.fanfare(); m.textContent = T.snd.ok; } else m.textContent = tpl(T.snd.ko, { s: c.state }); Snd.on = was; }, 150);
+});
 $("pMusicOn").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (Music.on){ Snd.ensure(); Music.start(); Bip.line2("music", "laugh", 2600); } renderProfile(); });
 document.querySelectorAll("#scr-profile [data-lang]").forEach(b => b.addEventListener("click", () => { applyLang(b.dataset.lang); renderProfile(); }));
 function exportCode(){ const data = { v: 1, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, m: dayMeta, snd: Snd.on, mus: Music.on, lang }; return btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/=+$/, ""); }
@@ -1982,14 +2103,14 @@ function renderHome(){
   const ring = $("hRing"); ring.dataset.lv = wallet.level; ring.style.setProperty("--p", Math.round(wallet.xp / xpNeed(wallet.level) * 100) + "%");
   $("hDailyT").textContent = T.home.daily; $("hDailySub").textContent = dailySub();
   const bb = store.get("kalku:blitz"); $("hBlitzT").textContent = T.home.blitz; $("hBlitzSub").textContent = bb && bb.level ? tpl(T.home.blitzSub, { l: bb.level, s: nf(bb.score) }) : T.home.blitzNew;
-  $("hRouletteT").textContent = T.home.roulette; $("hShopT").textContent = T.home.shop; $("hTrophT").textContent = T.home.trophies; $("hFoot").textContent = T.home.foot;
+  $("hRouletteT").textContent = T.home.roulette; $("hShopT").textContent = T.home.shop; $("hTrophT").textContent = T.home.trophies; $("hBoardT").textContent = T.home.board; $("hFoot").textContent = T.home.foot;
   $("hChestT").textContent = chestReady() ? T.chest.ready : T.chest.opened; $("hChestIco").classList.toggle("ready", chestReady()); $("hChestBadge").hidden = !chestReady(); renderXp();
   const ready = ACH.filter(a => !wallet.ach.includes(a.id) && a.get(wallet.c) >= a.need).length; $("hTrophBadge").hidden = !ready; $("hTrophBadge").textContent = ready;
   const dec = $("hDecor"); dec.innerHTML = ""; DECORS.filter(d => wallet.decors.includes(d.id)).forEach((d, i) => { const s = document.createElement("span"); s.className = "decor"; s.textContent = d.icon; s.style.left = d.x; s.style.top = d.y; s.style.animationDelay = (i * .4) + "s"; s.title = T.decors[d.id]; dec.appendChild(s); });
   renderCurrencies();
 }
-["hDaily","hBlitz","hRoulette","hShop","hTroph","hProfile","hSettings"].forEach(id => $(id).addEventListener("click", () => {
-  if (id === "hDaily"){ if (canStartNext()) askNextGame(); else startDaily(); } else if (id === "hBlitz") startBlitzScreen(); else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : "profile");
+["hDaily","hBlitz","hRoulette","hShop","hTroph","hBoard","hProfile","hSettings"].forEach(id => $(id).addEventListener("click", () => {
+  if (id === "hDaily"){ if (canStartNext()) askNextGame(); else startDaily(); } else if (id === "hBlitz") startBlitzScreen(); else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : id === "hBoard" ? "board" : "profile");
 }));
 $("gCoins").addEventListener("click", () => go("shop"));
 $("sCoins").addEventListener("click", () => { shopTab = "items"; go("shop"); }); $("sGems").addEventListener("click", () => { shopTab = "packs"; go("shop"); }); $("sTix").addEventListener("click", () => go("roulette"));
@@ -2000,11 +2121,11 @@ $("gMus").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (
 function go(id){
   document.body.classList.remove("combo"); $("light").classList.remove("on");
   if (screen === "game"){ if (blitz.running){ clearInterval(blitz.timer); blitz.running = false; applyMusic(); } if (mode === "daily" && startTs){ daily.elapsed += Date.now() - startTs; startTs = null; store.set("kalku:day:" + today, daily); } }
-  screen = id; ["home","game","shop","roulette","trophies","profile"].forEach(s => { const el = $("scr-" + s); el.hidden = s !== id; if (s === id){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
+  screen = id; ["home","game","shop","roulette","trophies","profile","board"].forEach(s => { const el = $("scr-" + s); el.hidden = s !== id; if (s === id){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
   if (Bip.bub) Bip.bub.classList.remove("show"); clearTimeout(Bip.timer);
   if (id === "game") Bip.mount("bipSlotGame", "bubble"); else if (id === "profile") Bip.mount("bipSlotProfile", "pBubble"); else Bip.mount("bipSlotHome", "hBubble");
   Music.setPart(id === "game" ? "daily" : (id === "shop" || id === "roulette") ? id : "home");
-  if (id === "home") renderHome(); else if (id === "shop") renderShop(); else if (id === "roulette") renderRoulette(); else if (id === "trophies") renderTrophies(); else if (id === "profile") renderProfile();
+  if (id === "home") renderHome(); else if (id === "shop") renderShop(); else if (id === "roulette") renderRoulette(); else if (id === "trophies") renderTrophies(); else if (id === "profile"){ renderProfile(); renderAccount(); } else if (id === "board") renderRanking();
   try{ window.scrollTo(0, 0); }catch(e){} Snd.tap();
 }
 function startDaily(){ mode = "daily"; go("game"); dailyStart(); if (firstVisit && !dailyDone()){ firstVisit = false; store.set("kalku:seen", 1); setTimeout(() => Bip.sequence(T.bip.tutorial), 500); } else if (!dailyDone()) setTimeout(greet, 400); }
@@ -2029,18 +2150,17 @@ function greet(){
 function applyLang(l){
   lang = l; T = I18N[l]; document.documentElement.lang = l; store.set("kalku:lang", l);
   if (screen === "home") renderHome(); else if (screen === "game"){ if (mode === "daily"){ if (dailyDone()) dailyFinish(false); else renderBoard(); } else { if (blitz.running){ renderBoard(); renderHud(); } else if (blitz.result && !$("blitzResult").hidden) renderBlitzResult(); else blitzIntro(); } renderMeta(); }
-  else if (screen === "shop") renderShop(); else if (screen === "roulette") renderRoulette(); else if (screen === "trophies") renderTrophies();
+  else if (screen === "shop") renderShop(); else if (screen === "roulette") renderRoulette(); else if (screen === "trophies") renderTrophies(); else if (screen === "board") renderRanking(); else if (screen === "profile"){ renderProfile(); renderAccount(); }
   renderXp(); renderCurrencies();
 }
 
 // ===== Démarrage =====
 let firstVisit = !store.get("kalku:seen");
-saveWallet(); applySkin(); applyTheme(); applyBtn(); applyMusic(); renderXp(); applyLang(lang); go("home"); renderMusBtn();
+saveWallet(); applySkin(); applyTheme(); applyBtn(); applyMusic(); renderXp(); applyLang(lang); go("home"); renderMusBtn(); Cloud.init();
 if (!wallet.welcomed){ wallet.welcomed = true; saveWallet(); setTimeout(() => { toast(T.welcomeGift); Bip.line("hello", "laugh", 4000); }, 700); }
 else setTimeout(() => Bip.line2("homeIdle", "happy", 3400), 900);
 setInterval(tick, 1000); resetIdle();
 
-// Application installable : enregistrement du service worker (hors aperçu claude.ai)
 if ("serviceWorker" in navigator && location.protocol === "https:" && !/claude\.ai$/.test(location.hostname)){ window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); }); }
 </script>
 </body>
