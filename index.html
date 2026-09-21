@@ -186,6 +186,14 @@ canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-in
 .node.cur b{background:var(--accent);color:var(--accent-ink);border-color:transparent;transform:scale(1.15);box-shadow:0 0 0 5px var(--tile-glow);animation:nodepulse 1.6s ease-in-out infinite}
 @keyframes nodepulse{50%{box-shadow:0 0 0 10px var(--tile-glow)}}
 .node .ns{font-size:.85rem;letter-spacing:.04em;line-height:1;min-height:.9rem}
+.path:has(.ten){max-width:none;gap:0}
+.node.ten b{width:1.45rem;height:1.45rem;font-size:.72rem}
+.node.ten:not(:first-child)::before{top:.7rem}
+.node.ten.done.s3 b{background:linear-gradient(135deg,#FFD54F,#FF8F00);color:#3E2A00}
+.node.ten.done.s2 b{background:linear-gradient(135deg,#CFD8DC,#90A4AE);color:#1B1740}
+.node.ten.done.s1 b{background:linear-gradient(135deg,#D7A86E,#A0522D);color:#fff}
+.node.ten.done.s0 b{background:var(--line);color:var(--soft)}
+.node.ten.earn b{animation:earn .6s cubic-bezier(.3,1.6,.4,1) both}
 .on{color:var(--star);display:inline-block}
 .off{color:var(--star-off)}
 .node.earn .on{animation:earn .6s cubic-bezier(.3,1.6,.4,1) both}
@@ -400,6 +408,12 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 .row4 .sq{padding:.55rem .1rem .45rem;font-size:.68rem}
 .row4 .sq .ico{font-size:1.35rem}
 .board{display:flex;flex-direction:column;gap:.35rem}
+.daynav{display:flex;align-items:center;justify-content:center;gap:.8rem;font-weight:800}
+.brow .sc{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;font-size:.8rem;font-weight:700;max-width:52%}
+.brow .sc span{background:var(--op);color:var(--op-ink);border-radius:.5rem;padding:.1rem .4rem;white-space:nowrap}
+.brow .sc span.main{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink)}
+.brow .bar2{height:.35rem;border-radius:999px;background:var(--line);margin-top:.3rem;overflow:hidden}
+.brow .bar2 i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 .brow{display:flex;align-items:center;gap:.6rem;background:var(--panel);border:1px solid var(--line);border-radius:.9rem;padding:.55rem .7rem;font-weight:700}
 .brow.me{border-color:var(--accent);box-shadow:0 0 0 2px var(--tile-glow)}
 .brow .rk{width:1.8rem;text-align:center;font-weight:800;color:var(--soft)}
@@ -449,8 +463,30 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 .segl button{flex:1;border:0;border-radius:.6rem;padding:.5rem;font-weight:700;background:transparent;color:var(--soft)}
 .segl button[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink)}
 .rnote{margin:0;padding:0 .9rem .6rem;color:var(--soft);font-size:.85rem;font-weight:500;line-height:1.35}
+/* ===== Refonte : barre d’XP, écran cible, boutons ===== */
+.xp{position:relative;height:1.45rem;border-radius:999px;background:var(--panel);border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;margin:0;box-shadow:inset 0 1px 3px rgba(0,0,0,.08)}
+.xp .track{position:absolute;inset:0;border:0;background:transparent;height:auto;border-radius:999px}
+.xp .track i{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 14px var(--tile-glow);transition:width .7s cubic-bezier(.2,.8,.2,1);border-radius:999px}
+.xp .lv{position:relative;z-index:1;margin-left:.15rem;border-radius:999px;padding:.05rem .55rem;font-size:.78rem;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.xp #xpTitle,.xp .xpt{position:relative;z-index:1;flex:1;text-align:center;font-size:.76rem;font-weight:800;color:var(--ink);text-shadow:0 0 6px var(--bg);letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 .4rem}
+.target{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);padding:.35rem .6rem .5rem;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0)),var(--panel);box-shadow:inset 0 0 48px var(--tile-glow),0 8px 24px rgba(0,0,0,.06)}
+.target::after{content:"";position:absolute;inset:-40% -20%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.18) 50%,transparent 58%);transform:translateX(-60%);animation:sweepline 7s ease-in-out infinite;pointer-events:none}
+@keyframes sweepline{0%,60%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
+.btn.primary::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-130%);animation:shine 3.6s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+.big .ico{width:2.7rem;height:2.7rem;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.45rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 6px 14px rgba(0,0,0,.12);flex:none}
+.big.alt .ico{background:var(--op)}
+.pcard{background:linear-gradient(135deg,var(--panel),var(--panel)) padding-box,linear-gradient(135deg,var(--accent),var(--accent-2)) border-box;border:1.5px solid transparent}
+.pcard .ring{width:3.3rem;height:3.3rem}
+.pcard .ring::after{font-size:1.05rem}
+.home .pcard .wallet .track{width:6.5rem !important;height:.5rem !important}
+.sq{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0)),var(--panel)}
+.brand,.home .logo h1{filter:drop-shadow(0 6px 18px var(--tile-glow))}
+.bubble .tw::after{content:"▍";color:var(--accent);animation:caret .8s steps(2) infinite;margin-left:.05rem}
+.bubble .tw.done::after,.hbubble .tw::after{content:none}
+@keyframes caret{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  .blob,.pt,.tnum,.tnum.roll,.tnum.hit,.node.earn .on,.node.cur b,.tile.pop,.tile.shake,.tile.in,.op.in,.tile.hint,.op.hint,.total,.rstars .on,.home .logo h1,.bip .body,.bip .eyes,.bip.bounce,.bip.dance,.bip.wiggle,.bip.droop,.bip.asleep .body,.banner.go,.flash.go,.bar.low i,.bump,.float,.card[data-anim] > *,body.quake,.wipe.go .panel,.wipe.go .wtext,.decor,.screen.enter,.prize,.ripple,.slot::after,body.combo::before,.wipe .lines,.wipe .ring,.chest-ico.ready{animation:none !important}
+  .blob,.pt,.tnum,.tnum.roll,.tnum.hit,.node.earn .on,.node.cur b,.tile.pop,.tile.shake,.tile.in,.op.in,.tile.hint,.op.hint,.total,.rstars .on,.home .logo h1,.bip .body,.bip .eyes,.bip.bounce,.bip.dance,.bip.wiggle,.bip.droop,.bip.asleep .body,.banner.go,.flash.go,.bar.low i,.bump,.float,.card[data-anim] > *,body.quake,.wipe.go .panel,.wipe.go .wtext,.decor,.screen.enter,.prize,.ripple,.slot::after,body.combo::before,.wipe .lines,.wipe .ring,.chest-ico.ready,.target::after,.btn.primary::before,.bubble .tw::after{animation:none !important}
   .tile,.op,.btn,.toast,.bubble,.hbubble,.bip .pupils,.scrim,.sheet,body,.big,.sq{transition:none}
 }
 </style>
@@ -551,11 +587,11 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
     <button class="icon" id="gMus" type="button" aria-label="Musique"><span data-ico="music"></span></button>
     <button class="icon cur coins" id="gCoins" type="button"><b data-ico="coin"></b> <span id="gCoinsV">0</span></button>
   </div>
-  <div class="xp" id="xp"><span class="lv" id="xpLv">1</span><span class="track"><i id="xpFill"></i></span><span id="xpTitle"></span></div>
+  <div class="xp" id="xp"><span class="track"><i id="xpFill"></i></span><span class="lv" id="xpLv">1</span><span id="xpTitle"></span></div>
   <div id="hud" class="hud" hidden>
-    <span class="pill"><span id="lvlL"></span> <b id="lvl">1</b></span>
+    <span class="pill"><b id="lvl">0</b> <span id="lvlL"></span></span>
     <span class="pill"><b id="scoreV">0</b> <span id="scoreL"></span></span>
-    <span class="pill"><b id="timeV">50</b> s</span>
+    <span class="pill" style="font-variant-numeric:tabular-nums"><b id="timeV" style="font-size:1.35rem">05:00</b></span>
   </div>
   <div id="bar" class="bar" hidden><i id="barFill"></i></div>
 
@@ -613,7 +649,9 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
       <div><b id="brBest"></b><span id="brBestL"></span></div>
       <div><b id="brCoins"></b><span id="brCoinsL"></span></div>
     </div>
+    <p class="note" id="brExtra" style="text-align:center;font-weight:700"></p>
     <button class="btn primary" id="againBlitz" type="button"></button>
+    <button class="btn ghostb" id="rankBlitz" type="button"></button>
     <button class="btn ghostb" id="shareBlitz" type="button"></button>
   </section>
 </main>
@@ -654,9 +692,14 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 <!-- CLASSEMENT -->
 <main class="screen" id="scr-board" hidden>
   <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="bdTitle"></div><span style="width:2.5rem"></span></div>
-  <div class="segl" style="flex:none"><button type="button" id="bdDaily" aria-pressed="true"></button><button type="button" id="bdBlitz" aria-pressed="false"></button></div>
-  <p class="note" id="bdNote"></p>
-  <div class="scroll board" id="bdList"></div>
+  <div class="segl" style="flex:none"><button type="button" id="bdToday" aria-pressed="true"></button><button type="button" id="bdHist" aria-pressed="false"></button></div>
+  <div class="chips" style="justify-content:center"><button type="button" class="chip" id="bdModeDaily" aria-pressed="true"></button><button type="button" class="chip" id="bdModeBlitz" aria-pressed="false"></button></div>
+  <div class="daynav" id="bdDayNav" hidden><button class="icon" type="button" id="bdPrev"><span data-ico="back"></span></button><b id="bdDay"></b><button class="icon" type="button" id="bdNext" style="transform:scaleX(-1)"><span data-ico="back"></span></button></div>
+  <p class="note" id="bdRule"></p>
+  <div class="scroll">
+    <div class="board" id="bdList"></div>
+    <div id="bdMine" hidden><div class="sect" id="bdMineT"></div><div class="board" id="bdMineList"></div></div>
+  </div>
 </main>
 
 <!-- PROFIL / RÉGLAGES -->
@@ -742,9 +785,8 @@ const PAYMENT_LINKS = { p150: "", p400: "", p1000: "", g20: "", g60: "", g150: "
 const CODE_HASHES = { /* codes de test, à retirer avant diffusion : */ "3da659ea":{"coins":1000000,"gems":1000,"tickets":100}, "0aea1c5a":{"coins":1000000,"gems":1000,"tickets":100}, "2eaf5fb6":{"coins":1000000,"gems":1000,"tickets":100}, "bcc68893":150, "3561b139":150, "cd62c73e":150, "da9f1880":150, "85a7b645":400, "e3be2205":400, "2b79f167":400, "2bc023bc":400, "4b002982":1000, "b9f95cf2":1000, "97f8e4f3":1000, "7298c07f":1000, "95f887c3":{"gems":20}, "a4dcccaf":{"gems":20}, "195e7c49":{"gems":20}, "66df24cf":{"gems":20} };
 const LAUNCH = Date.UTC(2026, 8, 15);
 const HUES = [14, 282, 168, 45];
-const BLITZ_START = 50, BLITZ_CAP = 60, HINT_COST = 5, SECOND_CHANCE = 15;
-const DAILY_GAMES = 5, DAILY_COOLDOWN = 2 * 3600 * 1000, SKIP_GEMS = 3, BONUS_RATE = .5;
-const blitzBonus = lvl => lvl <= 5 ? 8 : lvl <= 10 ? 6 : 4;
+const HINT_COST = 5;
+const SERIES_LEN = 10, BLITZ_DURATION = 300000, RUN_KEY = "kalku:blitzrun";
 const isBoss = lvl => lvl % 5 === 0;
 const COIN_PER_STAR = 10, COIN_PERFECT = 40, COIN_STREAK_CAP = 50, BLITZ_COIN_DIV = 40, BLITZ_COIN_DAY_CAP = 120, WELCOME_COINS = 50, WELCOME_TICKETS = 2;
 const XP_PER_STAR = 25, XP_PERFECT = 80, XP_STREAK = 20, XP_EXACT = 15, XP_SPEED = 20, XP_BLITZ_DIV = 8, XP_BLITZ_CAP = 400, XP_COMBO = 10, XP_SPIN = 5, XP_TROPHY = 50, XP_CHEST = 40;
@@ -842,8 +884,8 @@ const I18N = {
     rwStars:"Étoiles", rwPerfect:"Bonus 9/9", rwStreak:"Série", rwTotal:"Total", rwBlitz:"Blitz", rwCapped:"plafond du jour atteint",
     shConsum:"Consommables", shSkins:"Tenues de Bip", shCredits:"Recharger", buy:"Acheter", owned:"Porté", wear:"Porter", free:"Offert", have:"en stock", need:"Il manque", redeem:"Valider", codePh:"J’ai un code",
     codeOk:"Code accepté", codeBad:"Code inconnu", codeUsed:"Code déjà utilisé", payMissing:"Bientôt", shNote:"Le paiement se fait sur une page sécurisée. Tu reçois un code à saisir ici. Les pièces gagnées en jouant suffisent pour tout débloquer, plus lentement.",
-    items: { eraser:["Gomme","Rend 3 annulations sur la cible en cours. Le compteur d’annulations reste dans ton partage."], loupe:["Loupe","Montre les deux nombres à combiner, sans l’opération. Sans plafond d’étoiles."], hint:["Coup de pouce","Bip souffle le coup complet, sans plafond d’étoiles. En Blitz : sans perte de temps."], second:["Seconde chance","En Blitz, quand le temps tombe à zéro : +15 s, une fois par partie."], hourglass:["Sablier","En Blitz : +10 s, quand tu veux, depuis le sac."], redo:["Rejouer","Après une cible validée à côté, rejoue-la une fois depuis le départ."], x2:["Double butin","Pièces et XP doublés sur ta prochaine partie de Blitz."], shield:["Bouclier","Protège ta série un jour où tu ne joues pas. Se consomme tout seul."] },
-    bag:{ free:"Indice", useHint:"Coup de pouce", loupe:"Loupe", hourglass:"+10 s", eraser:"Gomme", x2Armed:"Double butin actif", shieldUsed:"Bouclier utilisé : ta série est sauve.", loupeSay:"Ces deux-là vont ensemble." },
+    items: { eraser:["Gomme","Rend 3 annulations sur la cible en cours. Le compteur d’annulations reste dans ton partage."], loupe:["Loupe","Montre les deux nombres à combiner, sans l’opération. Sans plafond d’étoiles."], hint:["Coup de pouce","Bip souffle le coup complet, sans plafond d’étoiles. En Blitz : sans perte de temps."], second:["Bouclier de combo","En Blitz : la prochaine cible validée à côté ne casse pas le combo."], hourglass:["Passe","En Blitz : passe la cible en cours et garde le combo. La durée ne change pas."], redo:["Rejouer","Après une cible validée à côté, rejoue-la une fois depuis le départ."], x2:["Double butin","Pièces et XP doublés sur ta prochaine partie de Blitz."], shield:["Bouclier","Protège ta série un jour où tu ne joues pas. Se consomme tout seul."] },
+    bag:{ free:"Indice", useHint:"Coup de pouce", loupe:"Loupe", hourglass:"Passer", second:"Bouclier", eraser:"Gomme", x2Armed:"Double butin actif", shieldUsed:"Bouclier utilisé : ta série est sauve.", loupeSay:"Ces deux-là vont ensemble." },
     und:{ left:"Annuler", none:"Plus d’annulations sur cette cible.", askTitle:"Plus d’annulations", askText:"Une gomme rend 3 annulations sur cette cible. Le compteur reste visible dans ton partage.", use:"Utiliser une gomme", errors:"Erreurs", undos:"Annulations", precision:"Précision", rankTitle:"Classement du jour", rankRule:"Étoiles, puis temps, puis annulations et erreurs départagent.", game:"Partie" },
     wait:{ title:"Partie suivante dans {t}", text:"Deux heures entre deux parties du jour. Les parties bonus rapportent la moitié des pièces et de l’XP. Tu peux passer l’attente.", skip:"Passer l’attente (3 ◆)", later:"Plus tard", nextBtn:"Partie suivante ({k}/5)", bonusTag:"Partie bonus {k}/5", noGems:"Il manque des gemmes" },
     chest:{ title:"Coffre du jour", ready:"Coffre", opened:"Ouvert", open:"Ouvrir", note:"Un coffre par jour. Plus ta série est longue, plus il est plein.", got:"Dans le coffre" },
@@ -886,10 +928,43 @@ const I18N = {
       themeSet:["Nouveau décor ! Je m’y sens déjà chez moi.","Ambiance changée. Mes yeux s’adaptent, ça pique un peu."]
     },
     snd:{ test:"Tester le son", ok:"Le son sort. Si tu n’entends rien, l’iPhone est en mode silencieux (cloche barrée en haut de l’écran) ou le volume média est à zéro.", ko:"Le moteur audio est bloqué ({s}). Touche encore une fois l’écran, puis réessaie.", none:"Pas de moteur audio sur ce navigateur." },
+    bip3:{
+      home_daily_new:["Le défi du jour t’attend : dix parties, les mêmes pour tout le monde. Une cible pile, c’est une réussite.","Pas encore commencé aujourd’hui ? Le défi compte pour ta série et pour le classement."],
+      home_daily_next:["Ta série est à la partie {k} sur 10. Le chrono ne tourne que quand tu joues, finis-la quand tu veux."],
+      home_blitz_new:["Le Blitz : cinq minutes, les mêmes pour tous, et autant de cibles exactes que possible. Le classement départage sur les erreurs, les coups, puis le temps.","Jamais essayé le Blitz ? C’est le mode où je crie. Tu vas aimer."],
+      home_blitz_more:["Ton record Blitz : {l} cibles. Un Double butin à 70 pièces et la prochaine partie paie double."],
+      home_tickets:["Tu as {n} ticket(s). La roulette donne un objet à chaque tour, plus 5 XP.","Des tickets qui dorment, c’est du décor qui manque autour de moi."],
+      home_chest:["Le coffre du jour est plein. Plus ta série est longue, plus il l’est. Ouvre-le.","Coffre ! Il ne s’ouvre pas tout seul, et moi je n’ai pas de mains."],
+      home_shop_hint:["Avec {c} pièces, tu peux te payer une loupe ou un coup de pouce. Une cible sauvée, c’est trois étoiles.","Conseil d’ami : la gomme à 25 pièces, c’est le meilleur rapport du magasin."],
+      home_shield:["Le bouclier protège ta série si tu sautes un jour. 120 pièces, et ta série dort tranquille."],
+      home_trophy:["Un trophée t’attend dans la salle des trophées. Il ne se décerne pas tout seul.","Trophée prêt ! Tickets ou gemmes à la clé, et 50 XP."],
+      home_gems_ticket:["Cinq gemmes font un ticket. Tu en as {g}. Fais le calcul, c’est ton jeu après tout."],
+      daily_start_first:["Touche un nombre, une opération, puis un autre nombre : le résultat les remplace. Chaque nombre sert une fois. Vise pile, trois étoiles."],
+      daily_start:["Partie {i} sur 10. Regarde le gros nombre, souvent c’est lui la clé.","Partie {i}. Chaque fusion compte comme un coup au classement : réfléchis avant de fusionner."],
+      daily_stuck:["Vingt secondes sans bouger. Le sac est là : loupe, indice gratuit, à toi de voir."],
+      daily_close:["Tu es à {d}. Valider maintenant, c’est deux étoiles ; continuer, c’est trois ou rien."],
+      daily_three:["Trois tuiles et loin de la cible. Une multiplication, une correction, et c’est plié."],
+      daily_errors:["Deux opérations impossibles. Entiers positifs seulement, je le répète parce que je t’aime bien."],
+      daily_result_good:["Belle série. Va voir où tu te places au classement, puis un Blitz pour chauffer les pièces."],
+      daily_result_bad:["Une loupe à 20 pièces aurait montré les deux nombres à combiner. Pense-y pour la prochaine."],
+      blitz_intro:["Règles : cinq minutes, le combo monte jusqu’à ×3, le boss double tout. Le classement compte les cibles réussies, puis les erreurs, les coups et le temps.","Une Passe dans le sac saute une cible trop dure sans casser le combo. 50 pièces en boutique, ou à la roulette."],
+      blitz_lvl3:["Troisième cible. Dans deux cibles, le boss : cinq nombres, grosse cible, points doublés."],
+      blitz_low_hourglass:["Moins d’une minute et une Passe dans le sac : si cette cible résiste, saute-la."],
+      blitz_combo:["Combo ×{m} ! Ne valide surtout pas à côté, il tomberait."],
+      shop_enter:["Bienvenue. Les objets tombent aussi à la roulette, mais ici c’est tout de suite.","Mon préféré : le Double butin, pièces et XP doublés sur le prochain Blitz."],
+      shop_poor:["Pas assez de pièces ? Le Blitz en paie une par 40 points, jusqu’à 120 par jour."],
+      roulette_enter:["Bronze 60 %, argent 27 %, or 10 %, diamant 3 %. Un objet possédé ne retombe jamais.","Une roue, huit cases, et moi qui ferme les yeux à chaque tour. Non, je regarde."],
+      roulette_no_tix:["Plus de tickets. Un trophée, un niveau, un 9/9, ou cinq gemmes."],
+      trophies_enter:["Chaque trophée paie des tickets ou des gemmes, et 50 XP. Les barres te disent où tu en es."]
+    },
     acc:{ title:"Compte", off:"Les comptes en ligne ne sont pas encore branchés sur cette version : ta partie vit sur cet appareil, avec le code de sauvegarde pour la déplacer.", intro:"Un compte sauvegarde ta partie en ligne, la retrouve sur un autre appareil et t’inscrit au classement.", email:"E-mail", pass:"Mot de passe (6 caractères minimum)", signIn:"Se connecter", signUp:"Créer le compte", who:"Connecté : {e}", sync:"Sauvegarder maintenant", out:"Se déconnecter", synced:"Sauvegarde en ligne à jour.", restoreTitle:"Une sauvegarde existe déjà", restoreText:"Sur le compte : niveau {l}, {c} pièces.\nSur cet appareil : niveau {ll}, {lc} pièces.\nLaquelle garder ?", useCloud:"Celle du compte", useLocal:"Celle de l’appareil", badLogin:"E-mail ou mot de passe refusé.", weakPass:"Mot de passe trop court.", exists:"Un compte existe déjà avec cet e-mail.", netErr:"Pas de réponse du serveur. Réessaie.", welcome:"Compte créé. Ta partie est maintenant en ligne." },
     board:{ title:"Classement", daily:"Du jour", blitz:"Blitz", noteOn:"Puzzle #{n}. Étoiles, puis temps, puis annulations et erreurs.", noteOff:"Connecte-toi dans Profil pour apparaître ici.", empty:"Personne pour l’instant. Sois le premier.", you:"toi", loading:"Chargement…", unavailable:"Classement indisponible sur cette version." },
-    home:{ tag:"Trois cibles, quatre opérations, un cerveau.", daily:"Du jour", dailyNew:"Puzzle #{n}, pas encore joué", dailyDone:"{s}/9 aujourd’hui, prochain dans {t}", dailyGo:"Cible {i}/3 en cours", dailyNext:"Partie {k}/5 prête, {s}/9 jusqu’ici", dailyWait:"Partie {k}/5 dans {t}", dailyAll:"5 parties jouées, {s}/45. Prochain puzzle dans {t}", blitz:"Blitz", blitzSub:"Record : niveau {l}, {s} pts", blitzNew:"50 secondes, des cibles qui s’enchaînent", roulette:"Roulette", shop:"Boutique", trophies:"Trophées", board:"Classement", foot:"Le même puzzle pour tout le monde, chaque jour." },
-    ru:{ title:"La roulette", spin:"Tourner (1 🎟)", spinning:"Ça tourne…", noTix:"Plus de tickets", buy:"Acheter 1 ticket (5 ◆)", note:"Les tickets se gagnent avec les trophées, les niveaux et les 9/9. Chaque objet a une rareté : bronze, argent, or, diamant. Quand une rareté n’a plus d’objet à offrir, elle donne des pièces ou des gemmes.", won:"Gagné", dup:"Déjà possédé : converti en", newItem:"Nouveau !", odds:"Chances" },
+    home:{ tag:"Dix parties par jour, les mêmes pour tous.", daily:"Défi du jour", dailyNew:"Défi #{n} : 10 parties, pas encore commencé", dailyDone:"{s}/10 réussies, nouveau défi dans {t}", dailyGo:"Partie {i}/10 en cours", blitz:"Blitz", blitzSub:"Record : {s} cibles, {p} pts", blitzNew:"5 minutes, autant de cibles que possible", roulette:"Roulette", shop:"Boutique", trophies:"Trophées", board:"Classement", foot:"Le même puzzle pour tout le monde, chaque jour." },
+    ser:{ game:"Partie", done:"Défi du jour terminé", successes:"Réussites", moves:"Coups", resumed:"Reprise", next:"Nouveau défi dans", rank:"Voir le classement" },
+    bz:{ rules:"Cinq minutes, les mêmes pour tous. Autant de cibles exactes que possible. Le combo multiplie les points, le boss (une cible sur cinq) les double. Valider à côté casse le combo. Un indice gratuit coûte 5 secondes.", timeUp:"Temps écoulé", resume:"Reprendre le Blitz ?", resumeText:"Une partie est en cours, il reste {t}. Le chrono a continué pendant ton absence.", resumeOk:"Reprendre", abandon:"Clore la partie", skip:"Passée", shieldOn:"Bouclier de combo armé", shieldUsed:"Bouclier : le combo tient.", lastHit:"dernière réussite", replay:"Rejouer (le meilleur compte)" },
+    rk:{ title:"Classement", today:"Aujourd’hui", history:"Historique", daily:"Défi du jour", blitz:"Blitz", rule_daily:"Défi #{n}. Ordre : réussites, puis erreurs, puis coups, puis temps ; une série terminée passe avant une série en cours. Un coup = une fusion de deux nombres, une erreur = une opération impossible (résultat non entier ou négatif).", rule_blitz:"Cinq minutes pour tous. Ordre : cibles réussies, puis erreurs, puis coups, puis temps jusqu’à la dernière réussite.", mine:"Ma progression", none:"Aucun résultat pour ce jour.", offline:"Hors connexion : seuls tes résultats apparaissent. Crée un compte dans Profil pour le classement mondial.", inprogress:"en cours", you:"toi", runs:"{n} parties, la meilleure compte" },
+
+    ru:{ title:"La roulette", spin:"Tourner (1 🎟)", spinning:"Ça tourne…", noTix:"Plus de tickets", buy:"Acheter 1 ticket (5 ◆)", note:"Les tickets se gagnent avec les trophées, les niveaux et les défis à 8 réussites ou plus. Chaque objet a une rareté : bronze, argent, or, diamant. Quand une rareté n’a plus d’objet à offrir, elle donne des pièces ou des gemmes.", won:"Gagné", dup:"Déjà possédé : converti en", newItem:"Nouveau !", odds:"Chances" },
     tr:{ title:"Trophées", note:"Chaque trophée rapporte des tickets ou des gemmes. Les gemmes ◆ sont la monnaie rare : elles achètent des tickets et se gagnent surtout ici." },
     pr:{ title:"Profil et réglages", name:"Ton pseudo", look:"Apparence", soundG:"Son", langG:"Langue", saveG:"Sauvegarde", skin:"Tenue de Bip", more:"Plus en boutique", ph:"Ton pseudo", themes:"Thème du plateau", music:"Style musical", buttons:"Style des boutons", audio:"Son et langue", sound:"Effets", musicOn:"Musique", save:"Sauvegarde", saveNote:"Ta partie vit sur cet appareil. Le code de sauvegarde la transporte vers un autre téléphone. Un vrai compte en ligne demandera un serveur.", export:"Copier mon code", import:"Coller un code", importGo:"Restaurer ce code", exported:"Code copié. Garde-le au chaud.", imported:"Sauvegarde restaurée.", badCode:"Code illisible", danger:"Zone rouge", reset:"Tout effacer", resetAsk:"Tout effacer ?", resetText:"Pièces, tenues, trophées, niveaux : tout part. Le puzzle du jour reste le même.", lockedItem:"À gagner à la roulette", best:"Meilleur Blitz", bestTime:"9/9 le plus rapide", played:"Parties", spins:"Tours de roulette" },
     rarity:{ bronze:"Bronze", silver:"Argent", gold:"Or", diamond:"Diamant" },
@@ -899,11 +974,11 @@ const I18N = {
     decors:{ plant:"Plante", lamp:"Lampe", cup:"Tasse", books:"Livres", poster:"Tableau", guitar:"Guitare", clock:"Horloge", console:"Console", cat:"Chat", trophy:"Trophée", telescope:"Télescope", disco:"Boule à facettes" },
     kinds:{ coins:"Pièces", gems:"Gemmes", skin:"Tenue de Bip", theme:"Thème", music:"Musique", buttons:"Boutons", decor:"Décor", consumable:"Objet" },
     ach:{
-      first:["Premier pas","Finir un puzzle du jour"], exact:["Pile","Une première cible exacte"], perfect:["Sans faute","Un 9/9"], noHint:["Tête froide","Un 9/9 sans aucun indice"],
+      first:["Premier pas","Finir un défi du jour"], exact:["Pile","Une première cible exacte"], perfect:["Sans faute","Un 10/10"], noHint:["Tête froide","Un 10/10 sans aucun indice"],
       fast:["Éclair","Une cible exacte en moins de 15 s"], s3:["Habitué","3 jours de série"], s7:["Fidèle","7 jours de série"], s30:["Inarrêtable","30 jours de série"],
-      b5:["Sprinteur","Atteindre le niveau 5 en Blitz"], b10:["Fusée","Niveau 10 en Blitz"], b20:["Machine","Niveau 20 en Blitz"], boss:["Tueur de boss","Une cible de boss exacte"],
+      b5:["Sprinteur","5 cibles en un Blitz"], b10:["Fusée","10 cibles en un Blitz"], b20:["Machine","20 cibles en un Blitz"], boss:["Tueur de boss","Une cible de boss exacte"],
       combo:["En feu","Un combo ×3"], col5:["Dressing","5 tenues de Bip"], col10:["Garde-robe","10 tenues de Bip"], spins:["Joueur","10 tours de roulette"],
-      rich:["Tirelire","1 000 pièces gagnées en jouant"], games:["Marathon","30 puzzles du jour"], lv10:["Confirmé","Niveau 10"], lv20:["Légende","Niveau 20"], nonet:["Sans filet","Un puzzle du jour sans aucune annulation"], surgeon:["Chirurgien","Un 9/9 sans annulation, sans erreur, sans indice"]
+      rich:["Tirelire","1 000 pièces gagnées en jouant"], games:["Marathon","30 défis du jour terminés"], lv10:["Confirmé","Niveau 10"], lv20:["Légende","Niveau 20"], nonet:["Sans filet","Un défi du jour sans aucune annulation"], surgeon:["Chirurgien","Un 10/10 sans annulation, sans erreur, sans indice"]
     },
     unlocked:"Trophée", gotTicket:"ticket", gotGem:"gemme", welcomeGift:"Bienvenue : 2 tickets pour la roulette.",
     bip: {
@@ -942,8 +1017,8 @@ const I18N = {
     rwStars:"Stars", rwPerfect:"9/9 bonus", rwStreak:"Streak", rwTotal:"Total", rwBlitz:"Blitz", rwCapped:"daily cap reached",
     shConsum:"Consumables", shSkins:"Bip’s outfits", shCredits:"Top up", buy:"Buy", owned:"Wearing", wear:"Wear", free:"Free", have:"in stock", need:"Short by", redeem:"Redeem", codePh:"I have a code",
     codeOk:"Code accepted", codeBad:"Unknown code", codeUsed:"Code already used", payMissing:"Soon", shNote:"Payment happens on a secure page. You get a code to enter here. Coins earned by playing unlock everything too, just slower.",
-    items: { eraser:["Eraser","Gives back 3 undos on the current target. The undo count still shows in your share."], loupe:["Magnifier","Shows the two numbers to combine, not the operation. No star cap."], hint:["Nudge","Bip whispers the full move, no star cap. In Blitz: no time lost."], second:["Second chance","In Blitz, when the clock hits zero: +15 s, once per run."], hourglass:["Hourglass","In Blitz: +10 s, whenever you want, from the bag."], redo:["Redo","After an off-target lock-in, replay that target once from scratch."], x2:["Double loot","Coins and XP doubled on your next Blitz run."], shield:["Shield","Protects your streak on a day you skip. Used automatically."] },
-    bag:{ free:"Hint", useHint:"Nudge", loupe:"Magnifier", hourglass:"+10 s", eraser:"Eraser", x2Armed:"Double loot armed", shieldUsed:"Shield used: your streak is safe.", loupeSay:"These two go together." },
+    items: { eraser:["Eraser","Gives back 3 undos on the current target. The undo count still shows in your share."], loupe:["Magnifier","Shows the two numbers to combine, not the operation. No star cap."], hint:["Nudge","Bip whispers the full move, no star cap. In Blitz: no time lost."], second:["Combo shield","In Blitz: the next off-target lock-in doesn’t break the combo."], hourglass:["Skip","In Blitz: skip the current target and keep the combo. The duration doesn’t change."], redo:["Redo","After an off-target lock-in, replay that target once from scratch."], x2:["Double loot","Coins and XP doubled on your next Blitz run."], shield:["Shield","Protects your streak on a day you skip. Used automatically."] },
+    bag:{ free:"Hint", useHint:"Nudge", loupe:"Magnifier", hourglass:"Skip", second:"Shield", eraser:"Eraser", x2Armed:"Double loot armed", shieldUsed:"Shield used: your streak is safe.", loupeSay:"These two go together." },
     und:{ left:"Undo", none:"No undos left on this target.", askTitle:"No undos left", askText:"An eraser gives back 3 undos on this target. The count stays visible in your share.", use:"Use an eraser", errors:"Errors", undos:"Undos", precision:"Precision", rankTitle:"Today’s ranking", rankRule:"Stars, then time, then undos and errors break ties.", game:"Game" },
     wait:{ title:"Next game in {t}", text:"Two hours between daily games. Bonus games pay half the coins and XP. You can skip the wait.", skip:"Skip the wait (3 ◆)", later:"Later", nextBtn:"Next game ({k}/5)", bonusTag:"Bonus game {k}/5", noGems:"Not enough gems" },
     chest:{ title:"Daily chest", ready:"Chest", opened:"Opened", open:"Open", note:"One chest a day. The longer your streak, the fuller it is.", got:"Inside the chest" },
@@ -986,10 +1061,43 @@ const I18N = {
       themeSet:["New scenery! Already feels like home.","Scenery changed. My eyes are adjusting, it stings a bit."]
     },
     snd:{ test:"Test the sound", ok:"Sound is playing. If you hear nothing, the iPhone is in silent mode (crossed bell at the top of the screen) or the media volume is at zero.", ko:"The audio engine is blocked ({s}). Tap the screen once more, then try again.", none:"No audio engine in this browser." },
+    bip3:{
+      home_daily_new:["The daily challenge is waiting: ten games, the same for everyone. An exact target is a solve.","Not started today? The challenge counts for your streak and the ranking."],
+      home_daily_next:["Your series is at game {k} of 10. The clock only runs while you play, finish it whenever you like."],
+      home_blitz_new:["Blitz: five minutes, the same for everyone, as many exact targets as you can. Ties break on errors, moves, then time.","Never tried Blitz? It’s the mode where I scream. You’ll love it."],
+      home_blitz_more:["Your Blitz best: {l} targets. A Double loot for 70 coins and the next run pays double."],
+      home_tickets:["You have {n} ticket(s). The wheel gives an item every spin, plus 5 XP.","Sleeping tickets mean missing decor around me."],
+      home_chest:["The daily chest is full. The longer your streak, the fuller it is. Open it.","Chest! It won’t open itself, and I have no hands."],
+      home_shop_hint:["With {c} coins you can afford a magnifier or a nudge. One saved target is three stars.","Friendly tip: the 25-coin eraser is the best deal in the shop."],
+      home_shield:["The shield protects your streak if you skip a day. 120 coins, and your streak sleeps tight."],
+      home_trophy:["A trophy is waiting in the trophy room. It won’t award itself.","Trophy ready! Tickets or gems, and 50 XP."],
+      home_gems_ticket:["Five gems make a ticket. You have {g}. Do the maths, it’s your game after all."],
+      daily_start_first:["Tap a number, an operation, then another number: the result replaces them. Each number is used once. Aim exact, three stars."],
+      daily_start:["Game {i} of 10. Look at the big number, it’s often the key.","Game {i}. Every merge counts as a move in the ranking: think before you merge."],
+      daily_stuck:["Twenty seconds without a move. The bag is right there: magnifier, free hint, your call."],
+      daily_close:["You’re off by {d}. Lock in now for two stars; keep going for three or nothing."],
+      daily_three:["Three tiles and far off. One multiplication, one fix, done."],
+      daily_errors:["Two impossible moves. Whole positive numbers only, I repeat it because I like you."],
+      daily_result_good:["Nice series. See where you stand in the ranking, then a Blitz to warm up the coins."],
+      daily_result_bad:["A 20-coin magnifier would have shown the two numbers to combine. Keep it in mind next time."],
+      blitz_intro:["Rules: five minutes, combo up to ×3, the boss doubles everything. The ranking counts solved targets, then errors, moves and time.","A Skip in the bag jumps a stubborn target without breaking the combo. 50 coins in the shop, or on the wheel."],
+      blitz_lvl3:["Third target. Two more to the boss: five numbers, big target, doubled points."],
+      blitz_low_hourglass:["Under a minute and a Skip in the bag: if this target resists, jump it."],
+      blitz_combo:["Combo ×{m}! Don’t lock in off-target, it would fall."],
+      shop_enter:["Welcome. Items also drop on the wheel, but here it’s instant.","My favourite: Double loot, coins and XP doubled on the next Blitz."],
+      shop_poor:["Short on coins? Blitz pays one per 40 points, up to 120 a day."],
+      roulette_enter:["Bronze 60%, silver 27%, gold 10%, diamond 3%. An owned item never drops again.","A wheel, eight slices, and me closing my eyes every spin. No, I’m watching."],
+      roulette_no_tix:["No tickets. A trophy, a level, a 9/9, or five gems."],
+      trophies_enter:["Every trophy pays tickets or gems, and 50 XP. The bars show where you stand."]
+    },
     acc:{ title:"Account", off:"Online accounts are not wired on this version yet: your game lives on this device, with the save code to move it.", intro:"An account saves your game online, restores it on another device and enters you in the leaderboard.", email:"E-mail", pass:"Password (6 characters minimum)", signIn:"Sign in", signUp:"Create account", who:"Signed in: {e}", sync:"Save now", out:"Sign out", synced:"Online save is up to date.", restoreTitle:"A save already exists", restoreText:"On the account: level {l}, {c} coins.\nOn this device: level {ll}, {lc} coins.\nWhich one to keep?", useCloud:"The account’s", useLocal:"This device’s", badLogin:"E-mail or password refused.", weakPass:"Password too short.", exists:"An account already exists with this e-mail.", netErr:"No answer from the server. Try again.", welcome:"Account created. Your game is online now." },
     board:{ title:"Leaderboard", daily:"Daily", blitz:"Blitz", noteOn:"Puzzle #{n}. Stars, then time, then undos and errors.", noteOff:"Sign in from Profile to appear here.", empty:"Nobody yet. Be the first.", you:"you", loading:"Loading…", unavailable:"Leaderboard unavailable on this version." },
-    home:{ tag:"Three targets, four operations, one brain.", daily:"Daily", dailyNew:"Puzzle #{n}, not played yet", dailyDone:"{s}/9 today, next in {t}", dailyGo:"Target {i}/3 in progress", dailyNext:"Game {k}/5 ready, {s}/9 so far", dailyWait:"Game {k}/5 in {t}", dailyAll:"5 games played, {s}/45. Next puzzle in {t}", blitz:"Blitz", blitzSub:"Best: level {l}, {s} pts", blitzNew:"50 seconds, back-to-back targets", roulette:"Wheel", shop:"Shop", trophies:"Trophies", board:"Ranking", foot:"The same puzzle for everyone, every day." },
-    ru:{ title:"The wheel", spin:"Spin (1 🎟)", spinning:"Spinning…", noTix:"No tickets left", buy:"Buy 1 ticket (5 ◆)", note:"Tickets come from trophies, levels and 9/9 days. Every item has a rarity: bronze, silver, gold, diamond. When a rarity has no item left to give, it pays coins or gems instead.", won:"You won", dup:"Already owned: converted to", newItem:"New!", odds:"Odds" },
+    home:{ tag:"Ten games a day, the same for everyone.", daily:"Daily challenge", dailyNew:"Challenge #{n}: 10 games, not started yet", dailyDone:"{s}/10 solved, new challenge in {t}", dailyGo:"Game {i}/10 in progress", blitz:"Blitz", blitzSub:"Best: {s} targets, {p} pts", blitzNew:"5 minutes, as many targets as you can", roulette:"Wheel", shop:"Shop", trophies:"Trophies", board:"Ranking", foot:"The same puzzle for everyone, every day." },
+    ser:{ game:"Game", done:"Daily challenge complete", successes:"Solved", moves:"Moves", resumed:"Resumed", next:"New challenge in", rank:"See the ranking" },
+    bz:{ rules:"Five minutes, the same for everyone. Hit as many exact targets as you can. Combos multiply points, the boss (every fifth target) doubles them. Locking in off-target breaks the combo. A free hint costs 5 seconds.", timeUp:"Time’s up", resume:"Resume the Blitz?", resumeText:"A run is in progress, {t} left. The clock kept running while you were away.", resumeOk:"Resume", abandon:"Close the run", skip:"Skipped", shieldOn:"Combo shield armed", shieldUsed:"Shield: the combo holds.", lastHit:"last solve", replay:"Play again (best run counts)" },
+    rk:{ title:"Ranking", today:"Today", history:"History", daily:"Daily challenge", blitz:"Blitz", rule_daily:"Challenge #{n}. Order: solved, then errors, then moves, then time; a finished series ranks above one in progress. A move = merging two numbers, an error = an impossible operation (non-integer or negative result).", rule_blitz:"Five minutes for everyone. Order: targets solved, then errors, then moves, then time to the last solve.", mine:"My progress", none:"No result for this day.", offline:"Offline: only your own results appear. Create an account in Profile for the world ranking.", inprogress:"in progress", you:"you", runs:"{n} runs, best one counts" },
+
+    ru:{ title:"The wheel", spin:"Spin (1 🎟)", spinning:"Spinning…", noTix:"No tickets left", buy:"Buy 1 ticket (5 ◆)", note:"Tickets come from trophies, levels and challenges with 8 solves or more. Every item has a rarity: bronze, silver, gold, diamond. When a rarity has no item left to give, it pays coins or gems instead.", won:"You won", dup:"Already owned: converted to", newItem:"New!", odds:"Odds" },
     tr:{ title:"Trophies", note:"Every trophy pays tickets or gems. Gems ◆ are the rare currency: they buy tickets and are mostly earned here." },
     pr:{ title:"Profile and settings", name:"Your nickname", look:"Appearance", soundG:"Sound", langG:"Language", saveG:"Save", skin:"Bip’s outfit", more:"More in the shop", ph:"Your nickname", themes:"Board theme", music:"Music style", buttons:"Button style", audio:"Sound and language", sound:"Effects", musicOn:"Music", save:"Save", saveNote:"Your game lives on this device. The save code carries it to another phone. A real online account will need a server.", export:"Copy my code", import:"Paste a code", importGo:"Restore this code", exported:"Code copied. Keep it safe.", imported:"Save restored.", badCode:"Unreadable code", danger:"Red zone", reset:"Erase everything", resetAsk:"Erase everything?", resetText:"Coins, outfits, trophies, levels: all gone. Today’s puzzle stays the same.", lockedItem:"Win it on the wheel", best:"Best Blitz", bestTime:"Fastest 9/9", played:"Games", spins:"Wheel spins" },
     rarity:{ bronze:"Bronze", silver:"Silver", gold:"Gold", diamond:"Diamond" },
@@ -999,11 +1107,11 @@ const I18N = {
     decors:{ plant:"Plant", lamp:"Lamp", cup:"Mug", books:"Books", poster:"Painting", guitar:"Guitar", clock:"Clock", console:"Console", cat:"Cat", trophy:"Trophy", telescope:"Telescope", disco:"Disco ball" },
     kinds:{ coins:"Coins", gems:"Gems", skin:"Bip outfit", theme:"Theme", music:"Music", buttons:"Buttons", decor:"Decor", consumable:"Item" },
     ach:{
-      first:["First step","Finish a daily puzzle"], exact:["Dead on","A first exact target"], perfect:["Flawless","A 9/9"], noHint:["Cool head","A 9/9 with no hints"],
+      first:["First step","Finish a daily challenge"], exact:["Dead on","A first exact target"], perfect:["Flawless","A 10/10"], noHint:["Cool head","A 10/10 with no hints"],
       fast:["Lightning","An exact target in under 15 s"], s3:["Regular","3-day streak"], s7:["Loyal","7-day streak"], s30:["Unstoppable","30-day streak"],
-      b5:["Sprinter","Reach level 5 in Blitz"], b10:["Rocket","Level 10 in Blitz"], b20:["Machine","Level 20 in Blitz"], boss:["Boss slayer","An exact boss target"],
+      b5:["Sprinter","5 targets in one Blitz"], b10:["Rocket","10 targets in one Blitz"], b20:["Machine","20 targets in one Blitz"], boss:["Boss slayer","An exact boss target"],
       combo:["On fire","A ×3 combo"], col5:["Dressing room","5 Bip outfits"], col10:["Wardrobe","10 Bip outfits"], spins:["Gambler","10 wheel spins"],
-      rich:["Piggy bank","1,000 coins earned by playing"], games:["Marathon","30 daily puzzles"], lv10:["Seasoned","Level 10"], lv20:["Legend","Level 20"], nonet:["No net","A daily puzzle with zero undos"], surgeon:["Surgeon","A 9/9 with no undo, no error, no hint"]
+      rich:["Piggy bank","1,000 coins earned by playing"], games:["Marathon","30 daily challenges finished"], lv10:["Seasoned","Level 10"], lv20:["Legend","Level 20"], nonet:["No net","A daily challenge with zero undos"], surgeon:["Surgeon","A 10/10 with no undo, no error, no hint"]
     },
     unlocked:"Trophy", gotTicket:"ticket", gotGem:"gem", welcomeGift:"Welcome: 2 tickets for the wheel.",
     bip: {
@@ -1043,9 +1151,11 @@ const buzz = p => { try{ if (navigator.vibrate) navigator.vibrate(p); }catch(e){
 const tpl = (s, vars) => { let t = s; Object.entries(vars || {}).forEach(([k, v]) => { t = t.split("{" + k + "}").join(v); }); return t; };
 
 const now = new Date();
-const dayKey = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const dayKey = d => d.toISOString().slice(0, 10);                 // jour de référence : UTC, identique pour tout le monde
 const today = dayKey(now);
-const yesterday = dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate()-1));
+const yesterday = dayKey(new Date(now.getTime() - 86400000));
+const dayFromIndex = i => dayKey(new Date(LAUNCH + i * 86400000));
+const dayIndex = k => Math.round((Date.UTC(+k.slice(0,4), +k.slice(5,7) - 1, +k.slice(8,10)) - LAUNCH) / 86400000);
 const puzzleNo = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - LAUNCH)/86400000) + 1;
 
 // Générateurs et solveur
@@ -1081,22 +1191,48 @@ function chooser(cands, rnd){
     return pool.length ? pick(pool)[0] : above + 1;
   };
 }
-function genPuzzle(seed){
-  const rnd = mulberry32(seed); const pick = arr => arr[Math.floor(rnd()*arr.length)];
-  const small = [1,2,3,4,5,6,7,8,9].sort(() => rnd() - .5).slice(0,4);
-  const nums = [...small, pick([10,11,12,13,14,15,16,18,20,24]), pick([25,50,75,100])];
-  const choose = chooser(reachable(nums, rnd, 3000), rnd);
-  const t1 = choose(20, 99, 2, 0), t2 = choose(100, 299, 3, t1), t3 = choose(300, 900, 3, t2);
-  return { nums, targets: [t1, t2, t3] };
+// Espace des jeux de nombres : 4 petits distincts parmi 1..9, 1 moyen, 1 grand : 5 040 jeux ordonnés, sans permutation possible.
+const SMALL_COMBOS = (() => { const out = []; for (let a = 1; a <= 9; a++) for (let b = a + 1; b <= 9; b++) for (let c = b + 1; c <= 9; c++) for (let d = c + 1; d <= 9; d++) out.push([a, b, c, d]); return out; })();
+const MIDS = [10,11,12,13,14,15,16,18,20,24], BIGS = [25,50,75,100];
+const SPACE = SMALL_COMBOS.length * MIDS.length * BIGS.length;
+const numsAt = i => { i = ((i % SPACE) + SPACE) % SPACE; return [...SMALL_COMBOS[i % SMALL_COMBOS.length], MIDS[Math.floor(i / SMALL_COMBOS.length) % MIDS.length], BIGS[Math.floor(i / (SMALL_COMBOS.length * MIDS.length)) % BIGS.length]]; };
+const PERM_A = 2311, PERM_C = 1729;                                   // 2311 est premier avec 5040 : la permutation parcourt tout l'espace sans répétition
+const permIndex = k => (((k % SPACE) * PERM_A) + PERM_C) % SPACE;
+const sig = (nums, target) => nums.slice().sort((a, b) => a - b).join("-") + ">" + target;
+const TIERS = [[20,99,2],[20,99,2],[20,99,2],[100,299,3],[100,299,3],[100,299,3],[300,699,3],[300,699,3],[300,699,3],[500,999,4]];
+function targetFor(nums, rnd, tier, avoid){
+  const cands = reachable(nums, rnd, 3000).filter(([v]) => !avoid || !avoid.includes(v));
+  const pools = [cands.filter(([v, st]) => v >= tier[0] && v <= tier[1] && st >= tier[2]), cands.filter(([v]) => v >= tier[0] && v <= tier[1]), cands.filter(([v]) => v >= 20)];
+  for (const pool of pools){ const p = pool.slice().sort((a, b) => a[0] - b[0]); for (let tries = 0; tries < 12 && p.length; tries++){ const pick = p.splice(Math.floor(rnd() * p.length), 1)[0][0]; if (solve(nums, pick)) return pick; } }
+  return null;
 }
+const seriesCache = {};
+function seriesForDay(day){
+  if (seriesCache[day]) return seriesCache[day];
+  const D = dayIndex(day), out = [];
+  for (let j = 0; j < SERIES_LEN; j++){
+    const g = D * SERIES_LEN + j; const nums = numsAt(permIndex(g)); const rnd = mulberry32(hash(`${day}#${j}`));
+    const cycle = Math.floor(g / SPACE); const avoid = [];
+    for (let c = 0; c < cycle; c++){ const prev = seriesCache._t && seriesCache._t[g - (c + 1) * SPACE]; if (prev) avoid.push(prev); }
+    let t = targetFor(nums, rnd, TIERS[j], avoid); if (t === null) t = targetFor(nums, mulberry32(hash(`${day}#${j}#b`)), TIERS[j], null); if (t === null) t = nums[0] + nums[1];
+    seriesCache._t = seriesCache._t || {}; seriesCache._t[g] = t;
+    out.push({ nums, target: t, sig: sig(nums, t) });
+  }
+  seriesCache[day] = out; return out;
+}
+const USED_KEY = "kalku:used", USED_MAX = 3000;
+let usedSigs = store.get(USED_KEY) || [];
+function rememberSig(sg){ if (usedSigs.includes(sg)) return; usedSigs.push(sg); if (usedSigs.length > USED_MAX) usedSigs = usedSigs.slice(-USED_MAX); store.set(USED_KEY, usedSigs); }
 function genBlitz(level){
-  const rnd = Math.random; const pick = arr => arr[Math.floor(rnd()*arr.length)];
-  const boss = isBoss(level); const count = boss ? 5 : (level < 4 ? 6 : 5);
-  const small = [1,2,3,4,5,6,7,8,9].sort(() => rnd() - .5).slice(0, count - 2);
-  const nums = [...small, pick([10,11,12,13,14,15,16,18,20,24]), pick(boss ? [50,75,100] : [25,50,75,100])];
-  const choose = chooser(reachable(nums, rnd, boss ? 2500 : 1500), rnd);
-  const lo = boss ? 200 + level * 20 : 15 + level * 10, hi = boss ? 500 + level * 40 : 40 + level * 35;
-  return { nums, target: choose(lo, hi, boss ? 3 : Math.min(1 + Math.floor(level/2), 3), 0) };
+  const boss = isBoss(level); const tier = boss ? [200 + level * 20, 500 + level * 40, 3] : [Math.min(400, 15 + level * 12), Math.min(900, 40 + level * 40), Math.min(1 + Math.floor(level / 2), 3)];
+  let last = null;
+  for (let attempt = 0; attempt < 25; attempt++){
+    const nums = numsAt(Math.floor(Math.random() * SPACE)); const t = targetFor(nums, Math.random, tier, null); if (t === null) continue;
+    const sg = sig(nums, t); last = { nums, target: t, sig: sg, repeated: false };
+    if (!usedSigs.includes(sg)){ rememberSig(sg); return last; }
+  }
+  if (last){ last.repeated = true; return last; }
+  const nums = numsAt(Math.floor(Math.random() * SPACE)); return { nums, target: nums[4] + nums[5], sig: "", repeated: true };
 }
 function solve(nums, target){
   const memo = new Set(); let budget = 80000;
@@ -1395,17 +1531,20 @@ const Bip = {
     $("browL").style.transform = t[0]; $("browR").style.transform = t[1];
   },
   say(text, mood, ms, sub){
-    clearTimeout(this.timer); this.mood(mood || "happy"); if (!this.bub) return;
-    this.bub.textContent = text; if (sub){ const s = document.createElement("small"); s.textContent = sub; this.bub.appendChild(s); }
+    clearTimeout(this.timer); clearInterval(this.tw); this.mood(mood || "happy"); if (!this.bub) return;
+    this.bub.textContent = ""; const span = document.createElement("span"); span.className = "tw"; this.bub.appendChild(span);
+    const words = String(text).split(" "); let i = 0; const finish = () => { clearInterval(this.tw); span.textContent = text; span.classList.add("done"); if (sub){ const s = document.createElement("small"); s.textContent = sub; this.bub.appendChild(s); } };
+    if (reduceMotion || words.length < 3) finish(); else this.tw = setInterval(() => { i++; span.textContent = words.slice(0, i).join(" "); if (i >= words.length) finish(); }, 42);
     this.bub.classList.add("show"); $("live").textContent = text; replay(this.el, "bounce");
-    if (ms) this.timer = setTimeout(() => { this.bub.classList.remove("show"); this.mood("happy"); }, ms);
+    const dur = ms ? ms + Math.min(2500, words.length * 42) : 0;
+    if (dur) this.timer = setTimeout(() => { this.bub.classList.remove("show"); this.mood("happy"); }, dur);
   },
   pick(arr, key){ let i = Math.floor(Math.random() * arr.length); if (arr.length > 1 && i === this.last[key]) i = (i + 1) % arr.length; this.last[key] = i; return arr[i]; },
   line(cat, mood, ms){ const arr = T.bip[cat] || []; if (arr.length) this.say(this.pick(arr, cat), mood, ms || 3800); },
   line2(cat, mood, ms, vars){ const arr = (T.bip2 || {})[cat] || []; if (arr.length) this.say(tpl(this.pick(arr, "2" + cat), vars), mood, ms || 3800); },
   joke(){ const j = T.jokes; if (j && j.length) this.say(this.pick(j, "joke"), "laugh", 5200); },
-  sequence(lines){ this.seq = { lines, i: 0 }; this.say(lines[0], "happy", 0, "▸"); },
-  advance(){ if (!this.seq) return false; this.seq.i++; if (this.seq.i >= this.seq.lines.length){ this.seq = null; this.bub.classList.remove("show"); return true; } this.say(this.seq.lines[this.seq.i], this.seq.i === 2 ? "laugh" : "happy", 0, "▸"); return true; },
+  sequence(lines){ this.seq = { lines, i: 0 }; this.say(lines[0], "happy", 0, "▸"); clearTimeout(this.seqTimer); this.seqTimer = setTimeout(() => this.advance(), 6500); },
+  advance(){ if (!this.seq) return false; clearTimeout(this.seqTimer); this.seq.i++; if (this.seq.i >= this.seq.lines.length){ this.seq = null; this.bub.classList.remove("show"); return true; } this.say(this.seq.lines[this.seq.i], this.seq.i === 2 ? "laugh" : "happy", 0, "▸"); this.seqTimer = setTimeout(() => this.advance(), 6500); return true; },
   ask(text, yesLabel, noLabel, onYes){
     clearTimeout(this.timer); this.mood("think"); this.bub.textContent = text;
     const y = document.createElement("button"); y.type = "button"; y.className = "act"; y.textContent = yesLabel;
@@ -1435,37 +1574,66 @@ setInterval(() => {
   else if (r < .42) replay(Bip.el, "bounce"); else if (r < .52) replay(Bip.el, "wiggle"); else if (r < .6){ Bip.mood("wow"); setTimeout(() => Bip.mood("happy"), 700); }
 }, 6500);
 
+// ===== Bip parle tout seul : le metteur en scène =====
+const Director = {
+  last: 0, cool: {}, timer: null,
+  start(){ clearInterval(this.timer); this.timer = setInterval(() => this.tick(), 5000); },
+  can(cat, cd){ const now = Date.now(); if (this.cool[cat] && now - this.cool[cat] < (cd || 240000)) return false; return true; },
+  say(cat, mood, vars, cd, force){
+    if (Bip.seq) return false; if (!force && Date.now() - this.last < 14000) return false; if (!this.can(cat, cd)) return false;
+    const arr = (T.bip3 || {})[cat]; if (!arr || !arr.length) return false;
+    this.last = Date.now(); this.cool[cat] = Date.now(); Bip.say(tpl(Bip.pick(arr, "3" + cat), vars || {}), mood || "happy", 5600); return true;
+  },
+  tick(){
+    if (Bip.asleep || Bip.seq || document.hidden || $("scrim").classList.contains("show") || (Bip.bub && Bip.bub.classList.contains("show"))) return;
+    if (Date.now() - this.last < 14000) return;
+    const c = [];
+    if (screen === "home"){
+      if (chestReady()) c.push(["home_chest", "laugh", {}, 3]);
+      if (!dailyDone() && daily.idx === 0 && daily.game === 0) c.push(["home_daily_new", "happy", {}, 4]);
+      if (!dailyDone() && daily.idx > 0) c.push(["home_daily_next", "happy", { k: daily.idx + 1 }, 3]);
+      const bb = store.get("kalku:blitz"); if (!bb || !bb.level) c.push(["home_blitz_new", "wow", {}, 3]); else if (wallet.items.x2 === 0 && wallet.coins >= 70) c.push(["home_blitz_more", "happy", { l: bb.level }, 1]);
+      if (wallet.tickets > 0) c.push(["home_tickets", "wow", { n: wallet.tickets }, 3]);
+      if (ACH.some(a => !wallet.ach.includes(a.id) && a.get(wallet.c) >= a.need)) c.push(["home_trophy", "laugh", {}, 3]);
+      if (wallet.coins >= 30 && wallet.items.hint + wallet.items.loupe === 0) c.push(["home_shop_hint", "happy", { c: nf(wallet.coins) }, 2]);
+      if (wallet.coins >= 120 && wallet.items.shield === 0 && ((store.get("kalku:stats") || {}).streak || 0) >= 2) c.push(["home_shield", "think", {}, 2]);
+      if (wallet.tickets === 0 && wallet.gems >= 5) c.push(["home_gems_ticket", "happy", { g: wallet.gems }, 2]);
+      if (!c.length || Math.random() < .15){ Bip.joke(); this.last = Date.now(); return; }
+    } else if (screen === "game" && mode === "daily" && boardActive()){
+      const idle = Date.now() - (B.lastMove || B.started), alive = B.tiles.filter(t => t.alive).length, bd = best().d;
+      if (idle > 20000 && B.merges === 0) c.push(["daily_stuck", "think", {}, 3]);
+      if (bd > 0 && bd <= 5 && alive <= 2) c.push(["daily_close", "wow", { d: bd }, 3]);
+      if (alive === 3 && bd > 15) c.push(["daily_three", "think", {}, 2]);
+      if (B.invalids >= 2) c.push(["daily_errors", "sad", {}, 2]);
+    } else if (screen === "game" && mode === "blitz" && blitz.running){
+      if (blitz.level === 3) c.push(["blitz_lvl3", "wow", {}, 2]);
+      if (blitz.endAt - Date.now() < 60000 && wallet.items.hourglass > 0 && best().d > 15) c.push(["blitz_low_hourglass", "wow", {}, 3]);
+      if (blitz.combo >= 2) c.push(["blitz_combo", "laugh", { m: Math.min(3, 1 + .5 * (blitz.combo - 1)).toFixed(1).replace(/\.0$/, "") }, 2]);
+    } else if (screen === "shop"){ c.push(["shop_enter", "happy", {}, 2]); if (wallet.coins < 20) c.push(["shop_poor", "think", {}, 3]); }
+    else if (screen === "roulette"){ c.push(["roulette_enter", "happy", {}, 2]); if (wallet.tickets === 0) c.push(["roulette_no_tix", "think", {}, 3]); }
+    else if (screen === "trophies") c.push(["trophies_enter", "happy", {}, 2]);
+    const ok = c.filter(x => this.can(x[0], x[0] === "daily_close" ? 60000 : undefined)); if (!ok.length) return;
+    const tot = ok.reduce((a, x) => a + x[3], 0); let r = Math.random() * tot;
+    for (const x of ok){ if ((r -= x[3]) <= 0){ this.say(x[0], x[1], x[2], x[0] === "daily_close" ? 60000 : undefined); return; } }
+  }
+};
+
 // ===== État de jeu =====
 let screen = "home", mode = "daily";
-let dayMeta = store.get("kalku:daymeta:" + today) || { done: 0, lastFinish: 0, stars: [], games: [] };
-dayMeta.games = dayMeta.games || [];
-const rankKey = g => (9 - g.stars) * 1e12 + g.time * 1e4 + g.undos * 100 + g.errors;
-const puzzleFor = k => genPuzzle(hash(k ? `${today}#${k}` : today));
-let daily = store.get("kalku:day:" + today) || { game: 0, idx: 0, stars: [null, null, null], elapsed: 0, hints: [0, 0, 0], redos: 0, rewarded: false, undos: 0, errors: 0 };
-daily.game = daily.game || 0; daily.undos = daily.undos || 0; daily.errors = daily.errors || 0; daily.hints = daily.hints || [0,0,0]; daily.elapsed = daily.elapsed || 0; daily.redos = daily.redos || 0;
-let puzzle = puzzleFor(daily.game);
-const saveMeta = () => store.set("kalku:daymeta:" + today, dayMeta);
-const dayTotal = () => dayMeta.stars.reduce((a, b) => a + b, 0) + (dailyDone() && !dayMeta.stars.includes(daily.game) && daily.rewarded ? 0 : 0);
-const waitLeft = () => Math.max(0, dayMeta.lastFinish + DAILY_COOLDOWN - Date.now());
-const canStartNext = () => dailyDone() && dayMeta.done < DAILY_GAMES;
-const fmtWait = ms => { const s = Math.ceil(ms / 1000); return `${Math.floor(s/3600)}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`; };
-function startNextGame(){
-  const k = dayMeta.done; daily = { game: k, idx: 0, stars: [null, null, null], elapsed: 0, hints: [0, 0, 0], redos: 0, rewarded: false, undos: 0, errors: 0 }; puzzle = puzzleFor(k); store.set("kalku:day:" + today, daily);
-  if (screen !== "game"){ mode = "daily"; go("game"); } dailyStart(); Bip.line("hello", "happy", 3000);
-}
-async function askNextGame(){
-  if (!canStartNext()) return;
-  const left = waitLeft();
-  if (left <= 0){ startNextGame(); return; }
-  const ok = await sheet(tpl(T.wait.title, { t: fmtWait(left) }), T.wait.text, T.wait.skip, T.wait.later);
-  if (!ok) return;
-  if (wallet.gems < SKIP_GEMS){ toast(T.wait.noGems); Snd.bad(); return; }
-  wallet.gems -= SKIP_GEMS; saveWallet(); Snd.buy(); startNextGame();
-}
+const series = seriesForDay(today); series.forEach(p => rememberSig(p.sig));
+const newDaily = () => ({ day: today, idx: 0, stars: Array(SERIES_LEN).fill(null), hints: Array(SERIES_LEN).fill(0), elapsed: 0, redos: 0, undos: 0, errors: 0, moves: 0, successes: 0, rewarded: false, resumed: false, startedAt: 0, finishedAt: 0 });
+let daily = store.get("kalku:day:" + today); if (!daily || daily.day !== today || !Array.isArray(daily.stars) || daily.stars.length !== SERIES_LEN) daily = newDaily();
+if (daily.idx > 0 && daily.idx < SERIES_LEN) daily.resumed = true;
+const saveDaily = () => store.set("kalku:day:" + today, daily);
+let hist = store.get("kalku:hist") || [];
+function histPut(e){ const i = hist.findIndex(h => h.day === e.day && h.mode === e.mode); if (i >= 0){ if (e.mode === "blitz" && cmpRank(hist[i], e) <= 0){ hist[i].runs = (hist[i].runs || 1) + 1; store.set("kalku:hist", hist); return hist[i]; } e.runs = (hist[i].runs || 1) + (e.mode === "blitz" ? 1 : 0); hist[i] = e; } else hist.push(e); hist.sort((a, b) => a.day < b.day ? 1 : -1); if (hist.length > 400) hist = hist.slice(0, 400); store.set("kalku:hist", hist); return e; }
+function cmpRank(a, b){ return (b.successes - a.successes) || (a.errors - b.errors) || (a.moves - b.moves) || ((b.completed ? 1 : 0) - (a.completed ? 1 : 0)) || (a.time - b.time); }
+function nextIn(){ const n = Date.now(); const d = new Date(n); const mid = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1); const s = Math.max(0, Math.floor((mid - n) / 1000)); return `${pad(Math.floor(s/3600))}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`; }
+const fmtClock = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return `${pad(Math.floor(s / 60))}:${pad(s % 60)}`; };
 let startTs = null, locking = false, stuckTimer;
-const blitz = { running: false, level: 1, score: 0, time: BLITZ_START, combo: 0, timer: null, last: 0, secondUsed: false, result: null, paused: false, warned: false };
+const blitz = { running: false, startAt: 0, endAt: 0, level: 1, score: 0, combo: 0, successes: 0, errors: 0, moves: 0, undos: 0, lastSuccessMs: 0, timer: null, paused: false, result: null, x2: false, shield: false, warned: false, day: today };
 let B = { nums: [], target: 0, tiles: [], history: [], selA: null, selOp: null, hit: false, busy: false, popIdx: null, earned: null, roll: false, tokenHint: false, undos: 0, invalids: 0, asked: false, started: 0, merges: 0, fresh: false };
-const dailyDone = () => daily.idx >= 3;
+const dailyDone = () => daily.idx >= SERIES_LEN;
 const boardActive = () => screen === "game" && (mode === "daily" ? !dailyDone() : blitz.running);
 const best = () => { let b = null; B.tiles.forEach(t => { if (!t.alive) return; const d = Math.abs(t.v - B.target); if (b === null || d < b.d) b = {v: t.v, d}; }); return b || {v: 0, d: Infinity}; };
 const starsFor = d => d === 0 ? 3 : d <= 5 ? 2 : d <= 15 ? 1 : 0;
@@ -1475,11 +1643,14 @@ function armStuck(){ clearTimeout(stuckTimer); stuckTimer = setTimeout(() => { i
 function proposeHint(cat){ B.asked = true; Bip.ask((T.bip2[cat] || [T.askHint])[0], T.yes, T.no, () => hint()); }
 function isPrime(n){ if (n < 2) return false; for (let i = 2; i * i <= n; i++) if (n % i === 0) return false; return true; }
 function commentTarget(){
-  if (mode !== "daily" || Math.random() < .4) return; const t = B.target;
+  if (mode !== "daily") return;
+  wallet.taught = wallet.taught || {}; if (!wallet.taught.daily){ wallet.taught.daily = true; saveWallet(); if (!Bip.seq && !firstVisit) setTimeout(() => Director.say("daily_start_first", "happy", {}, 0, true), 900); return; }
+  if (Math.random() < .5){ setTimeout(() => Director.say("daily_start", "think", { i: daily.idx + 1 }, 20000, true), 900); return; }
+  const t = B.target;
   setTimeout(() => { if (Bip.seq || B.hit || screen !== "game") return; if (t % 100 === 0) Bip.line2("targetRound", "think", 3400); else if (t % 25 === 0 && B.nums.some(v => v >= 25)) Bip.line2("targetMult25", "think", 3400); else if (isPrime(t)) Bip.line2("targetPrime", "wow", 4200); }, 1400);
 }
 function reactMerge(r){
-  B.merges++; armStuck(); const d = Math.abs(r - B.target), alive = B.tiles.filter(t => t.alive).length; if (Bip.seq) return;
+  B.merges++; B.lastMove = Date.now(); armStuck(); if (mode === "daily"){ daily.moves++; saveDaily(); } else { blitz.moves++; blitzSave(); } const d = Math.abs(r - B.target), alive = B.tiles.filter(t => t.alive).length; if (Bip.seq) return;
   if (d > 0 && d <= 3 && Math.random() < .8) Bip.line2("nearMiss", "wow", 2600);
   else if (r > B.target * 3 && Math.random() < .6) Bip.line2("overshoot", "think", 2600);
   else if (alive === 2 && best().d > 15) Bip.line2("twoTilesFar", "sad", 3000);
@@ -1494,15 +1665,13 @@ function tickerTo(el, target){
 function starRow(){
   const el = $("path"); el.innerHTML = ""; if (mode !== "daily"){ el.hidden = true; return; } el.hidden = false;
   daily.stars.forEach((s, j) => {
-    const n = document.createElement("div"); n.className = "node " + (s !== null ? "done" : j === daily.idx ? "cur" : "todo") + (j === B.earned ? " earn" : "");
-    const b = document.createElement("b"); b.textContent = j + 1; const ns = document.createElement("span"); ns.className = "ns";
-    if (s !== null) for (let k = 0; k < 3; k++){ const sp = document.createElement("span"); sp.className = k < s ? "on" : "off"; sp.textContent = k < s ? "★" : "☆"; ns.appendChild(sp); }
-    n.append(b, ns); el.appendChild(n);
+    const n = document.createElement("div"); n.className = "node ten " + (s !== null ? "done s" + s : j === daily.idx ? "cur" : "todo") + (j === B.earned ? " earn" : "");
+    const b = document.createElement("b"); b.textContent = s === 3 ? "★" : s !== null ? (s > 0 ? s : "·") : (j + 1); n.appendChild(b); el.appendChild(n);
   });
   B.earned = null;
 }
 function renderBoard(){
-  $("tlabel").textContent = mode === "daily" ? `${T.target} ${daily.idx+1}/3${daily.game ? "  ·  " + tpl(T.wait.bonusTag, { k: daily.game + 1 }) : ""}`.replace("  ·  ", "   ") : (isBoss(blitz.level) ? `${T.boss}  ${T.level} ${blitz.level}` : `${T.level} ${blitz.level}`);
+  $("tlabel").textContent = mode === "daily" ? `${T.ser.game} ${daily.idx + 1}/${SERIES_LEN}${daily.idx === SERIES_LEN - 1 ? "  " + T.boss : ""}` : (isBoss(blitz.level) ? `${T.boss}  ${T.target} ${blitz.level}` : `${T.target} ${blitz.level}`);
   const tn = $("tnum"); if (B.roll) tickerTo(tn, B.target); else tn.textContent = B.target; tn.className = "tnum" + (B.hit ? " hit" : "") + (B.roll ? " roll" : ""); B.roll = false;
   starRow();
   const tl = $("tiles"); tl.innerHTML = "";
@@ -1534,18 +1703,20 @@ function renderBag(){
   if (wallet.items.hint) add(`💡 ${T.bag.useHint}`, wallet.items.hint, () => hint(true), active);
   if (wallet.items.loupe) add(`🔍 ${T.bag.loupe}`, wallet.items.loupe, loupe, active);
   if (wallet.items.eraser) add(`🧽 ${T.bag.eraser}`, wallet.items.eraser, useEraser, active);
-  if (mode === "blitz" && wallet.items.hourglass) add(`⌛ ${T.bag.hourglass}`, wallet.items.hourglass, hourglass, blitz.running);
+  if (mode === "blitz" && wallet.items.hourglass) add(`⏭ ${T.bag.hourglass}`, wallet.items.hourglass, hourglass, blitz.running && !B.hit);
+  if (mode === "blitz" && wallet.items.second) add(`🛡 ${T.bag.second}`, wallet.items.second, comboShield, blitz.running && !blitz.shield);
   if (mode === "blitz" && wallet.items.x2) add(`✖️ ${T.items.x2[0]}`, wallet.items.x2, null, false);
   if (wallet.items.shield) add(`🛡`, wallet.items.shield, null, false);
 }
 function loupe(){
   if (!boardActive() || B.busy || B.hit || locking || wallet.items.loupe < 1) return;
   const path = solve(B.tiles.filter(t => t.alive).map(t => t.v), B.target); if (!path){ Bip.say(T.hintNo, "sad", 4200); Snd.bad(); return; }
-  wallet.items.loupe--; saveWallet(); if (mode === "daily"){ daily.hints[daily.idx]++; store.set("kalku:day:" + today, daily); }
+  wallet.items.loupe--; saveWallet(); if (mode === "daily"){ daily.hints[daily.idx]++; saveDaily(); }
   const s = path[0]; const tilesEls = [...$("tiles").children]; const ia = B.tiles.findIndex(t => t.alive && t.v === s.a); const ib = B.tiles.findIndex((t, i) => t.alive && t.v === s.b && i !== ia);
   [ia, ib].forEach(i => { if (i >= 0) replay(tilesEls[i], "hint"); }); Bip.say(T.bag.loupeSay, "wow", 3200); Snd.hint(); renderBag();
 }
-function hourglass(){ if (!blitz.running || wallet.items.hourglass < 1) return; wallet.items.hourglass--; saveWallet(); blitz.time = Math.min(BLITZ_CAP, blitz.time + 10); renderHud(); banner("+10 s"); Snd.buy(); renderBag(); }
+function hourglass(){ if (!blitz.running || B.busy || B.hit || locking || wallet.items.hourglass < 1) return; wallet.items.hourglass--; saveWallet(); Snd.buy(); banner(T.bz.skip); blitz.level++; blitzSave(); blitzNext(); }
+function comboShield(){ if (!blitz.running || blitz.shield || wallet.items.second < 1) return; wallet.items.second--; blitz.shield = true; saveWallet(); Snd.buy(); toast(T.bz.shieldOn); blitzSave(); renderBag(); }
 function flyStars(n, toEl){
   if (reduceMotion || !toEl || n <= 0) return;
   const from = centerOf($("tnum")), to = centerOf(toEl);
@@ -1555,7 +1726,7 @@ function flyStars(n, toEl){
     a.onfinish = () => st.remove();
   }
 }
-function renderMeta(){ if (mode === "daily"){ const el = startTs && !dailyDone() ? daily.elapsed + (Date.now() - startTs) : daily.elapsed; $("meta").textContent = `#${puzzleNo}${daily.game ? ` (${daily.game + 1}/5)` : ""}  ${fmtTime(el)}`; } else $("meta").textContent = T.blitz; }
+function renderMeta(){ if (mode === "daily"){ const el = startTs && !dailyDone() ? daily.elapsed + (Date.now() - startTs) : daily.elapsed; $("meta").textContent = `#${puzzleNo}   ${Math.min(daily.idx + 1, SERIES_LEN)}/${SERIES_LEN}   ${fmtTime(el)}`; } else $("meta").textContent = T.blitz; }
 function animateMerge(from, to, then){
   const els = $("tiles").children, a = els[from], b = els[to];
   if (reduceMotion || !a || !b){ then(); return; }
@@ -1570,14 +1741,14 @@ function animateMerge(from, to, then){
 // ===== Interactions =====
 function tapTile(i){
   if (B.busy || B.hit || locking || !B.tiles[i].alive || !boardActive()) return;
-  if (mode === "daily" && !startTs) startTs = Date.now();
+  if (mode === "daily" && !startTs){ startTs = Date.now(); if (!daily.startedAt){ daily.startedAt = Date.now(); saveDaily(); } }
   Snd.tap(); { const c = centerOf($("tiles").children[i]); spark(c.x, c.y, 8, HUES[mode === "daily" ? Math.min(daily.idx, 2) : (blitz.level - 1) % 3]); }
   if (B.selA === null){ B.selA = i; }
   else if (B.selA === i){ B.selA = null; B.selOp = null; }
   else if (B.selOp === null){ B.selA = i; }
   else {
     const r = apply(B.tiles[B.selA].v, B.selOp, B.tiles[i].v);
-    if (r === null){ B.selOp = null; renderBoard(); $("tiles").children[i].classList.add("shake"); Snd.bad(); buzz([40,30,40]); B.invalids++; wallet.c.errors++; if (mode === "daily"){ daily.errors++; store.set("kalku:day:" + today, daily); } else blitz.errors = (blitz.errors || 0) + 1; saveWallet(); if (B.invalids % 3 === 0) Bip.line2("invalidStreak", "sad", 3600); else Bip.line("invalid", "sad", 2600); return; }
+    if (r === null){ B.selOp = null; renderBoard(); $("tiles").children[i].classList.add("shake"); Snd.bad(); buzz([40,30,40]); B.invalids++; wallet.c.errors++; if (mode === "daily"){ daily.errors++; saveDaily(); } else { blitz.errors++; blitzSave(); } saveWallet(); if (B.invalids % 3 === 0) Bip.line2("invalidStreak", "sad", 3600); else Bip.line("invalid", "sad", 2600); return; }
     const from = B.selA; B.busy = true;
     animateMerge(from, i, () => {
       B.history.push(B.tiles.map(t => ({...t})));
@@ -1592,10 +1763,10 @@ function tapTile(i){
 }
 function tapOp(k){ if (B.busy || B.hit || locking || !boardActive()) return; if (B.selA === null){ Bip.say(T.pick, "think", 2200); return; } B.selOp = B.selOp === k ? null : k; Snd.tap(); const el = [...$("ops").children].find(o => o.dataset.k === k); if (el){ const c = centerOf(el); spark(c.x, c.y, 6, 45); } renderBoard(); }
 function onHit(){
-  B.hit = true; renderBoard(); flash(); Snd.exact(); buzz([30,40,30,40,60]); replay(Bip.el, "dance");
+  B.hit = true; if (mode === "daily"){ daily.moves++; saveDaily(); } else { blitz.moves++; } renderBoard(); flash(); Snd.exact(); buzz([30,40,30,40,60]); replay(Bip.el, "dance");
   const c = centerOf($("tnum")); burst(c.x, c.y, 70, HUES[mode === "daily" ? daily.idx : 3]);
   wallet.c.exacts++; const fast = Date.now() - B.started < 15000; if (fast) wallet.c.fast++; if (mode === "blitz" && isBoss(blitz.level)) wallet.c.bossKills++; saveWallet();
-  if (mode === "daily"){ confettiRain(40); daily.xpBonus = (daily.xpBonus || 0) + XP_EXACT + (Date.now() - B.started < 30000 ? XP_SPEED : 0); store.set("kalku:day:" + today, daily); }
+  if (mode === "daily"){ confettiRain(40); daily.xpBonus = (daily.xpBonus || 0) + XP_EXACT + (Date.now() - B.started < 30000 ? XP_SPEED : 0); saveDaily(); }
   if (mode === "daily" && fast) Bip.line2("fast", "laugh", 3000); else Bip.line("hit", "laugh", 3000);
   setTimeout(() => lockIn(0), mode === "daily" ? 1100 : 700);
 }
@@ -1611,13 +1782,13 @@ async function spendUndo(){
 $("undo").addEventListener("click", async () => {
   if (B.busy || locking || !B.history.length) return;
   if (!(await spendUndo())) { renderBoard(); return; }
-  B.tiles = B.history.pop(); B.selA = null; B.selOp = null; B.undos++; wallet.c.undos++; if (mode === "daily"){ daily.undos++; store.set("kalku:day:" + today, daily); } else blitz.undos = (blitz.undos || 0) + 1; saveWallet(); renderBoard(); Snd.tap();
+  B.tiles = B.history.pop(); B.selA = null; B.selOp = null; B.undos++; wallet.c.undos++; if (mode === "daily"){ daily.undos++; saveDaily(); } else { blitz.undos++; blitzSave(); } saveWallet(); renderBoard(); Snd.tap();
   if (B.undos >= 3 && !B.asked && mode === "daily") proposeHint("undoMany"); else if (Math.random() < .5) Bip.line("undo", "think", 2200);
 });
 $("reset").addEventListener("click", async () => {
   if (B.busy || locking || !B.history.length) return;
   if (!(await spendUndo())) { renderBoard(); return; }
-  const t = B.target, tk = B.tokenHint, left = B.undoLeft; setBoard(B.nums, t); B.roll = false; B.fresh = false; B.tokenHint = tk; B.undoLeft = left; B.undos++; wallet.c.undos++; if (mode === "daily"){ daily.undos++; store.set("kalku:day:" + today, daily); } else blitz.undos = (blitz.undos || 0) + 1; saveWallet(); renderBoard(); Snd.tap();
+  const t = B.target, tk = B.tokenHint, left = B.undoLeft; setBoard(B.nums, t); B.roll = false; B.fresh = false; B.tokenHint = tk; B.undoLeft = left; B.undos++; wallet.c.undos++; if (mode === "daily"){ daily.undos++; saveDaily(); } else { blitz.undos++; blitzSave(); } saveWallet(); renderBoard(); Snd.tap();
 });
 function useEraser(){ if (wallet.items.eraser < 1 || !boardActive()) return; wallet.items.eraser--; B.undoLeft += ERASER_UNDOS; saveWallet(); Snd.buy(); toast(`↶ +${ERASER_UNDOS}`); renderBoard(); }
 $("lock").addEventListener("click", () => { if (!B.busy && !B.hit && !locking && boardActive()) lockIn(); });
@@ -1632,171 +1803,161 @@ async function hint(force){
   if (!path){ Bip.say(T.hintNo, "sad", 4200); Snd.bad(); return; }
   const s = path[0]; const sym = OPS.find(o => o.k === s.op).s;
   if (useToken){ wallet.items.hint--; saveWallet(); B.tokenHint = true; }
-  if (mode === "daily"){ daily.hints[daily.idx]++; if (!useToken) daily.capped = true; store.set("kalku:day:" + today, daily); }
-  else if (!useToken){ blitz.time = Math.max(1, blitz.time - HINT_COST); renderHud(); }
+  if (mode === "daily"){ daily.hints[daily.idx]++; if (!useToken) daily.capped = true; saveDaily(); }
+  else if (!useToken){ blitz.endAt -= HINT_COST * 1000; blitzSave(); renderHud(); }
   Bip.say(`${rand(T.bip.hintIntro)} ${T.hintTry} ${s.a} ${sym} ${s.b}`, "wow", 5000, useToken ? T.hintToken : (mode === "daily" ? T.hintCap : T.hintCost)); Snd.hint();
   const tilesEls = [...$("tiles").children]; const ia = B.tiles.findIndex(t => t.alive && t.v === s.a); const ib = B.tiles.findIndex((t, i) => t.alive && t.v === s.b && i !== ia);
   [ia, ib].forEach(i => { if (i >= 0) replay(tilesEls[i], "hint"); });
   const opEl = [...$("ops").children].find(el => el.dataset.k === s.op); if (opEl){ replay(opEl, "hint"); setTimeout(() => opEl.classList.remove("hint"), 3000); }
 }
 
-// ===== Mode du jour =====
+// ===== Mode du jour : série de 10 parties =====
 function showOnly(id){ ["board","dailyResult","blitzIntro","blitzResult"].forEach(x => { const el = $(x); if (x === "board") el.style.display = x === id ? "contents" : "none"; else el.hidden = x !== id; }); if (id !== "board"){ $("hud").hidden = true; $("bar").hidden = true; } }
 function dailyStart(){
-  setHue(HUES[Math.min(daily.idx, 3)]);
+  setHue(HUES[Math.min(Math.floor(daily.idx / 4), 2)]);
   if (dailyDone()){ dailyFinish(false); return; }
-  showOnly("board"); setBoard(puzzle.nums, puzzle.targets[daily.idx]); renderBoard(); renderMeta(); applyMusic(); commentTarget();
+  showOnly("board"); const p = series[daily.idx]; setBoard(p.nums, p.target); renderBoard(); renderMeta(); applyMusic(); commentTarget();
+  if (daily.resumed && daily.idx > 0) setTimeout(() => toast(`${T.ser.resumed}  ${daily.idx}/${SERIES_LEN}`), 600);
 }
 async function dailyLock(d){
   locking = true;
   if (d > 0 && wallet.items.redo > 0){
     const redo = await sheet(`${T.redoTitle} ${d}`, T.redoText, `${T.redoOk} (♻ ${wallet.items.redo})`, T.redoNo);
-    if (redo){ wallet.items.redo--; saveWallet(); daily.redos++; store.set("kalku:day:" + today, daily); const t = B.target; setBoard(puzzle.nums, t); B.roll = false; renderBoard(); Snd.buy(); locking = false; return; }
+    if (redo){ wallet.items.redo--; saveWallet(); daily.redos++; saveDaily(); const p = series[daily.idx]; setBoard(p.nums, p.target); B.roll = false; renderBoard(); Snd.buy(); locking = false; return; }
   }
   const freeCap = daily.capped ? 2 : 3; daily.capped = false;
-  daily.stars[daily.idx] = Math.min(starsFor(d), freeCap); B.earned = daily.idx;
+  daily.stars[daily.idx] = Math.min(starsFor(d), freeCap); if (d === 0) daily.successes++; B.earned = daily.idx;
   if (startTs){ daily.elapsed += Date.now() - startTs; startTs = null; }
-  flyStars(daily.stars[daily.idx], $("path").children[daily.idx]);
+  flyStars(Math.min(1, daily.stars[daily.idx]), $("path").children[daily.idx]);
   if (d > 0){ Bip.line(d <= 5 ? "close" : "far", d <= 5 ? "happy" : "sad", 3200); if (d <= 15) Snd.hint(); else { Snd.bad(); replay(Bip.el, "droop"); } }
-  daily.idx++; store.set("kalku:day:" + today, daily);
+  daily.idx++; saveDaily(); Cloud.pushSeries("daily", dailyEntry(false), true);
   if (dailyDone()){ locking = false; setTimeout(() => dailyFinish(true), 700); return; }
-  const nextT = puzzle.targets[daily.idx];
-  await wipe(`${T.target} ${daily.idx + 1}/3`, nextT, 1300, () => { setHue(HUES[daily.idx]); setBoard(puzzle.nums, nextT); renderBoard(); Bip.lookAt($("tnum")); });
+  const p = series[daily.idx];
+  await wipe(`${T.ser.game} ${daily.idx + 1}/${SERIES_LEN}`, p.target, 1300, () => { setHue(HUES[Math.min(Math.floor(daily.idx / 4), 2)]); setBoard(p.nums, p.target); renderBoard(); Bip.lookAt($("tnum")); });
   startTs = Date.now(); renderMeta(); locking = false; commentTarget();
-  if (Math.random() < .35) setTimeout(() => { if (!Bip.seq && boardActive()) Bip.joke(); }, 2600);
+  if (Math.random() < .3) setTimeout(() => { if (!Bip.seq && boardActive()) Bip.joke(); }, 2600);
 }
+const dailyEntry = completed => ({ day: today, mode: "daily", successes: daily.successes, errors: daily.errors, moves: daily.moves, time: daily.elapsed, completed, resumed: daily.resumed, name: wallet.name || "" });
 function dailyFinish(fresh){
   setHue(HUES[3]); if (screen !== "game") return;
-  const total = daily.stars.reduce((a, s) => a + (s || 0), 0);
+  const total = daily.stars.reduce((a, s) => a + (s || 0), 0), perfect = daily.successes === SERIES_LEN;
   let st = store.get("kalku:stats") || { last: null, streak: 0, played: 0, bestTime: null };
   if (st.last !== today){
     let cont = st.last === yesterday;
     if (!cont && st.last && st.streak > 0 && wallet.items.shield > 0){ wallet.items.shield--; saveWallet(); cont = true; setTimeout(() => toast(T.bag.shieldUsed), 1200); }
-    st.streak = cont ? st.streak + 1 : 1; st.played += 1; st.last = today; if (total === 9 && (!st.bestTime || daily.elapsed < st.bestTime)) st.bestTime = daily.elapsed; store.set("kalku:stats", st); }
+    st.streak = cont ? st.streak + 1 : 1; st.played += 1; st.last = today; if (perfect && (!st.bestTime || daily.elapsed < st.bestTime)) st.bestTime = daily.elapsed; store.set("kalku:stats", st); }
   let rw = daily.reward;
   if (!daily.rewarded){
-    rw = { stars: total * COIN_PER_STAR, perfect: total === 9 ? COIN_PERFECT : 0, streak: Math.min(COIN_STREAK_CAP, 5 * st.streak), tix: total === 9 ? 1 : 0 };
+    rw = { stars: total * COIN_PER_STAR, perfect: perfect ? COIN_PERFECT * 3 : 0, streak: Math.min(COIN_STREAK_CAP, 5 * st.streak), tix: daily.successes >= 8 ? 1 : 0 };
     rw.total = rw.stars + rw.perfect + rw.streak;
-    const mult = Math.min(2, 1 + .1 * (st.streak - 1)); rw.xp = Math.round((total * XP_PER_STAR + (total === 9 ? XP_PERFECT : 0) + XP_STREAK + (daily.xpBonus || 0)) * mult); rw.mult = mult;
-    if (daily.game > 0){ rw.stars = Math.round(rw.stars * BONUS_RATE); rw.perfect = Math.round(rw.perfect * BONUS_RATE); rw.streak = 0; rw.total = rw.stars + rw.perfect; rw.xp = Math.round(rw.xp * BONUS_RATE); rw.tix = 0; rw.bonus = true; }
-    dayMeta.done = Math.max(dayMeta.done, daily.game + 1); dayMeta.lastFinish = Date.now(); dayMeta.stars[daily.game] = total; saveMeta();
-    daily.reward = rw; daily.rewarded = true; store.set("kalku:day:" + today, daily);
-    wallet.coins += rw.total; wallet.c.coinsEarned += rw.total; wallet.c.dailies++; wallet.c.streakBest = Math.max(wallet.c.streakBest, st.streak);
-    if (total === 9){ wallet.c.perfects++; wallet.tickets += rw.tix; if (!daily.hints.some(h => h) && !daily.redos) wallet.c.cleanPerfects++; if (!daily.hints.some(h => h) && !daily.redos && !daily.undos && !daily.errors) wallet.c.surgeon++; }
+    const mult = Math.min(2, 1 + .1 * (st.streak - 1)); rw.xp = Math.round((total * XP_PER_STAR + (perfect ? XP_PERFECT * 2 : 0) + XP_STREAK + (daily.xpBonus || 0)) * mult); rw.mult = mult;
+    daily.reward = rw; daily.rewarded = true; daily.finishedAt = Date.now(); saveDaily();
+    wallet.coins += rw.total; wallet.c.coinsEarned += rw.total; wallet.c.dailies++; wallet.c.streakBest = Math.max(wallet.c.streakBest, st.streak); wallet.tickets += rw.tix;
+    if (perfect){ wallet.c.perfects++; if (!daily.hints.some(h => h) && !daily.redos) wallet.c.cleanPerfects++; if (!daily.hints.some(h => h) && !daily.redos && !daily.undos && !daily.errors) wallet.c.surgeon++; }
     if (!daily.undos) wallet.c.noUndo++;
-    dayMeta.games[daily.game] = { game: daily.game, stars: total, time: daily.elapsed, undos: daily.undos, errors: daily.errors }; saveMeta();
-    saveWallet(); if (fresh) setTimeout(() => addXp(rw.xp), 2400); else addXp(rw.xp); setTimeout(checkAch, fresh ? 4500 : 300);
-    Cloud.pushDaily(); Cloud.save(true);
+    saveWallet(); histPut(dailyEntry(true)); Cloud.pushSeries("daily", dailyEntry(true)); Cloud.save(true);
+    if (fresh) setTimeout(() => addXp(rw.xp), 2400); else addXp(rw.xp); setTimeout(checkAch, fresh ? 4500 : 300);
   }
   showOnly("dailyResult"); if (fresh) $("dailyResult").dataset.anim = "1"; else delete $("dailyResult").dataset.anim;
-  $("rtitle").textContent = T.done; $("rtotal").textContent = total;
-  const rs = $("rstars"); rs.innerHTML = ""; let k0 = 0;
-  daily.stars.forEach((s, j) => { for (let k = 0; k < 3; k++){ const sp = document.createElement("span"); sp.className = k < s ? "on" : "off"; sp.textContent = k < s ? "★" : "☆"; if (k < s) sp.style.animationDelay = (.35 + k0++ * .09) + "s"; rs.appendChild(sp); } if (j < 2) rs.appendChild(document.createTextNode("  ")); });
+  $("rtitle").textContent = T.ser.done; $("rtotal").textContent = daily.successes; $("rtotal").nextElementSibling.textContent = "/" + SERIES_LEN;
+  const rs = $("rstars"); rs.innerHTML = ""; daily.stars.forEach((s, j) => { const sp = document.createElement("span"); sp.className = s === 3 ? "on" : "off"; sp.textContent = s === 3 ? "★" : s > 0 ? "☆" : "·"; sp.style.animationDelay = (.3 + j * .06) + "s"; rs.appendChild(sp); });
   $("rtime").textContent = fmtTime(daily.elapsed); $("rtimel").textContent = T.time;
-  $("streak").textContent = `↶ ${daily.undos}`; $("streakl").textContent = T.und.undos;
-  $("played").textContent = `✗ ${daily.errors}`; $("playedl").textContent = T.und.errors;
+  $("streak").textContent = `✗ ${daily.errors}`; $("streakl").textContent = T.und.errors;
+  $("played").textContent = `↔ ${daily.moves}`; $("playedl").textContent = T.ser.moves;
   const box = $("rewardBox"); box.innerHTML = "";
   const row = (l, v, color) => { const r = document.createElement("div"); const a = document.createElement("span"); a.textContent = l; const b = document.createElement("b"); b.textContent = v; if (color) b.style.color = color; r.append(a, b); return r; };
   if (rw){ if (rw.stars) box.appendChild(row(T.rwStars, `+${rw.stars} ◎`)); if (rw.perfect) box.appendChild(row(T.rwPerfect, `+${rw.perfect} ◎`)); if (rw.streak) box.appendChild(row(T.rwStreak, `+${rw.streak} ◎`));
     const t = row(T.rwTotal, `+${rw.total} ◎`); t.className = "tot"; box.appendChild(t); if (rw.xp) box.appendChild(row(T.rwXp + (rw.mult > 1 ? `  ×${rw.mult.toFixed(1)}` : ""), `+${rw.xp} ${T.xp}`, "var(--accent)")); if (rw.tix) box.appendChild(row(T.ru.title, `+${rw.tix} 🎟`, "var(--ticket)")); }
-  const games = dayMeta.games.filter(Boolean); const rk = $("rankBox"); rk.innerHTML = "";
-  if (games.length > 1){ const h = document.createElement("div"); h.className = "tot"; h.style.borderTop = "0"; h.style.marginTop = "0"; h.style.paddingTop = "0"; h.innerHTML = "<span></span><b></b>"; h.firstChild.textContent = T.und.rankTitle; h.lastChild.textContent = ""; rk.appendChild(h);
-    games.slice().sort((a, b) => rankKey(a) - rankKey(b)).forEach((g, i) => { const r = document.createElement("div"); const a = document.createElement("span"); a.textContent = `${i + 1}.  ${T.und.game} ${g.game + 1}${g.game === daily.game ? " ◂" : ""}`; const b = document.createElement("b"); b.style.color = "var(--ink)"; b.textContent = `${g.stars}/9  ${fmtTime(g.time)}  ↶${g.undos} ✗${g.errors}`; r.append(a, b); rk.appendChild(r); });
-    const n = document.createElement("div"); n.style.cssText = "color:var(--soft);font-size:.8rem;font-weight:500;padding-top:.3rem"; n.textContent = T.und.rankRule; rk.appendChild(n); rk.hidden = false; } else rk.hidden = true;
-  $("share").textContent = T.share; $("goBlitz").textContent = canStartNext() ? tpl(T.wait.nextBtn, { k: dayMeta.done + 1 }) : T.playBlitz; $("nextl").textContent = T.next;
+  const rk = $("rankBox"); rk.innerHTML = ""; rk.hidden = false;
+  [[T.ser.successes, `${daily.successes}/${SERIES_LEN}`], [T.time, fmtTime(daily.elapsed)], [T.und.errors, daily.errors], [T.ser.moves, daily.moves], [T.und.undos, daily.undos]].forEach(([l, v]) => { const r = row(l, v); r.lastChild.style.color = "var(--ink)"; rk.appendChild(r); });
+  if (daily.resumed){ const r = row(T.ser.resumed, "✓"); r.lastChild.style.color = "var(--soft)"; rk.appendChild(r); }
+  $("share").textContent = T.share; $("goBlitz").textContent = T.ser.rank; $("nextl").textContent = T.ser.next;
   if (fresh){ Snd.level(); setTimeout(() => { const c = centerOf($("rtotal")); burst(c.x, c.y, 130, HUES[3]); }, 250);
-    if (total === 9){ Bip.line2("perfect", "laugh", 3800); confettiRain(160); } else if (daily.stars.includes(0)) Bip.line2("zero", "sad", 3600);
+    if (perfect){ Bip.line2("perfect", "laugh", 3800); confettiRain(160); } else if (daily.successes <= 3) Bip.line2("zero", "sad", 3600);
     if (rw) setTimeout(() => { floatAt($("gCoins"), `+${rw.total} ◎`); replay($("gCoins"), "bump"); Snd.coin(); Bip.line("coins", "laugh", 4200); }, 1600);
-    if ([3,7,14,30,100].includes(st.streak)) setTimeout(() => Bip.line2("milestone", "laugh", 5000, { n: st.streak }), 6200); }
+    if ([3,7,14,30,100].includes(st.streak)) setTimeout(() => Bip.line2("milestone", "laugh", 5000, { n: st.streak }), 6200);
+    setTimeout(() => { if (screen !== "game") return; daily.successes >= 7 ? Director.say("daily_result_good", "happy", {}, 0, true) : Director.say("daily_result_bad", "think", {}, 0, true); }, 9000); }
   renderMeta(); tick(); if (!dailyFinish.timer) dailyFinish.timer = setInterval(tick, 1000);
 }
 function dailyShare(){
-  const total = daily.stars.reduce((a, s) => a + (s || 0), 0);
-  const row = daily.stars.map(s => "⭐".repeat(s) + "☆".repeat(3 - s)).join(" ");
-  const hints = daily.hints.reduce((a, b) => a + b, 0);
-  const marks = (hints ? `  💡${hints}` : "") + (daily.redos ? `  ♻${daily.redos}` : "") + `  ↶${daily.undos} ✗${daily.errors}`;
-  return `Kalku #${puzzleNo}${daily.game ? ` (${daily.game + 1}/5)` : ""}  ${total}/9  ⏱ ${fmtTime(daily.elapsed)}  ${T.lvl} ${wallet.level}\n${row}${marks}\n${SHARE_URL || location.origin + location.pathname}`;
+  const row = daily.stars.map(s => s === 3 ? "⭐" : s > 0 ? "☆" : "▫").join("");
+  const hints = daily.hints.reduce((a, b) => a + b, 0); const marks = (hints ? `  💡${hints}` : "") + (daily.redos ? `  ♻${daily.redos}` : "");
+  return `Kalku #${puzzleNo}  ${daily.successes}/${SERIES_LEN}  ⏱ ${fmtTime(daily.elapsed)}  ✗${daily.errors}  ↔${daily.moves}  ${T.lvl} ${wallet.level}\n${row}${marks}\n${SHARE_URL || location.origin + location.pathname}`;
 }
-function nextIn(){ const n = new Date(); const mid = new Date(n.getFullYear(), n.getMonth(), n.getDate()+1); const s = Math.max(0, Math.floor((mid - n)/1000)); return `${pad(Math.floor(s/3600))}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`; }
 function dailySub(){
-  const total = daily.stars.reduce((a, s) => a + (s || 0), 0);
-  if (!dailyDone()) return daily.idx > 0 ? tpl(T.home.dailyGo, { i: daily.idx + 1 }) : (daily.game ? tpl(T.wait.bonusTag, { k: daily.game + 1 }) : tpl(T.home.dailyNew, { n: puzzleNo }));
-  if (dayMeta.done >= DAILY_GAMES) return tpl(T.home.dailyAll, { s: dayMeta.stars.reduce((a, b) => a + b, 0), t: nextIn() });
-  const left = waitLeft(); return left > 0 ? tpl(T.home.dailyWait, { k: dayMeta.done + 1, t: fmtWait(left) }) : tpl(T.home.dailyNext, { k: dayMeta.done + 1, s: total });
+  if (dailyDone()) return tpl(T.home.dailyDone, { s: daily.successes, t: nextIn() });
+  return daily.idx > 0 ? tpl(T.home.dailyGo, { i: daily.idx + 1 }) : tpl(T.home.dailyNew, { n: puzzleNo });
 }
-function tick(){
-  if (canStartNext()){ const left = waitLeft(); $("nextl").textContent = left > 0 ? tpl(T.wait.title, { t: "" }).replace(/\s+$/, "") : ""; $("countdown").textContent = left > 0 ? fmtWait(left) : tpl(T.wait.nextBtn, { k: dayMeta.done + 1 }); $("goBlitz").textContent = tpl(T.wait.nextBtn, { k: dayMeta.done + 1 }); }
-  else { $("nextl").textContent = T.next; $("countdown").textContent = nextIn(); }
-  if (screen === "home") $("hDailySub").textContent = dailySub();
-}
+function tick(){ $("countdown").textContent = nextIn(); if (screen === "home") $("hDailySub").textContent = dailySub(); }
 setInterval(() => { if (mode === "daily" && startTs && screen === "game") renderMeta(); }, 1000);
 
-// ===== Blitz =====
+// ===== Blitz : 5 minutes exactement, horloge murale, reprise fiable =====
 function blitzIntro(){
-  const bst = store.get("kalku:blitz") || { level: 0, score: 0 };
+  const bst = store.get("kalku:blitz") || { level: 0, score: 0, successes: 0 };
   showOnly("blitzIntro"); setHue(HUES[3]); renderMeta();
-  $("biTitle").textContent = T.biTitle; $("biText").textContent = T.biText;
-  $("bestLvl").textContent = bst.level; $("bestLvlL").textContent = T.level.toLowerCase() + " " + T.best;
+  $("biTitle").textContent = T.biTitle; $("biText").textContent = T.bz.rules;
+  $("bestLvl").textContent = bst.successes || 0; $("bestLvlL").textContent = T.ser.successes.toLowerCase() + " " + T.best;
   $("bestScore").textContent = nf(bst.score); $("bestScoreL").textContent = T.pts + " " + T.best;
   $("startBlitz").textContent = T.start;
+  setTimeout(() => Director.say("blitz_intro", "wow", {}, 90000, true), 700);
 }
 function blitzStart(){
-  Object.assign(blitz, { running: true, level: 1, score: 0, time: BLITZ_START, combo: 0, last: performance.now(), secondUsed: false, result: null, paused: false, warned: false, xpCombo: 0, x2: wallet.items.x2 > 0, undos: 0, errors: 0 });
+  const t0 = Date.now();
+  Object.assign(blitz, { running: true, startAt: t0, endAt: t0 + BLITZ_DURATION, level: 1, score: 0, combo: 0, successes: 0, errors: 0, moves: 0, undos: 0, lastSuccessMs: 0, paused: false, result: null, warned: false, shield: false, day: today, xpCombo: 0, x2: wallet.items.x2 > 0 });
   if (blitz.x2){ wallet.items.x2--; saveWallet(); setTimeout(() => toast(T.bag.x2Armed), 900); }
   showOnly("board"); $("hud").hidden = false; $("bar").hidden = false;
-  blitzLevel(); Bip.line("blitzStart", "wow", 2600); Snd.level(); Music.setPart("blitz");
-  clearInterval(blitz.timer); blitz.timer = setInterval(blitzTick, 100);
+  blitzLevel(); blitzSave(); Bip.line("blitzStart", "wow", 2600); Snd.level(); Music.setPart("blitz");
+  clearInterval(blitz.timer); blitz.timer = setInterval(blitzTick, 200);
 }
-function blitzLevel(){ setHue(isBoss(blitz.level) ? 300 : HUES[(blitz.level - 1) % 3]); const p = genBlitz(blitz.level); setBoard(p.nums, p.target); renderBoard(); renderHud(); blitz.warned = false; }
+function blitzSave(){ if (!blitz.running) return; store.set(RUN_KEY, { day: blitz.day, startAt: blitz.startAt, endAt: blitz.endAt, level: blitz.level, score: blitz.score, combo: blitz.combo, successes: blitz.successes, errors: blitz.errors, moves: blitz.moves, undos: blitz.undos, lastSuccessMs: blitz.lastSuccessMs, x2: blitz.x2, shield: blitz.shield, xpCombo: blitz.xpCombo || 0, nums: B.nums, target: B.target }); }
+function blitzLevel(){ setHue(isBoss(blitz.level) ? 300 : HUES[(blitz.level - 1) % 3]); const p = genBlitz(blitz.level); setBoard(p.nums, p.target); renderBoard(); renderHud(); blitz.warned = false; blitzSave(); }
 async function blitzNext(){
-  blitz.paused = true; const p = genBlitz(blitz.level); const boss = isBoss(blitz.level);
-  await wipe(boss ? `${T.boss}  ${T.level} ${blitz.level}` : `${T.level} ${blitz.level}`, p.target, boss ? 1100 : 850, () => { setHue(boss ? 300 : HUES[(blitz.level - 1) % 3]); setBoard(p.nums, p.target); renderBoard(); renderHud(); blitz.warned = false; }, true);
-  blitz.paused = false; blitz.last = performance.now();
-  if (boss){ banner(T.boss.toUpperCase(), true); Bip.line2("boss", "wow", 3400); }
+  const p = genBlitz(blitz.level); const boss = isBoss(blitz.level);
+  await wipe(boss ? `${T.boss}  ${T.target} ${blitz.level}` : `${T.target} ${blitz.level}`, p.target, boss ? 900 : 700, () => { setHue(boss ? 300 : HUES[(blitz.level - 1) % 3]); setBoard(p.nums, p.target); renderBoard(); renderHud(); blitz.warned = false; blitzSave(); }, true);
+  if (boss && blitz.running){ banner(T.boss.toUpperCase(), true); Bip.line2("boss", "wow", 3400); }
 }
 function renderHud(){
-  $("lvlL").textContent = T.level; $("lvl").textContent = blitz.level; $("scoreV").textContent = nf(blitz.score); $("scoreL").textContent = T.pts;
-  $("timeV").textContent = Math.ceil(blitz.time); $("barFill").style.width = (blitz.time / BLITZ_CAP * 100) + "%"; $("bar").classList.toggle("low", blitz.time <= 10);
+  const left = Math.max(0, blitz.endAt - Date.now());
+  $("lvlL").textContent = T.ser.successes.toLowerCase(); $("lvl").textContent = blitz.successes; $("scoreV").textContent = nf(blitz.score); $("scoreL").textContent = T.pts;
+  $("timeV").textContent = fmtClock(left); $("barFill").style.width = (left / BLITZ_DURATION * 100) + "%"; $("bar").classList.toggle("low", left <= 30000);
 }
-async function blitzTick(){
-  if (blitz.paused) { blitz.last = performance.now(); return; }
-  const n = performance.now(); blitz.time -= (n - blitz.last) / 1000; blitz.last = n;
-  if (blitz.time <= 8 && !blitz.warned && blitz.time > 0){ blitz.warned = true; if (!Bip.seq) Bip.line2("lowTime", "wow", 2200); }
-  if (blitz.time <= 0){
-    blitz.time = 0; renderHud();
-    if (!blitz.secondUsed && wallet.items.second > 0){
-      blitz.paused = true;
-      const ok = await sheet(T.secondTitle, T.secondText, `${T.secondOk} (${wallet.items.second})`, T.secondNo);
-      if (ok){ wallet.items.second--; saveWallet(); blitz.secondUsed = true; blitz.time = SECOND_CHANCE; blitz.paused = false; blitz.last = performance.now(); Snd.buy(); banner(`+${SECOND_CHANCE} s`); renderHud(); return; }
-      blitz.paused = false;
-    }
-    blitzEnd(); return;
-  }
+function blitzTick(){
+  if (!blitz.running) return;
+  const left = blitz.endAt - Date.now();
+  if (left <= 30000 && !blitz.warned && left > 0){ blitz.warned = true; if (!Bip.seq) Bip.line2("lowTime", "wow", 2200); }
+  if (left <= 0){ renderHud(); blitzEnd(); return; }
   renderHud();
 }
 function blitzLock(d){
+  if (!blitz.running) return;
   const s = starsFor(d);
   if (d === 0){
-    blitz.combo++; const mult = Math.min(3, 1 + .5 * (blitz.combo - 1)), bonus = blitzBonus(blitz.level);
-    blitz.score += Math.round(100 * blitz.level * mult * (isBoss(blitz.level) ? 2 : 1)); blitz.time = Math.min(BLITZ_CAP, blitz.time + bonus);
-    banner(blitz.combo > 1 ? `${T.combo} ×${mult.toFixed(1).replace(/\.0$/, "")}  +${bonus} s` : `+${bonus} s`); Snd.level();
-    if (blitz.combo > 1){ const c = centerOf($("banner")); burst(c.x, c.y, 20 + blitz.combo * 8, HUES[(blitz.level - 1) % 3]); blitz.xpCombo += XP_COMBO; }
+    blitz.combo++; blitz.successes++; blitz.lastSuccessMs = Date.now() - blitz.startAt; const mult = Math.min(3, 1 + .5 * (blitz.combo - 1));
+    blitz.score += Math.round(100 * blitz.level * mult * (isBoss(blitz.level) ? 2 : 1));
+    banner(blitz.combo > 1 ? `${T.combo} ×${mult.toFixed(1).replace(/\.0$/, "")}` : "✓"); Snd.level();
+    if (blitz.combo > 1){ const c = centerOf($("banner")); burst(c.x, c.y, 20 + blitz.combo * 8, HUES[(blitz.level - 1) % 3]); blitz.xpCombo = (blitz.xpCombo || 0) + XP_COMBO; }
     document.body.classList.toggle("combo", blitz.combo >= 2);
     if (blitz.combo === 3){ wallet.c.combo3++; saveWallet(); Bip.line2("comboHot", "laugh", 2400); } else if (blitz.level % 3 === 0) Bip.line("levelUp", "laugh", 2200);
-  } else { blitz.combo = 0; document.body.classList.remove("combo"); blitz.score += 25 * s * blitz.level; Bip.line(s ? "close" : "far", s ? "happy" : "sad", 2000); }
-  blitz.level++; blitzNext();
+  } else {
+    if (blitz.shield){ blitz.shield = false; toast(T.bz.shieldUsed); } else { blitz.combo = 0; document.body.classList.remove("combo"); }
+    blitz.score += 25 * s * blitz.level; Bip.line(s ? "close" : "far", s ? "happy" : "sad", 2000);
+  }
+  blitz.level++; blitzSave(); blitzNext();
 }
+function blitzEntry(){ return { day: blitz.day, mode: "blitz", successes: blitz.successes, errors: blitz.errors, moves: blitz.moves, time: blitz.lastSuccessMs, completed: true, score: blitz.score, name: wallet.name || "" }; }
 function blitzEnd(){
-  clearInterval(blitz.timer); blitz.running = false; B.busy = true; applyMusic(); Music.setPart("daily"); document.body.classList.remove("combo");
-  const bst = store.get("kalku:blitz") || { level: 0, score: 0 };
-  const lvl = blitz.level - 1, isBest = blitz.score > bst.score;
-  const nb = { level: Math.max(bst.level, lvl), score: Math.max(bst.score, blitz.score) }; store.set("kalku:blitz", nb);
+  if (!blitz.running) return;
+  clearInterval(blitz.timer); blitz.running = false; B.busy = true; store.del(RUN_KEY); applyMusic(); Music.setPart("daily"); document.body.classList.remove("combo");
+  const bst = store.get("kalku:blitz") || { level: 0, score: 0, successes: 0 };
+  const isBest = blitz.successes > (bst.successes || 0) || (blitz.successes === (bst.successes || 0) && blitz.score > bst.score);
+  const nb = { level: Math.max(bst.level || 0, blitz.level - 1), score: Math.max(bst.score, blitz.score), successes: Math.max(bst.successes || 0, blitz.successes) }; store.set("kalku:blitz", nb);
   const k = blitz.x2 ? 2 : 1; const room = Math.max(0, BLITZ_COIN_DAY_CAP * k - wallet.blitzCoins); const earned = Math.min(room, Math.floor(blitz.score / BLITZ_COIN_DIV) * k);
   wallet.blitzCoins += earned; if (earned){ wallet.coins += earned; wallet.c.coinsEarned += earned; }
-  const xpRoom = Math.max(0, XP_BLITZ_CAP * k - wallet.blitzXp), xpGain = Math.min(xpRoom, (Math.floor(blitz.score / XP_BLITZ_DIV) + blitz.xpCombo) * k); wallet.blitzXp += xpGain;
-  wallet.c.blitzBest = Math.max(wallet.c.blitzBest, lvl); saveWallet(); Cloud.pushBlitz(lvl, blitz.score);
+  const xpRoom = Math.max(0, XP_BLITZ_CAP * k - wallet.blitzXp), xpGain = Math.min(xpRoom, (Math.floor(blitz.score / XP_BLITZ_DIV) + (blitz.xpCombo || 0)) * k); wallet.blitzXp += xpGain;
+  wallet.c.blitzBest = Math.max(wallet.c.blitzBest, blitz.successes); saveWallet();
+  const entry = blitzEntry(); const kept = histPut(entry); Cloud.pushSeries("blitz", entry);
   document.body.classList.remove("quake"); void document.body.offsetWidth; if (!reduceMotion) document.body.classList.add("quake"); buzz([60,40,60]);
-  blitz.result = { lvl, score: blitz.score, best: nb.score, coins: earned, capped: room === 0, undos: blitz.undos || 0, errors: blitz.errors || 0 };
+  blitz.result = { successes: blitz.successes, score: blitz.score, best: nb.score, coins: earned, capped: room === 0, undos: blitz.undos, errors: blitz.errors, moves: blitz.moves, time: blitz.lastSuccessMs, runs: kept.runs || 1 };
   $("blitzResult").dataset.anim = "1"; renderBlitzResult();
   Snd.over(); Bip.line("timeout", isBest ? "laugh" : "happy", 3500);
   if (earned) setTimeout(() => { floatAt($("gCoins"), `+${earned} ◎`); Snd.coin(); }, 700);
@@ -1806,13 +1967,24 @@ function blitzEnd(){
 function renderBlitzResult(){
   const r = blitz.result; if (!r) return;
   showOnly("blitzResult"); setHue(HUES[3]);
-  $("brTitle").textContent = T.timeUp; $("brScore").textContent = nf(r.score);
-  $("brLvl").textContent = r.lvl; $("brLvlL").textContent = T.level.toLowerCase();
-  $("brBest").textContent = nf(r.best); $("brBestL").textContent = T.best;
-  $("brCoins").textContent = `+${r.coins} ◎`; $("brCoinsL").textContent = (r.capped ? T.rwCapped : T.coins) + `   ↶${r.undos} ✗${r.errors}`;
-  $("againBlitz").textContent = T.again; $("shareBlitz").textContent = T.share;
+  $("brTitle").textContent = T.bz.timeUp; $("brScore").textContent = r.successes; $("brScore").insertAdjacentHTML("beforeend", `<small style="font-size:1.4rem;font-weight:600;-webkit-text-fill-color:var(--soft);color:var(--soft)"> ${T.ser.successes.toLowerCase()}</small>`);
+  $("brLvl").textContent = `✗ ${r.errors}`; $("brLvlL").textContent = T.und.errors;
+  $("brBest").textContent = `↔ ${r.moves}`; $("brBestL").textContent = T.ser.moves;
+  $("brCoins").textContent = fmtTime(r.time); $("brCoinsL").textContent = T.bz.lastHit;
+  $("brExtra").textContent = `${nf(r.score)} ${T.pts}   +${r.coins} ◎${r.capped ? " (" + T.rwCapped + ")" : ""}   ↶${r.undos}`;
+  $("againBlitz").textContent = T.bz.replay; $("shareBlitz").textContent = T.share; $("rankBlitz").textContent = T.ser.rank;
 }
-function blitzShare(){ const r = blitz.result || { lvl: blitz.level - 1, score: blitz.score, undos: 0, errors: 0 }; return `Kalku ${T.blitz}  ${T.level.toLowerCase()} ${r.lvl}  ${nf(r.score)} ${T.pts} ⚡  ↶${r.undos || 0} ✗${r.errors || 0}\n${SHARE_URL || location.origin + location.pathname}`; }
+function blitzShare(){ const r = blitz.result || blitzEntry(); return `Kalku ${T.blitz} 5:00  ${r.successes} ✓  ✗${r.errors}  ↔${r.moves}  ⏱ ${fmtTime(r.time || 0)}  ${nf(r.score)} ${T.pts} ⚡\n${SHARE_URL || location.origin + location.pathname}`; }
+async function blitzResumeCheck(){
+  const run = store.get(RUN_KEY); if (!run) return;
+  if (Date.now() >= run.endAt || run.day !== today){
+    Object.assign(blitz, run, { running: true, timer: null, result: null }); B.busy = true; mode = "blitz"; go("game"); blitzEnd(); return;
+  }
+  const ok = await sheet(T.bz.resume, tpl(T.bz.resumeText, { t: fmtClock(run.endAt - Date.now()) }), T.bz.resumeOk, T.bz.abandon);
+  if (!ok){ Object.assign(blitz, run, { running: true, timer: null, result: null }); mode = "blitz"; go("game"); blitzEnd(); return; }
+  Object.assign(blitz, run, { running: true, paused: false, result: null, warned: false }); mode = "blitz"; go("game"); showOnly("board"); $("hud").hidden = false; $("bar").hidden = false;
+  setBoard(run.nums, run.target); B.fresh = false; renderBoard(); renderHud(); Music.setPart("blitz"); clearInterval(blitz.timer); blitz.timer = setInterval(blitzTick, 200);
+}
 
 // ===== Comptes en ligne (Supabase) =====
 const Cloud = {
@@ -1826,7 +1998,7 @@ const Cloud = {
       this.sb.auth.onAuthStateChange((ev, sess) => { this.user = (sess && sess.user) || null; renderAccount(); });
     }catch(e){ this.sb = null; }
   },
-  snapshot(){ return { v: 1, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, m: dayMeta, at: Date.now() }; },
+  snapshot(){ return { v: 2, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, h: hist, at: Date.now() }; },
   async signUp(email, pass){ const { data, error } = await this.sb.auth.signUp({ email, password: pass, options: { data: { name: wallet.name || null } } }); if (error) throw error; this.user = data.user; if (!data.session) { const r = await this.sb.auth.signInWithPassword({ email, password: pass }); if (r.error) throw r.error; this.user = r.data.user; } await this.save(true); await this.pushProfile(); toast(T.acc.welcome); },
   async signIn(email, pass){ const { data, error } = await this.sb.auth.signInWithPassword({ email, password: pass }); if (error) throw error; this.user = data.user; await this.afterLogin(); },
   async signOut(){ try{ await this.sb.auth.signOut(); }catch(e){} this.user = null; renderAccount(); },
@@ -1834,7 +2006,7 @@ const Cloud = {
     let remote = null; try{ const { data } = await this.sb.from("saves").select("data").eq("id", this.user.id).maybeSingle(); remote = data && data.data; }catch(e){}
     if (remote && remote.w){
       const ok = await sheet(T.acc.restoreTitle, tpl(T.acc.restoreText, { l: remote.w.level || 1, c: nf(remote.w.coins || 0), ll: wallet.level, lc: nf(wallet.coins) }), T.acc.useCloud, T.acc.useLocal);
-      if (ok){ store.set("kalku:wallet", remote.w); if (remote.s) store.set("kalku:stats", remote.s); if (remote.b) store.set("kalku:blitz", remote.b); if (remote.d && remote.d.idx !== undefined) store.set("kalku:day:" + today, remote.d); if (remote.m) store.set("kalku:daymeta:" + today, remote.m); location.reload(); return; }
+      if (ok){ store.set("kalku:wallet", remote.w); if (remote.s) store.set("kalku:stats", remote.s); if (remote.b) store.set("kalku:blitz", remote.b); if (remote.d && remote.d.day === today) store.set("kalku:day:" + today, remote.d); if (Array.isArray(remote.h)) store.set("kalku:hist", remote.h); location.reload(); return; }
     }
     await this.save(true); await this.pushProfile();
   },
@@ -1844,10 +2016,17 @@ const Cloud = {
     if (now) return doit(); this.timer = setTimeout(doit, 3000); return Promise.resolve();
   },
   async pushProfile(){ if (!this.user) return; try{ await this.sb.from("profiles").upsert({ id: this.user.id, name: wallet.name || null, skin: wallet.skin, level: wallet.level, updated_at: new Date().toISOString() }); }catch(e){} },
-  async pushDaily(){ if (!this.user) return; const total = daily.stars.reduce((a, s) => a + (s || 0), 0); try{ await this.sb.from("daily_scores").upsert({ user_id: this.user.id, day: today, game: daily.game, stars: total, time_ms: daily.elapsed, undos: daily.undos, errors: daily.errors, name: wallet.name || null, level: wallet.level }); }catch(e){} },
-  async pushBlitz(lvl, score){ if (!this.user) return; try{ const { data } = await this.sb.from("blitz_scores").select("score").eq("user_id", this.user.id).maybeSingle(); if (!data || score > data.score) await this.sb.from("blitz_scores").upsert({ user_id: this.user.id, level: lvl, score, name: wallet.name || null, updated_at: new Date().toISOString() }); }catch(e){} },
-  async topDaily(){ const { data } = await this.sb.from("daily_scores").select("user_id,name,level,stars,time_ms,undos,errors").eq("day", today).eq("game", 0).order("stars", { ascending: false }).order("time_ms", { ascending: true }).order("undos", { ascending: true }).order("errors", { ascending: true }).limit(50); return data || []; },
-  async topBlitz(){ const { data } = await this.sb.from("blitz_scores").select("user_id,name,level,score").order("score", { ascending: false }).limit(50); return data || []; }
+  pushSeries(modeName, e, debounced){
+    if (!this.user || !this.sb) return; clearTimeout(this._ps);
+    const doit = async () => { try{
+      const key = { user_id: this.user.id, day: e.day, mode: modeName };
+      if (modeName === "blitz"){ const { data } = await this.sb.from("series_scores").select("successes,errors,moves,time_ms,completed").match(key).maybeSingle(); if (data && cmpRank({ successes: data.successes, errors: data.errors, moves: data.moves, time: data.time_ms, completed: data.completed }, e) <= 0) return; }
+      await this.sb.from("series_scores").upsert({ ...key, successes: e.successes, errors: e.errors, moves: e.moves, time_ms: e.time, completed: !!e.completed, score: e.score || 0, name: wallet.name || null, level: wallet.level, updated_at: new Date().toISOString() });
+    }catch(err){} };
+    if (debounced) this._ps = setTimeout(doit, 2500); else doit();
+  },
+  async topSeries(day, modeName){ const { data } = await this.sb.from("series_scores").select("user_id,name,level,successes,errors,moves,time_ms,completed,score").eq("day", day).eq("mode", modeName).order("successes", { ascending: false }).order("errors", { ascending: true }).order("moves", { ascending: true }).order("completed", { ascending: false }).order("time_ms", { ascending: true }).limit(100); return (data || []).map(r => ({ ...r, time: r.time_ms })); },
+  async myHistory(modeName){ if (!this.user) return []; const { data } = await this.sb.from("series_scores").select("day,successes,errors,moves,time_ms,completed,score").eq("user_id", this.user.id).eq("mode", modeName).order("day", { ascending: false }).limit(90); return (data || []).map(r => ({ ...r, time: r.time_ms })); }
 };
 function renderAccount(){
   const on = Cloud.ready(); $("grpAccT").textContent = T.acc.title;
@@ -1863,26 +2042,44 @@ $("accSignUp").addEventListener("click", async () => { $("accErr").hidden = true
 $("accSync").addEventListener("click", async () => { await Cloud.save(true); await Cloud.pushProfile(); toast(T.acc.synced); Snd.buy(); });
 $("accOut").addEventListener("click", async () => { await Cloud.signOut(); toast(T.acc.out); });
 
-// ===== Classement en ligne =====
-let boardTab = "daily";
-async function renderRanking(){
-  $("bdTitle").textContent = T.board.title; $("bdDaily").textContent = T.board.daily; $("bdBlitz").textContent = T.board.blitz;
-  $("bdDaily").setAttribute("aria-pressed", String(boardTab === "daily")); $("bdBlitz").setAttribute("aria-pressed", String(boardTab === "blitz"));
-  const list = $("bdList"); list.innerHTML = "";
-  if (!Cloud.ready()){ $("bdNote").textContent = T.board.unavailable; return; }
-  $("bdNote").textContent = (boardTab === "daily" ? tpl(T.board.noteOn, { n: puzzleNo }) : "") + (Cloud.user ? "" : "  " + T.board.noteOff);
-  const ld = document.createElement("p"); ld.className = "note"; ld.textContent = T.board.loading; list.appendChild(ld);
-  let rows = []; try{ rows = boardTab === "daily" ? await Cloud.topDaily() : await Cloud.topBlitz(); }catch(e){}
-  list.innerHTML = ""; if (!rows.length){ const p = document.createElement("p"); p.className = "note"; p.textContent = T.board.empty; list.appendChild(p); return; }
-  rows.forEach((r, i) => {
-    const row = document.createElement("div"); row.className = "brow" + (Cloud.user && r.user_id === Cloud.user.id ? " me" : "");
-    const rk = document.createElement("span"); rk.className = "rk" + (i < 3 ? " top" : ""); rk.textContent = i < 3 ? ["🥇","🥈","🥉"][i] : (i + 1);
-    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = (r.name || (lang === "fr" ? "Joueur" : "Player")) + (Cloud.user && r.user_id === Cloud.user.id ? ` (${T.board.you})` : ""); const sm = document.createElement("small"); sm.textContent = `${T.lvl} ${r.level || 1}`; nm.appendChild(sm);
-    const sc = document.createElement("span"); sc.className = "sc"; sc.textContent = boardTab === "daily" ? `${r.stars}/9  ${fmtTime(r.time_ms)}  ↶${r.undos} ✗${r.errors}` : `${T.level} ${r.level}  ${nf(r.score)} ${T.pts}`;
-    row.append(rk, nm, sc); list.appendChild(row);
-  });
+// ===== Classement : aujourd’hui, historique, progression personnelle =====
+const board = { tab: "today", mode: "daily", day: today };
+function rankRows(rows){ const out = []; rows.sort(cmpRank); let rank = 0; rows.forEach((r, i) => { if (i === 0 || cmpRank(rows[i - 1], r) !== 0) rank = i + 1; out.push({ ...r, rank }); }); return out; }
+function rowEl(r, modeName, isMe, showDay){
+  const row = document.createElement("div"); row.className = "brow" + (isMe ? " me" : "");
+  const rk = document.createElement("span"); rk.className = "rk" + (r.rank <= 3 ? " top" : ""); rk.textContent = showDay ? "" : (r.rank <= 3 ? ["🥇","🥈","🥉"][r.rank - 1] : r.rank);
+  const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = showDay ? r.day : ((r.name || (lang === "fr" ? "Joueur" : "Player")) + (isMe ? ` (${T.rk.you})` : ""));
+  const sm = document.createElement("small"); sm.textContent = showDay ? (r.completed === false ? T.rk.inprogress : (r.runs > 1 ? tpl(T.rk.runs, { n: r.runs }) : "")) : `${T.lvl} ${r.level || 1}${r.completed === false ? "  " + T.rk.inprogress : ""}`; nm.appendChild(sm);
+  if (showDay){ const b2 = document.createElement("div"); b2.className = "bar2"; const i = document.createElement("i"); i.style.width = Math.min(100, r.successes / (modeName === "daily" ? SERIES_LEN : Math.max(10, r.successes)) * 100) + "%"; b2.appendChild(i); nm.appendChild(b2); }
+  const sc = document.createElement("span"); sc.className = "sc";
+  [[`${r.successes}${modeName === "daily" ? "/" + SERIES_LEN : ""} ✓`, true], [`✗ ${r.errors}`], [`↔ ${r.moves}`], [`⏱ ${fmtTime(r.time || 0)}`]].forEach(([t, main]) => { const sp = document.createElement("span"); if (main) sp.className = "main"; sp.textContent = t; sc.appendChild(sp); });
+  row.append(rk, nm, sc); return row;
 }
-$("bdDaily").addEventListener("click", () => { boardTab = "daily"; renderRanking(); }); $("bdBlitz").addEventListener("click", () => { boardTab = "blitz"; renderRanking(); });
+async function renderRanking(){
+  $("bdTitle").textContent = T.rk.title; $("bdToday").textContent = T.rk.today; $("bdHist").textContent = T.rk.history; $("bdModeDaily").textContent = T.rk.daily; $("bdModeBlitz").textContent = T.rk.blitz;
+  $("bdToday").setAttribute("aria-pressed", String(board.tab === "today")); $("bdHist").setAttribute("aria-pressed", String(board.tab === "hist"));
+  $("bdModeDaily").setAttribute("aria-pressed", String(board.mode === "daily")); $("bdModeBlitz").setAttribute("aria-pressed", String(board.mode === "blitz"));
+  const day = board.tab === "today" ? today : board.day; $("bdDayNav").hidden = board.tab !== "hist"; $("bdDay").textContent = day; $("bdNext").disabled = day >= today;
+  $("bdRule").textContent = (board.mode === "daily" ? tpl(T.rk.rule_daily, { n: dayIndex(day) + 1 }) : T.rk.rule_blitz) + (Cloud.ready() && !Cloud.user ? "  " + T.board.noteOff : "") + (!Cloud.ready() ? "  " + T.rk.offline : "");
+  const list = $("bdList"); list.innerHTML = ""; const ld = document.createElement("p"); ld.className = "note"; ld.textContent = T.board.loading; list.appendChild(ld);
+  let rows = []; if (Cloud.ready()){ try{ rows = await Cloud.topSeries(day, board.mode); }catch(e){ rows = []; } }
+  const mineLocal = hist.find(h => h.day === day && h.mode === board.mode) || (board.mode === "daily" && day === today && daily.idx > 0 && !dailyDone() ? dailyEntry(false) : null);
+  const myId = Cloud.user && Cloud.user.id;
+  if (mineLocal && !(myId && rows.some(r => r.user_id === myId))) rows.push({ ...mineLocal, user_id: "__me__", name: wallet.name || (lang === "fr" ? "Joueur" : "Player"), level: wallet.level });
+  list.innerHTML = "";
+  if (!rows.length){ const p = document.createElement("p"); p.className = "note"; p.textContent = T.rk.none; list.appendChild(p); }
+  else rankRows(rows).forEach(r => list.appendChild(rowEl(r, board.mode, r.user_id === "__me__" || (myId && r.user_id === myId), false)));
+  const mine = $("bdMine"); mine.hidden = board.tab !== "hist"; $("bdMineT").textContent = T.rk.mine;
+  if (board.tab === "hist"){
+    let my = hist.filter(h => h.mode === board.mode).map(h => ({ ...h })); if (Cloud.ready() && Cloud.user){ try{ const remote = await Cloud.myHistory(board.mode); remote.forEach(r => { if (!my.some(h => h.day === r.day)) my.push({ ...r, mode: board.mode }); }); }catch(e){} }
+    my.sort((a, b) => a.day < b.day ? 1 : -1); const ml = $("bdMineList"); ml.innerHTML = "";
+    if (!my.length){ const p = document.createElement("p"); p.className = "note"; p.textContent = T.rk.none; ml.appendChild(p); }
+    my.slice(0, 60).forEach(r => { const el = rowEl({ ...r, rank: 0 }, board.mode, false, true); el.style.cursor = "pointer"; el.addEventListener("click", () => { board.day = r.day; renderRanking(); }); ml.appendChild(el); });
+  }
+}
+$("bdToday").addEventListener("click", () => { board.tab = "today"; renderRanking(); }); $("bdHist").addEventListener("click", () => { board.tab = "hist"; board.day = board.day || today; renderRanking(); });
+$("bdModeDaily").addEventListener("click", () => { board.mode = "daily"; renderRanking(); }); $("bdModeBlitz").addEventListener("click", () => { board.mode = "blitz"; renderRanking(); });
+$("bdPrev").addEventListener("click", () => { board.day = dayFromIndex(Math.max(0, dayIndex(board.day) - 1)); renderRanking(); }); $("bdNext").addEventListener("click", () => { if (board.day < today){ board.day = dayFromIndex(dayIndex(board.day) + 1); renderRanking(); } });
 
 // ===== Boutique =====
 function rarBadge(r){ if (!r) return ""; return `<span class="rar ${r}">${T.rarity[r]}</span>`; }
@@ -2042,7 +2239,7 @@ function renderProfile(){
   $("pLvl").textContent = `${T.lvl} ${wallet.level}  ${titleFor(wallet.level)}  ·  ${wallet.xp}/${xpNeed(wallet.level)} ${T.xp}`.replace("  ·  ", "   "); $("pXpFill").style.width = Math.min(100, wallet.xp / xpNeed(wallet.level) * 100) + "%";
   const st = store.get("kalku:stats") || { streak: 0, played: 0, bestTime: null }; const bb = store.get("kalku:blitz") || { level: 0, score: 0 };
   const ps = $("pStats"); ps.innerHTML = "";
-  [[st.played, T.pr.played], [st.streak, T.streak], [st.bestTime ? fmtTime(st.bestTime) : "–", T.pr.bestTime], [bb.level ? `${T.lvl} ${bb.level}` : "–", T.pr.best]].forEach(([v, l]) => { const d = document.createElement("div"); d.className = "stat"; const b = document.createElement("b"); b.textContent = v; const sp = document.createElement("span"); sp.textContent = l; d.append(b, sp); ps.appendChild(d); });
+  [[st.played, T.pr.played], [st.streak, T.streak], [st.bestTime ? fmtTime(st.bestTime) : "–", T.pr.bestTime], [bb.successes ? `${bb.successes} ✓` : "–", T.pr.best]].forEach(([v, l]) => { const d = document.createElement("div"); d.className = "stat"; const b = document.createElement("b"); b.textContent = v; const sp = document.createElement("span"); sp.textContent = l; d.append(b, sp); ps.appendChild(d); });
   $("grpLook").textContent = T.pr.look; $("grpSound").textContent = T.pr.soundG; $("grpLang").textContent = T.pr.langG; $("grpSave").textContent = T.pr.saveG; $("grpDanger").textContent = T.pr.danger;
   const chips = (host, list, ownedList, current, names, onPick) => {
     host.innerHTML = "";
@@ -2069,7 +2266,7 @@ $("sndTest").addEventListener("click", () => {
 });
 $("pMusicOn").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (Music.on){ Snd.ensure(); Music.start(); Bip.line2("music", "laugh", 2600); } renderProfile(); });
 document.querySelectorAll("#scr-profile [data-lang]").forEach(b => b.addEventListener("click", () => { applyLang(b.dataset.lang); renderProfile(); }));
-function exportCode(){ const data = { v: 1, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, m: dayMeta, snd: Snd.on, mus: Music.on, lang }; return btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/=+$/, ""); }
+function exportCode(){ const data = { v: 2, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, h: hist, snd: Snd.on, mus: Music.on, lang }; return btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/=+$/, ""); }
 $("exportBtn").addEventListener("click", async () => { const code = exportCode(); const ta = $("codeArea"); $("importBox").hidden = false; ta.value = code; $("importGo").hidden = true; try{ await navigator.clipboard.writeText(code); toast(T.pr.exported); }catch(e){ ta.select(); } });
 $("importBtn").addEventListener("click", () => { const ta = $("codeArea"); $("importBox").hidden = false; ta.value = ""; $("importGo").hidden = false; ta.focus(); });
 $("importGo").addEventListener("click", async () => {
@@ -2077,12 +2274,12 @@ $("importGo").addEventListener("click", async () => {
     const data = JSON.parse(decodeURIComponent(escape(atob($("codeArea").value.trim()))));
     if (!data || !data.w || !data.w.items) throw 0;
     const ok = await sheet(T.pr.importGo, T.pr.saveNote, T.pr.importGo, T.no); if (!ok) return;
-    store.set("kalku:wallet", data.w); if (data.s) store.set("kalku:stats", data.s); if (data.b) store.set("kalku:blitz", data.b); if (data.d && data.d.idx !== undefined) store.set("kalku:day:" + today, data.d); if (data.m) store.set("kalku:daymeta:" + today, data.m);
+    store.set("kalku:wallet", data.w); if (data.s) store.set("kalku:stats", data.s); if (data.b) store.set("kalku:blitz", data.b); if (data.d && data.d.day === today) store.set("kalku:day:" + today, data.d); if (Array.isArray(data.h)) store.set("kalku:hist", data.h);
     if (data.snd !== undefined) store.set("kalku:sound", data.snd); if (data.mus !== undefined) store.set("kalku:music", data.mus); if (data.lang) store.set("kalku:lang", data.lang);
     toast(T.pr.imported); setTimeout(() => location.reload(), 600);
   }catch(e){ toast(T.pr.badCode); Snd.bad(); }
 });
-$("resetBtn").addEventListener("click", async () => { const ok = await sheet(T.pr.resetAsk, T.pr.resetText, T.pr.reset, T.no); if (!ok) return; ["kalku:wallet","kalku:stats","kalku:blitz","kalku:seen","kalku:day:" + today, "kalku:daymeta:" + today].forEach(k => store.del(k)); location.reload(); });
+$("resetBtn").addEventListener("click", async () => { const ok = await sheet(T.pr.resetAsk, T.pr.resetText, T.pr.reset, T.no); if (!ok) return; ["kalku:wallet","kalku:stats","kalku:blitz","kalku:seen","kalku:hist","kalku:used",RUN_KEY,"kalku:day:" + today].forEach(k => store.del(k)); location.reload(); });
 
 // ===== Coffre du jour =====
 const chestReady = () => wallet.chestDay !== today;
@@ -2102,7 +2299,7 @@ function renderHome(){
   $("hTag").textContent = T.home.tag; $("hName").textContent = wallet.name || (lang === "fr" ? "Joueur" : "Player"); $("hTitle").textContent = `${T.lvl} ${wallet.level}  ${titleFor(wallet.level)}`;
   const ring = $("hRing"); ring.dataset.lv = wallet.level; ring.style.setProperty("--p", Math.round(wallet.xp / xpNeed(wallet.level) * 100) + "%");
   $("hDailyT").textContent = T.home.daily; $("hDailySub").textContent = dailySub();
-  const bb = store.get("kalku:blitz"); $("hBlitzT").textContent = T.home.blitz; $("hBlitzSub").textContent = bb && bb.level ? tpl(T.home.blitzSub, { l: bb.level, s: nf(bb.score) }) : T.home.blitzNew;
+  const bb = store.get("kalku:blitz"); $("hBlitzT").textContent = T.home.blitz; $("hBlitzSub").textContent = bb && bb.score ? tpl(T.home.blitzSub, { s: bb.successes || 0, p: nf(bb.score) }) : T.home.blitzNew;
   $("hRouletteT").textContent = T.home.roulette; $("hShopT").textContent = T.home.shop; $("hTrophT").textContent = T.home.trophies; $("hBoardT").textContent = T.home.board; $("hFoot").textContent = T.home.foot;
   $("hChestT").textContent = chestReady() ? T.chest.ready : T.chest.opened; $("hChestIco").classList.toggle("ready", chestReady()); $("hChestBadge").hidden = !chestReady(); renderXp();
   const ready = ACH.filter(a => !wallet.ach.includes(a.id) && a.get(wallet.c) >= a.need).length; $("hTrophBadge").hidden = !ready; $("hTrophBadge").textContent = ready;
@@ -2110,7 +2307,7 @@ function renderHome(){
   renderCurrencies();
 }
 ["hDaily","hBlitz","hRoulette","hShop","hTroph","hBoard","hProfile","hSettings"].forEach(id => $(id).addEventListener("click", () => {
-  if (id === "hDaily"){ if (canStartNext()) askNextGame(); else startDaily(); } else if (id === "hBlitz") startBlitzScreen(); else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : id === "hBoard" ? "board" : "profile");
+  if (id === "hDaily") startDaily(); else if (id === "hBlitz") startBlitzScreen(); else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : id === "hBoard" ? "board" : "profile");
 }));
 $("gCoins").addEventListener("click", () => go("shop"));
 $("sCoins").addEventListener("click", () => { shopTab = "items"; go("shop"); }); $("sGems").addEventListener("click", () => { shopTab = "packs"; go("shop"); }); $("sTix").addEventListener("click", () => go("roulette"));
@@ -2120,7 +2317,7 @@ $("gMus").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (
 // ===== Navigation =====
 function go(id){
   document.body.classList.remove("combo"); $("light").classList.remove("on");
-  if (screen === "game"){ if (blitz.running){ clearInterval(blitz.timer); blitz.running = false; applyMusic(); } if (mode === "daily" && startTs){ daily.elapsed += Date.now() - startTs; startTs = null; store.set("kalku:day:" + today, daily); } }
+  if (screen === "game"){ if (blitz.running){ clearInterval(blitz.timer); blitzSave(); blitz.running = false; applyMusic(); } if (mode === "daily" && startTs){ daily.elapsed += Date.now() - startTs; startTs = null; saveDaily(); } }
   screen = id; ["home","game","shop","roulette","trophies","profile","board"].forEach(s => { const el = $("scr-" + s); el.hidden = s !== id; if (s === id){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
   if (Bip.bub) Bip.bub.classList.remove("show"); clearTimeout(Bip.timer);
   if (id === "game") Bip.mount("bipSlotGame", "bubble"); else if (id === "profile") Bip.mount("bipSlotProfile", "pBubble"); else Bip.mount("bipSlotHome", "hBubble");
@@ -2133,7 +2330,8 @@ function startBlitzScreen(){ mode = "blitz"; go("game"); blitzIntro(); }
 $("back").addEventListener("click", () => go("home"));
 document.querySelectorAll(".icon.back").forEach(b => b.addEventListener("click", () => go("home")));
 $("startBlitz").addEventListener("click", blitzStart); $("againBlitz").addEventListener("click", blitzStart);
-$("goBlitz").addEventListener("click", () => { if (canStartNext()) askNextGame(); else startBlitzScreen(); });
+$("goBlitz").addEventListener("click", () => { board.tab = "today"; board.mode = "daily"; go("board"); });
+$("rankBlitz").addEventListener("click", () => { board.tab = "today"; board.mode = "blitz"; go("board"); });
 async function shareOut(text){ try { if (navigator.share){ await navigator.share({ text }); return; } await navigator.clipboard.writeText(text); toast(T.copied); } catch(e){ try { await navigator.clipboard.writeText(text); toast(T.copied); } catch(_){ toast(text); } } }
 $("share").addEventListener("click", () => shareOut(dailyShare())); $("shareBlitz").addEventListener("click", () => shareOut(blitzShare()));
 Bip.mount("bipSlotHome", "hBubble");
@@ -2159,7 +2357,7 @@ let firstVisit = !store.get("kalku:seen");
 saveWallet(); applySkin(); applyTheme(); applyBtn(); applyMusic(); renderXp(); applyLang(lang); go("home"); renderMusBtn(); Cloud.init();
 if (!wallet.welcomed){ wallet.welcomed = true; saveWallet(); setTimeout(() => { toast(T.welcomeGift); Bip.line("hello", "laugh", 4000); }, 700); }
 else setTimeout(() => Bip.line2("homeIdle", "happy", 3400), 900);
-setInterval(tick, 1000); resetIdle();
+setInterval(tick, 1000); resetIdle(); Director.start(); setTimeout(blitzResumeCheck, 900);
 
 if ("serviceWorker" in navigator && location.protocol === "https:" && !/claude\.ai$/.test(location.hostname)){ window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); }); }
 </script>
