@@ -1,30 +1,37 @@
 # Kalku
 
-Casse-tête quotidien : six nombres, trois cibles, quatre opérations. Mode Blitz, compagnon Bip, roulette, trophées, boutique.
-Application web installable (PWA) : aucun serveur, tout tient dans ce dossier.
+Casse-tête de nombres : défi du jour en 10 parties (les mêmes pour tous, changement à minuit UTC), Blitz de 5 minutes, classements par jour, compagnon Bip, boutique, roulette, trophées. Application web installable, un seul fichier `index.html` plus ses icônes.
 
-## Mettre en ligne sur GitHub Pages (gratuit, 5 minutes)
+## 1. Mettre en ligne ou mettre à jour (GitHub Pages)
 
-1. Compte sur github.com.
-2. « + » puis « New repository ». Nom : `kalku`. Public. « Create repository ».
-3. « uploading an existing file » : glisse TOUT le contenu de ce dossier, y compris le dossier `icons`, `manifest.webmanifest` et `sw.js` (garde la structure : le dossier `icons` doit rester un dossier). « Commit changes ».
-4. Settings, Pages, Source « Deploy from a branch », Branch `main`, dossier `/ (root)`, Save.
-5. Une à trois minutes plus tard : `https://TONPSEUDO.github.io/kalku/`
+- Première fois : dépôt public `kalkul`, envoyer tous les fichiers de ce dossier à la racine (pas de sous-dossier), puis Settings › Pages › Deploy from a branch › main › / (root).
+- Mise à jour : Add file › Upload files, glisser les fichiers modifiés (un même nom remplace l’ancien), Commit changes. Les téléphones qui ont installé l’app reçoivent la nouvelle version à la deuxième ouverture suivante.
 
-## Installer sur iPhone (sans App Store)
+Adresse : https://jlefebvre59320-hash.github.io/kalkul/
 
-Ouvre l'adresse dans Safari, bouton Partager (carré avec flèche), « Sur l'écran d'accueil ». Le jeu s'ouvre en plein écran avec sa propre icône, fonctionne hors ligne après la première visite, et garde sa sauvegarde.
-Android : Chrome propose « Installer l'application » tout seul, ou menu à trois points, « Ajouter à l'écran d'accueil ».
+## 2. Installer comme une app
 
-## Mettre à jour
+- iPhone : Safari, bouton Partager, « Sur l’écran d’accueil ».
+- Android : Chrome propose « Installer l’application », ou menu ⋮ › « Ajouter à l’écran d’accueil ».
+- Mac : Safari › Fichier › Ajouter au Dock, ou Chrome › icône d’installation dans la barre d’adresse.
 
-Ré-envoie `index.html` (et le reste si changé). Les joueurs qui ont installé l'app reçoivent la nouvelle version à leur deuxième ouverture suivante : le service worker sert d'abord la version en cache, puis remplace. Pour forcer, change `kalku-v1` en `kalku-v2` dans `sw.js`.
+## 3. Comptes, classement mondial, administration (Supabase)
 
-## Avant d'ouvrir à d'autres joueurs
+1. SQL Editor › New query : coller tout `supabase.sql`, Run. Le fichier peut être rejoué sans erreur.
+2. Authentication › Sign In / Providers › Email : « Confirm email » **activé**. Le jeu gère l’attente de confirmation, le renvoi de l’e-mail et le mot de passe oublié.
+3. Authentication › URL Configuration : Site URL et Redirect URLs = `https://jlefebvre59320-hash.github.io/kalkul/`. Sans ça, les liens des e-mails renvoient vers localhost.
+4. Table Editor › admins › Insert row : ton e-mail. Une fois connecté dans le jeu avec ce compte, Profil › Compte affiche « Administration ».
+5. Les identifiants du projet (URL et clé publique) sont déjà en tête du script de `index.html`, constantes SUPABASE_URL et SUPABASE_ANON_KEY.
 
-- Retire les trois codes de test (commentaire « codes de test, à retirer avant diffusion » dans `index.html`).
-- Colle tes liens de paiement dans `PAYMENT_LINKS`.
+Le service d’e-mail intégré de Supabase est limité à quelques envois par heure : suffisant pour tester, à remplacer par un SMTP (Resend, Brevo…) avant une ouverture large (réglage Supabase, rien à changer dans le jeu).
 
-## App Store, plus tard
+## 4. Avant d’ouvrir à d’autres joueurs
 
-Emballage Capacitor + Xcode sur Mac + compte développeur Apple (99 $/an). Les achats de pièces et gemmes devront passer par le système d'achat intégré d'Apple, pas par des liens externes.
+- Retirer les trois codes de test (commentaire « codes de test, à retirer avant diffusion » en tête du script).
+- Coller les liens de paiement dans PAYMENT_LINKS.
+
+## 5. Limites connues
+
+- Les scores sont déclarés par le jeu lui-même ; un classement public exigeant demandera une validation côté serveur.
+- Les défis Blitz sont uniques par appareil (historique local) ; les défis du jour le sont pour tous par construction.
+- App Store : nécessite un emballage natif, un Mac, un compte développeur Apple et les achats intégrés d’Apple.
