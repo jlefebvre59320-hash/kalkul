@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 <style>
 @property --hue { syntax:"<number>"; inherits:true; initial-value:14; }
 :root{
@@ -780,7 +780,7 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 <script>
 // ===== Réglages à remplir avant diffusion =====
 const SHARE_URL = "";
-const SUPABASE_URL = "", SUPABASE_ANON_KEY = "";   // comptes en ligne : URL et clé « anon » du projet Supabase. Vides = tout reste local.
+const SUPABASE_URL = "https://negwozlthfxquywxzwyk.supabase.co", SUPABASE_ANON_KEY = "sb_publishable_Hvl1HI23HllfoRpqfgLtkQ_tf0m2kAl";   // comptes en ligne : URL et clé « anon » du projet Supabase. Vides = tout reste local.
 const PAYMENT_LINKS = { p150: "", p400: "", p1000: "", g20: "", g60: "", g150: "" };
 const CODE_HASHES = { /* codes de test, à retirer avant diffusion : */ "3da659ea":{"coins":1000000,"gems":1000,"tickets":100}, "0aea1c5a":{"coins":1000000,"gems":1000,"tickets":100}, "2eaf5fb6":{"coins":1000000,"gems":1000,"tickets":100}, "bcc68893":150, "3561b139":150, "cd62c73e":150, "da9f1880":150, "85a7b645":400, "e3be2205":400, "2b79f167":400, "2bc023bc":400, "4b002982":1000, "b9f95cf2":1000, "97f8e4f3":1000, "7298c07f":1000, "95f887c3":{"gems":20}, "a4dcccaf":{"gems":20}, "195e7c49":{"gems":20}, "66df24cf":{"gems":20} };
 const LAUNCH = Date.UTC(2026, 8, 15);
