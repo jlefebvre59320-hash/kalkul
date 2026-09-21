@@ -485,6 +485,25 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
 .bubble .tw::after{content:"▍";color:var(--accent);animation:caret .8s steps(2) infinite;margin-left:.05rem}
 .bubble .tw.done::after,.hbubble .tw::after{content:none}
 @keyframes caret{50%{opacity:0}}
+/* Décor de l’accueil : mode édition */
+.decoBtn{position:absolute;right:.1rem;bottom:.1rem;z-index:3;padding:.25rem .5rem;font-size:.9rem;opacity:.75}
+.stage.editing #hDecor{pointer-events:auto;z-index:4}
+.stage.editing .decor{cursor:grab;touch-action:none;outline:2px dashed var(--accent);outline-offset:4px;border-radius:.5rem;animation:none}
+.stage.editing .decor.off{opacity:.3;filter:grayscale(1)}
+.stage.editing .hbubble{display:none}
+/* Boutique : aperçus */
+.item .pv{width:3.2rem;height:3.5rem;flex:none;display:grid;place-items:center}
+.item .pv svg{width:100%;height:100%;overflow:visible}
+/* Admin */
+.adgrid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.adcard{background:var(--panel);border:1px solid var(--line);border-radius:.9rem;padding:.6rem .7rem}
+.adcard b{display:block;font-size:1.35rem;font-weight:800;line-height:1.1}
+.adcard span{display:block;color:var(--soft);font-size:.78rem;font-weight:700;margin-top:.15rem}
+.adbars{display:flex;align-items:flex-end;gap:.25rem;height:5.5rem;padding:.4rem .2rem 0}
+.adbars i{flex:1;background:linear-gradient(180deg,var(--accent),var(--accent-2));border-radius:.3rem .3rem 0 0;min-height:2px;position:relative}
+.adbars i::after{content:attr(data-v);position:absolute;top:-1.1rem;left:0;right:0;text-align:center;font-size:.65rem;font-weight:800;color:var(--soft)}
+.adx{display:flex;gap:.25rem;padding:0 .2rem}
+.adx span{flex:1;text-align:center;font-size:.6rem;color:var(--soft);font-weight:700;overflow:hidden;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){
   .blob,.pt,.tnum,.tnum.roll,.tnum.hit,.node.earn .on,.node.cur b,.tile.pop,.tile.shake,.tile.in,.op.in,.tile.hint,.op.hint,.total,.rstars .on,.home .logo h1,.bip .body,.bip .eyes,.bip.bounce,.bip.dance,.bip.wiggle,.bip.droop,.bip.asleep .body,.banner.go,.flash.go,.bar.low i,.bump,.float,.card[data-anim] > *,body.quake,.wipe.go .panel,.wipe.go .wtext,.decor,.screen.enter,.prize,.ripple,.slot::after,body.combo::before,.wipe .lines,.wipe .ring,.chest-ico.ready,.target::after,.btn.primary::before,.bubble .tw::after{animation:none !important}
   .tile,.op,.btn,.toast,.bubble,.hbubble,.bip .pupils,.scrim,.sheet,body,.big,.sq{transition:none}
@@ -559,7 +578,9 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
     <div id="hDecor"></div>
     <div class="slot" id="bipSlotHome"></div>
     <div class="hbubble" id="hBubble"></div>
+    <button class="chip decoBtn" id="decoBtn" type="button">✏️</button>
   </div>
+  <p class="note" id="decoHint" hidden style="text-align:center;margin:-.2rem 0 0"></p>
   <div class="pcard" id="pcard">
     <div class="ring" id="hRing" data-lv="1"></div>
     <div class="who"><b id="hName"></b><span id="hTitle"></span></div>
@@ -702,6 +723,12 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
   </div>
 </main>
 
+<!-- ADMINISTRATION -->
+<main class="screen" id="scr-admin" hidden>
+  <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="adTitle"></div><button class="icon" id="adRefresh" type="button">↻</button></div>
+  <div class="scroll" id="adBody"></div>
+</main>
+
 <!-- PROFIL / RÉGLAGES -->
 <main class="screen" id="scr-profile" hidden>
   <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="prTitle"></div><span style="width:2.5rem"></span></div>
@@ -723,13 +750,17 @@ body.combo::before{content:"";position:fixed;inset:0;pointer-events:none;box-sha
       <div id="accForm" class="pick" style="flex-direction:column;align-items:stretch;gap:.3rem" hidden>
         <input class="name" id="accEmail" type="email" autocomplete="email" inputmode="email" autocapitalize="none">
         <input class="name" id="accPass" type="password" autocomplete="current-password">
-        <div class="chips"><button class="buy" id="accSignIn" type="button"></button><button class="buy" id="accSignUp" type="button" style="background:var(--op);color:var(--op-ink)"></button></div>
+        <div class="chips"><button class="buy" id="accSignIn" type="button"></button><button class="buy" id="accSignUp" type="button" style="background:var(--op);color:var(--op-ink)"></button><button class="chip" id="accForgot" type="button"></button></div>
         <p class="rnote" id="accErr" style="color:var(--bad);padding:0" hidden></p>
+        <p class="rnote" id="accPending" style="padding:0" hidden></p>
+        <div class="chips" id="accResendRow" hidden><button class="chip" id="accResend" type="button"></button></div>
       </div>
+      <div id="accReset" class="pick" style="flex-direction:column;align-items:stretch;gap:.3rem" hidden><p class="rnote" id="accResetL" style="padding:0"></p><input class="name" id="accNewPass" type="password" autocomplete="new-password"><button class="buy" id="accNewPassBtn" type="button" style="align-self:flex-start"></button></div>
       <div id="accLogged" hidden>
         <div class="row"><span class="ri">✅</span><span class="rl" id="accWho"></span></div>
         <button class="row" type="button" id="accSync"><span class="ri">🔄</span><span class="rl"></span><span class="chev">›</span></button>
         <button class="row" type="button" id="accOut"><span class="ri">🚪</span><span class="rl"></span><span class="chev">›</span></button>
+        <button class="row" type="button" id="accAdmin" hidden><span class="ri">🛠</span><span class="rl"></span><span class="chev">›</span></button>
       </div>
     </section>
 
@@ -792,33 +823,33 @@ const COIN_PER_STAR = 10, COIN_PERFECT = 40, COIN_STREAK_CAP = 50, BLITZ_COIN_DI
 const XP_PER_STAR = 25, XP_PERFECT = 80, XP_STREAK = 20, XP_EXACT = 15, XP_SPEED = 20, XP_BLITZ_DIV = 8, XP_BLITZ_CAP = 400, XP_COMBO = 10, XP_SPIN = 5, XP_TROPHY = 50, XP_CHEST = 40;
 const xpNeed = lvl => 100 + (lvl - 1) * 60;
 const UNLOCKS = { 3:"glasses", 5:"pirate", 8:"robot", 12:"unicorn", 16:"disco", 20:"astro" };
-const PRICES = { eraser: 25, loupe: 20, hint: 30, second: 60, hourglass: 50, redo: 60, x2: 70, shield: 120 };
+const PRICES = { eraser: 40, loupe: 35, hint: 60, second: 90, hourglass: 80, redo: 120, x2: 150, shield: 250 };
 const UNDO_DAILY = 3, UNDO_BLITZ = 2, ERASER_UNDOS = 3;
-const PRICE_BY_RAR = { bronze: 150, silver: 400, gold: 900, diamond: 2000 };
+const PRICE_BY_RAR = { bronze: 600, silver: 1500, gold: 3500, diamond: 8000 };
 const ITEM_ICONS = { eraser:"🧽", loupe:"🔍", hint:"💡", second:"⏳", hourglass:"⌛", redo:"♻", x2:"✖️", shield:"🛡" };
-const TICKET_GEMS = 5;
-const RARITY = { bronze:{ w:60 }, silver:{ w:27 }, gold:{ w:10 }, diamond:{ w:3 } };
-const rarityOfPrice = p => p <= 200 ? "bronze" : p <= 300 ? "silver" : p <= 420 ? "gold" : "diamond";
+const TICKET_GEMS = 8;
+const RARITY = { bronze:{ w:70 }, silver:{ w:22 }, gold:{ w:7 }, diamond:{ w:1 } };
+const rarityOfPrice = p => p <= 800 ? "bronze" : p <= 1200 ? "silver" : p <= 1680 ? "gold" : "diamond";
 const SKINS = [
   { id:"classic",   price:0,   grad:null, parts:[], icon:"" },
-  { id:"neon",      price:120, grad:["#00E5FF","#FF3DAB"], parts:[], icon:"✨" },
-  { id:"antenna",   price:150, grad:null, parts:["hatAntenna"], icon:"📡" },
-  { id:"glasses",   price:180, grad:null, parts:["glasses"], icon:"👓" },
-  { id:"cap",       price:200, grad:null, parts:["hatCap"], icon:"🧢" },
-  { id:"gold",      price:250, grad:["#FFD54F","#FF8F00"], parts:[], icon:"🥇" },
-  { id:"ghost",     price:260, grad:["#F5F5FF","#C5CAE9"], parts:["cGhostTail"], opacity:.8, icon:"👻" },
-  { id:"snowman",   price:260, grad:["#FFFFFF","#CFD8DC"], parts:["cSnowman"], icon:"⛄" },
-  { id:"chef",      price:280, grad:null, parts:["cChef"], icon:"👨‍🍳" },
-  { id:"cactus",    price:280, grad:["#66BB6A","#2E7D32"], parts:["cCactus"], icon:"🌵" },
-  { id:"pineapple", price:300, grad:["#FFD54F","#F9A825"], parts:["cPineapple"], pattern:"patDiamond", icon:"🍍" },
-  { id:"pirate",    price:300, grad:null, parts:["cPirate"], icon:"🏴‍☠️" },
-  { id:"ninja",     price:320, grad:["#455A64","#263238"], parts:["cNinja","cNinjaTails"], icon:"🥷" },
-  { id:"robot",     price:350, grad:["#B0BEC5","#546E7A"], parts:["cRobotEyes"], robot:true, icon:"🤖" },
-  { id:"wizard",    price:380, grad:["#7E57C2","#4527A0"], parts:["cWizard"], icon:"🧙" },
-  { id:"crown",     price:400, grad:["#B388FF","#7C4DFF"], parts:["hatCrown"], icon:"👑" },
-  { id:"disco",     price:420, grad:["#ECEFF1","#90A4AE"], parts:["cDisco"], pattern:"patDots", icon:"🕺" },
-  { id:"unicorn",   price:450, grad:["#FFFFFF","#F8BBD0"], parts:["cUnicorn","cMane"], icon:"🦄" },
-  { id:"astro",     price:480, grad:["#FFFFFF","#B3E5FC"], parts:["cAstro","cAstroPack"], icon:"🚀" }
+  { id:"neon",      price:480, grad:["#00E5FF","#FF3DAB"], parts:[], icon:"✨" },
+  { id:"antenna",   price:600, grad:null, parts:["hatAntenna"], icon:"📡" },
+  { id:"glasses",   price:720, grad:null, parts:["glasses"], icon:"👓" },
+  { id:"cap",       price:800, grad:null, parts:["hatCap"], icon:"🧢" },
+  { id:"gold",      price:1000, grad:["#FFD54F","#FF8F00"], parts:[], icon:"🥇" },
+  { id:"ghost",     price:1040, grad:["#F5F5FF","#C5CAE9"], parts:["cGhostTail"], opacity:.8, icon:"👻" },
+  { id:"snowman",   price:1040, grad:["#FFFFFF","#CFD8DC"], parts:["cSnowman"], icon:"⛄" },
+  { id:"chef",      price:1120, grad:null, parts:["cChef"], icon:"👨‍🍳" },
+  { id:"cactus",    price:1120, grad:["#66BB6A","#2E7D32"], parts:["cCactus"], icon:"🌵" },
+  { id:"pineapple", price:1200, grad:["#FFD54F","#F9A825"], parts:["cPineapple"], pattern:"patDiamond", icon:"🍍" },
+  { id:"pirate",    price:1200, grad:null, parts:["cPirate"], icon:"🏴‍☠️" },
+  { id:"ninja",     price:1280, grad:["#455A64","#263238"], parts:["cNinja","cNinjaTails"], icon:"🥷" },
+  { id:"robot",     price:1400, grad:["#B0BEC5","#546E7A"], parts:["cRobotEyes"], robot:true, icon:"🤖" },
+  { id:"wizard",    price:1520, grad:["#7E57C2","#4527A0"], parts:["cWizard"], icon:"🧙" },
+  { id:"crown",     price:1600, grad:["#B388FF","#7C4DFF"], parts:["hatCrown"], icon:"👑" },
+  { id:"disco",     price:1680, grad:["#ECEFF1","#90A4AE"], parts:["cDisco"], pattern:"patDots", icon:"🕺" },
+  { id:"unicorn",   price:1800, grad:["#FFFFFF","#F8BBD0"], parts:["cUnicorn","cMane"], icon:"🦄" },
+  { id:"astro",     price:1920, grad:["#FFFFFF","#B3E5FC"], parts:["cAstro","cAstroPack"], icon:"🚀" }
 ];
 const ALL_PARTS = ["hatAntenna","hatCap","hatCrown","glasses","cGhostTail","cAstroPack","cMane","cNinjaTails","cRobotEyes","cPirate","cNinja","cAstro","cWizard","cChef","cDisco","cUnicorn","cPineapple","cCactus","cSnowman"];
 const THEMES = [
@@ -957,7 +988,12 @@ const I18N = {
       roulette_no_tix:["Plus de tickets. Un trophée, un niveau, un 9/9, ou cinq gemmes."],
       trophies_enter:["Chaque trophée paie des tickets ou des gemmes, et 50 XP. Les barres te disent où tu en es."]
     },
-    acc:{ title:"Compte", off:"Les comptes en ligne ne sont pas encore branchés sur cette version : ta partie vit sur cet appareil, avec le code de sauvegarde pour la déplacer.", intro:"Un compte sauvegarde ta partie en ligne, la retrouve sur un autre appareil et t’inscrit au classement.", email:"E-mail", pass:"Mot de passe (6 caractères minimum)", signIn:"Se connecter", signUp:"Créer le compte", who:"Connecté : {e}", sync:"Sauvegarder maintenant", out:"Se déconnecter", synced:"Sauvegarde en ligne à jour.", restoreTitle:"Une sauvegarde existe déjà", restoreText:"Sur le compte : niveau {l}, {c} pièces.\nSur cet appareil : niveau {ll}, {lc} pièces.\nLaquelle garder ?", useCloud:"Celle du compte", useLocal:"Celle de l’appareil", badLogin:"E-mail ou mot de passe refusé.", weakPass:"Mot de passe trop court.", exists:"Un compte existe déjà avec cet e-mail.", netErr:"Pas de réponse du serveur. Réessaie.", welcome:"Compte créé. Ta partie est maintenant en ligne." },
+    acc:{ title:"Compte", off:"Les comptes en ligne ne sont pas encore branchés sur cette version : ta partie vit sur cet appareil, avec le code de sauvegarde pour la déplacer.", intro:"Un compte sauvegarde ta partie en ligne, la retrouve sur un autre appareil et t’inscrit au classement.", email:"E-mail", pass:"Mot de passe (6 caractères minimum)", signIn:"Se connecter", signUp:"Créer le compte", who:"Connecté : {e}", sync:"Sauvegarder maintenant", out:"Se déconnecter", synced:"Sauvegarde en ligne à jour.", restoreTitle:"Une sauvegarde existe déjà", restoreText:"Sur le compte : niveau {l}, {c} pièces.\nSur cet appareil : niveau {ll}, {lc} pièces.\nLaquelle garder ?", useCloud:"Celle du compte", useLocal:"Celle de l’appareil", badLogin:"E-mail ou mot de passe refusé.", weakPass:"Mot de passe trop court.", exists:"Un compte existe déjà avec cet e-mail.", netErr:"Pas de réponse du serveur. Réessaie.", welcome:"Compte créé. Ta partie est maintenant en ligne.",
+      pending:"Un e-mail de confirmation vient de partir vers {e}. Ouvre-le, touche le lien, puis reviens ici te connecter.", resend:"Renvoyer l’e-mail", resent:"E-mail renvoyé.", notConfirmed:"Cet e-mail n’est pas encore confirmé : ouvre le message reçu et touche le lien.", forgot:"Mot de passe oublié ?", needEmail:"Écris d’abord ton e-mail dans le champ.", resetSent:"E-mail de réinitialisation envoyé à {e}.", newPass:"Choisis un nouveau mot de passe", newPassBtn:"Enregistrer le mot de passe", passChanged:"Mot de passe changé. Tu es connecté.", confirmed:"E-mail confirmé, bienvenue.", admin:"Administration" },
+    adm:{ title:"Administration", refresh:"Actualiser", players:"Joueurs inscrits", new7:"Nouveaux (7 j)", new1:"Nouveaux (24 h)", saves:"Sauvegardes", dailyToday:"Défi du jour joué", dailyDone:"Défis terminés", dailyAvg:"Réussites moy.", blitzToday:"Parties Blitz", blitzAvg:"Cibles moy.", blitzMax:"Record du jour", dist:"Répartition des réussites (défi du jour)", days:"Participations, 14 derniers jours", top:"Top 10 du jour", eco:"Économie (toutes les sauvegardes)", coins:"Pièces en circulation", gems:"Gemmes", tickets:"Tickets", avgLevel:"Niveau moyen", maxLevel:"Niveau max", skins:"Tenues possédées", codes:"Codes utilisés", spins:"Tours de roulette", denied:"Accès refusé : ton e-mail n’est pas dans la table admins.", loading:"Chargement…", none:"Rien pour l’instant.", local:"Cet appareil", localNote:"Statistiques du serveur : uniquement quand Supabase est branché et que ton e-mail est dans la table « admins »." },
+    shop2:{ later:"Plus tard", ownedNot:"Possédée, pas portée",
+      buyTitle:"Acheter {n} ?", buyText:"{p} ◎. Il te restera {r} ◎.", buy:"Acheter", wearNow:"Porter maintenant", worn:"Porté ✓", wear:"Porter", useNow:"Utiliser", inUse:"En place ✓", bought:"{n} acheté.", preview:"Aperçu" },
+    deco:{ edit:"Décorer", done:"Terminé", hint:"Glisse un objet pour le placer, touche-le pour le cacher ou l’afficher.", none:"Gagne des objets à la roulette ou achète-les en boutique pour décorer ton accueil." },
     board:{ title:"Classement", daily:"Du jour", blitz:"Blitz", noteOn:"Puzzle #{n}. Étoiles, puis temps, puis annulations et erreurs.", noteOff:"Connecte-toi dans Profil pour apparaître ici.", empty:"Personne pour l’instant. Sois le premier.", you:"toi", loading:"Chargement…", unavailable:"Classement indisponible sur cette version." },
     home:{ tag:"Dix parties par jour, les mêmes pour tous.", daily:"Défi du jour", dailyNew:"Défi #{n} : 10 parties, pas encore commencé", dailyDone:"{s}/10 réussies, nouveau défi dans {t}", dailyGo:"Partie {i}/10 en cours", blitz:"Blitz", blitzSub:"Record : {s} cibles, {p} pts", blitzNew:"5 minutes, autant de cibles que possible", roulette:"Roulette", shop:"Boutique", trophies:"Trophées", board:"Classement", foot:"Le même puzzle pour tout le monde, chaque jour." },
     ser:{ game:"Partie", done:"Défi du jour terminé", successes:"Réussites", moves:"Coups", resumed:"Reprise", next:"Nouveau défi dans", rank:"Voir le classement" },
@@ -1090,7 +1126,12 @@ const I18N = {
       roulette_no_tix:["No tickets. A trophy, a level, a 9/9, or five gems."],
       trophies_enter:["Every trophy pays tickets or gems, and 50 XP. The bars show where you stand."]
     },
-    acc:{ title:"Account", off:"Online accounts are not wired on this version yet: your game lives on this device, with the save code to move it.", intro:"An account saves your game online, restores it on another device and enters you in the leaderboard.", email:"E-mail", pass:"Password (6 characters minimum)", signIn:"Sign in", signUp:"Create account", who:"Signed in: {e}", sync:"Save now", out:"Sign out", synced:"Online save is up to date.", restoreTitle:"A save already exists", restoreText:"On the account: level {l}, {c} coins.\nOn this device: level {ll}, {lc} coins.\nWhich one to keep?", useCloud:"The account’s", useLocal:"This device’s", badLogin:"E-mail or password refused.", weakPass:"Password too short.", exists:"An account already exists with this e-mail.", netErr:"No answer from the server. Try again.", welcome:"Account created. Your game is online now." },
+    acc:{ title:"Account", off:"Online accounts are not wired on this version yet: your game lives on this device, with the save code to move it.", intro:"An account saves your game online, restores it on another device and enters you in the leaderboard.", email:"E-mail", pass:"Password (6 characters minimum)", signIn:"Sign in", signUp:"Create account", who:"Signed in: {e}", sync:"Save now", out:"Sign out", synced:"Online save is up to date.", restoreTitle:"A save already exists", restoreText:"On the account: level {l}, {c} coins.\nOn this device: level {ll}, {lc} coins.\nWhich one to keep?", useCloud:"The account’s", useLocal:"This device’s", badLogin:"E-mail or password refused.", weakPass:"Password too short.", exists:"An account already exists with this e-mail.", netErr:"No answer from the server. Try again.", welcome:"Account created. Your game is online now.",
+      pending:"A confirmation e-mail is on its way to {e}. Open it, tap the link, then come back here to sign in.", resend:"Resend the e-mail", resent:"E-mail sent again.", notConfirmed:"This e-mail isn’t confirmed yet: open the message you received and tap the link.", forgot:"Forgot your password?", needEmail:"Type your e-mail in the field first.", resetSent:"Reset e-mail sent to {e}.", newPass:"Choose a new password", newPassBtn:"Save the password", passChanged:"Password changed. You’re signed in.", confirmed:"E-mail confirmed, welcome.", admin:"Administration" },
+    adm:{ title:"Administration", refresh:"Refresh", players:"Registered players", new7:"New (7 d)", new1:"New (24 h)", saves:"Saves", dailyToday:"Daily played", dailyDone:"Daily finished", dailyAvg:"Avg. solved", blitzToday:"Blitz runs", blitzAvg:"Avg. targets", blitzMax:"Day record", dist:"Solved distribution (daily challenge)", days:"Participation, last 14 days", top:"Today’s top 10", eco:"Economy (all saves)", coins:"Coins in circulation", gems:"Gems", tickets:"Tickets", avgLevel:"Average level", maxLevel:"Max level", skins:"Outfits owned", codes:"Codes used", spins:"Wheel spins", denied:"Access denied: your e-mail isn’t in the admins table.", loading:"Loading…", none:"Nothing yet.", local:"This device", localNote:"Server statistics only appear when Supabase is wired and your e-mail is in the “admins” table." },
+    shop2:{ later:"Later", ownedNot:"Owned, not worn",
+      buyTitle:"Buy {n}?", buyText:"{p} ◎. You’ll have {r} ◎ left.", buy:"Buy", wearNow:"Wear it now", worn:"Wearing ✓", wear:"Wear", useNow:"Use", inUse:"In use ✓", bought:"{n} bought.", preview:"Preview" },
+    deco:{ edit:"Decorate", done:"Done", hint:"Drag an object to place it, tap it to hide or show it.", none:"Win objects on the wheel or buy them in the shop to decorate your home." },
     board:{ title:"Leaderboard", daily:"Daily", blitz:"Blitz", noteOn:"Puzzle #{n}. Stars, then time, then undos and errors.", noteOff:"Sign in from Profile to appear here.", empty:"Nobody yet. Be the first.", you:"you", loading:"Loading…", unavailable:"Leaderboard unavailable on this version." },
     home:{ tag:"Ten games a day, the same for everyone.", daily:"Daily challenge", dailyNew:"Challenge #{n}: 10 games, not started yet", dailyDone:"{s}/10 solved, new challenge in {t}", dailyGo:"Game {i}/10 in progress", blitz:"Blitz", blitzSub:"Best: {s} targets, {p} pts", blitzNew:"5 minutes, as many targets as you can", roulette:"Wheel", shop:"Shop", trophies:"Trophies", board:"Ranking", foot:"The same puzzle for everyone, every day." },
     ser:{ game:"Game", done:"Daily challenge complete", successes:"Solved", moves:"Moves", resumed:"Resumed", next:"New challenge in", rank:"See the ranking" },
@@ -1486,12 +1527,12 @@ function levelChest(lv){
   const id = rand(["hint","loupe","hourglass","redo","x2","shield","second","eraser"]); wallet.items[id] += 2; saveWallet(); return `${T.items[id][0]} +2`;
 }
 async function levelUp(lv){
-  const bonus = 30 * lv; wallet.coins += bonus; wallet.tickets += 1; saveWallet();
+  const bonus = 20 * lv; wallet.coins += bonus; const tix = lv % 2 === 0 ? 1 : 0; wallet.tickets += tix; saveWallet();
   banner(`${T.levelUp} ${lv}`); Snd.fanfare(); replay(Bip.el, "dance"); flash(); confettiRain(90);
-  const lines = [`+${bonus} ◎ ${T.lv.coins}`, `+1 🎟 ${T.lv.ticket}`];
+  const lines = [`+${bonus} ◎ ${T.lv.coins}`]; if (tix) lines.push(`+1 🎟 ${T.lv.ticket}`);
   if (lv % 5 === 0){ wallet.gems += 3; saveWallet(); lines.push(`+3 ◆ ${T.lv.gems}`); }
   const un = UNLOCKS[lv]; if (un && !wallet.owned.includes(un)){ wallet.owned.push(un); saveWallet(); lines.push(`${T.unlockedSkin} : ${T.skins[un]}`); }
-  if (lv % 3 === 0) lines.push(`${T.lv.chest} : ${levelChest(lv)}`);
+  if (lv % 5 === 0) lines.push(`${T.lv.chest} : ${levelChest(lv)}`);
   Bip.line2("levelUp", "laugh", 4200, { n: lv }); renderCurrencies(); Cloud.pushProfile();
   await sheet(tpl(T.lv.title, { n: lv }) + "  " + titleFor(lv), `${T.lv.rewards}\n${lines.join("\n")}`, T.lv.ok, "", true);
   setTimeout(checkAch, 400);
@@ -1506,6 +1547,21 @@ function applySkin(){
   $("bodyMain").style.opacity = sk.opacity || 1;
   const bp = $("bodyPattern"); if (sk.pattern){ bp.hidden = false; bp.setAttribute("fill", `url(#${sk.pattern})`); } else bp.hidden = true;
   Bip.el.classList.toggle("robot", !!sk.robot);
+}
+
+// Aperçu d’une tenue : copie du modèle de Bip avec des identifiants uniques
+let pvCount = 0;
+function bipPreview(sk){
+  const id = "pv" + (++pvCount); let html = $("bipTpl").innerHTML;
+  ["bipGrad","g1","g2","patDots","patDiamond","bodyMain","bodyPattern","eyes","pupils","mouth","browL","browR","glasses","costBack","costFront"].concat(ALL_PARTS).forEach(k => { html = html.split(`id="${k}"`).join(`id="${k}_${id}"`).split(`#${k})`).join(`#${k}_${id})`); });
+  const wrap = document.createElement("div"); wrap.innerHTML = html; const svg = wrap.firstElementChild; svg.removeAttribute("id"); svg.removeAttribute("role"); svg.removeAttribute("tabindex"); svg.classList.remove("bip"); svg.setAttribute("aria-hidden", "true");
+  const q = k => svg.querySelector(`#${k}_${id}`);
+  q("g1").setAttribute("stop-color", sk.grad ? sk.grad[0] : "var(--accent)"); q("g2").setAttribute("stop-color", sk.grad ? sk.grad[1] : "var(--accent-2)");
+  ALL_PARTS.forEach(k => { const el = q(k); if (el) el.hidden = !(sk.parts || []).includes(k); });
+  q("bodyMain").style.opacity = sk.opacity || 1; const bp = q("bodyPattern"); if (sk.pattern){ bp.hidden = false; bp.setAttribute("fill", `url(#${sk.pattern}_${id})`); } else bp.hidden = true;
+  if (sk.robot) q("eyes").style.display = "none";
+  svg.querySelectorAll("[class]").forEach(el => el.removeAttribute("class"));   // pas d’animations sur les aperçus
+  return svg;
 }
 
 // ===== Trophées =====
@@ -1848,7 +1904,7 @@ function dailyFinish(fresh){
     st.streak = cont ? st.streak + 1 : 1; st.played += 1; st.last = today; if (perfect && (!st.bestTime || daily.elapsed < st.bestTime)) st.bestTime = daily.elapsed; store.set("kalku:stats", st); }
   let rw = daily.reward;
   if (!daily.rewarded){
-    rw = { stars: total * COIN_PER_STAR, perfect: perfect ? COIN_PERFECT * 3 : 0, streak: Math.min(COIN_STREAK_CAP, 5 * st.streak), tix: daily.successes >= 8 ? 1 : 0 };
+    rw = { stars: total * COIN_PER_STAR, perfect: perfect ? COIN_PERFECT * 3 : 0, streak: Math.min(COIN_STREAK_CAP, 5 * st.streak), tix: perfect ? 1 : 0 };
     rw.total = rw.stars + rw.perfect + rw.streak;
     const mult = Math.min(2, 1 + .1 * (st.streak - 1)); rw.xp = Math.round((total * XP_PER_STAR + (perfect ? XP_PERFECT * 2 : 0) + XP_STREAK + (daily.xpBonus || 0)) * mult); rw.mult = mult;
     daily.reward = rw; daily.rewarded = true; daily.finishedAt = Date.now(); saveDaily();
@@ -1994,12 +2050,28 @@ const Cloud = {
     if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) return;
     try{
       this.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      this.sb.auth.getSession().then(({ data }) => { this.user = (data && data.session && data.session.user) || null; renderAccount(); }).catch(() => {});
-      this.sb.auth.onAuthStateChange((ev, sess) => { this.user = (sess && sess.user) || null; renderAccount(); });
+      this.sb.auth.getSession().then(({ data }) => { this.user = (data && data.session && data.session.user) || null; renderAccount(); if (this.user) this.checkAdmin(); }).catch(() => {});
+      this.sb.auth.onAuthStateChange((ev, sess) => {
+        const had = !!this.user; this.user = (sess && sess.user) || null; renderAccount();
+        if (ev === "PASSWORD_RECOVERY"){ this.recovery = true; go("profile"); renderAccount(); }
+        else if (ev === "SIGNED_IN" && !had && this.user && /type=signup|type=email/.test(location.hash || "")){ toast(T.acc.confirmed); Snd.fanfare(); go("profile"); this.afterLogin(); }
+        if (this.user) this.checkAdmin();
+        if (location.hash && /access_token|type=/.test(location.hash)) history.replaceState(null, "", location.pathname);
+      });
     }catch(e){ this.sb = null; }
   },
   snapshot(){ return { v: 2, w: wallet, s: store.get("kalku:stats"), b: store.get("kalku:blitz"), d: daily, h: hist, at: Date.now() }; },
-  async signUp(email, pass){ const { data, error } = await this.sb.auth.signUp({ email, password: pass, options: { data: { name: wallet.name || null } } }); if (error) throw error; this.user = data.user; if (!data.session) { const r = await this.sb.auth.signInWithPassword({ email, password: pass }); if (r.error) throw r.error; this.user = r.data.user; } await this.save(true); await this.pushProfile(); toast(T.acc.welcome); },
+  async signUp(email, pass){
+    const { data, error } = await this.sb.auth.signUp({ email, password: pass, options: { data: { name: wallet.name || null }, emailRedirectTo: location.origin + location.pathname } }); if (error) throw error;
+    if (!data.session){ this.pending = email; return "pending"; }   // confirmation par e-mail requise
+    this.user = data.user; await this.save(true); await this.pushProfile(); toast(T.acc.welcome); return "ok";
+  },
+  async resend(){ if (!this.pending) return; const { error } = await this.sb.auth.resend({ type: "signup", email: this.pending, options: { emailRedirectTo: location.origin + location.pathname } }); if (error) throw error; },
+  async forgot(email){ const { error } = await this.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname }); if (error) throw error; },
+  async setPassword(pass){ const { error } = await this.sb.auth.updateUser({ password: pass }); if (error) throw error; this.recovery = false; },
+  admin: false,
+  async checkAdmin(){ try{ const { data } = await this.sb.rpc("is_admin"); this.admin = !!data; }catch(e){ this.admin = false; } renderAccount(); },
+  async stats(){ const { data, error } = await this.sb.rpc("admin_stats"); if (error) throw error; return data; },
   async signIn(email, pass){ const { data, error } = await this.sb.auth.signInWithPassword({ email, password: pass }); if (error) throw error; this.user = data.user; await this.afterLogin(); },
   async signOut(){ try{ await this.sb.auth.signOut(); }catch(e){} this.user = null; renderAccount(); },
   async afterLogin(){
@@ -2032,13 +2104,19 @@ function renderAccount(){
   const on = Cloud.ready(); $("grpAccT").textContent = T.acc.title;
   $("accNote").textContent = on ? (Cloud.user ? "" : T.acc.intro) : T.acc.off;
   $("accForm").hidden = !on || !!Cloud.user; $("accLogged").hidden = !on || !Cloud.user;
-  $("accEmail").placeholder = T.acc.email; $("accPass").placeholder = T.acc.pass; $("accSignIn").textContent = T.acc.signIn; $("accSignUp").textContent = T.acc.signUp;
-  $("accSync").querySelector(".rl").textContent = T.acc.sync; $("accOut").querySelector(".rl").textContent = T.acc.out;
+  $("accEmail").placeholder = T.acc.email; $("accPass").placeholder = T.acc.pass; $("accSignIn").textContent = T.acc.signIn; $("accSignUp").textContent = T.acc.signUp; $("accForgot").textContent = T.acc.forgot;
+  $("accSync").querySelector(".rl").textContent = T.acc.sync; $("accOut").querySelector(".rl").textContent = T.acc.out; $("accAdmin").querySelector(".rl").textContent = T.acc.admin; $("accAdmin").hidden = !Cloud.admin;
+  $("accPending").hidden = !Cloud.pending || !!Cloud.user; $("accResendRow").hidden = !Cloud.pending || !!Cloud.user; if (Cloud.pending) $("accPending").textContent = tpl(T.acc.pending, { e: Cloud.pending }); $("accResend").textContent = T.acc.resend;
+  $("accReset").hidden = !Cloud.recovery; $("accResetL").textContent = T.acc.newPass; $("accNewPass").placeholder = T.acc.pass; $("accNewPassBtn").textContent = T.acc.newPassBtn;
   if (Cloud.user) $("accWho").textContent = tpl(T.acc.who, { e: Cloud.user.email || "" });
 }
-function accError(e){ const m = String(e && e.message || e || ""); const el = $("accErr"); el.hidden = false; el.textContent = /invalid|credentials/i.test(m) ? T.acc.badLogin : /password/i.test(m) ? T.acc.weakPass : /already|registered|exists/i.test(m) ? T.acc.exists : m ? m : T.acc.netErr; Snd.bad(); }
+function accError(e){ const m = String(e && e.message || e || ""); const el = $("accErr"); el.hidden = false; el.textContent = /not confirmed/i.test(m) ? T.acc.notConfirmed : /invalid|credentials/i.test(m) ? T.acc.badLogin : /password/i.test(m) ? T.acc.weakPass : /already|registered|exists/i.test(m) ? T.acc.exists : m ? m : T.acc.netErr; if (/not confirmed/i.test(m)){ Cloud.pending = $("accEmail").value.trim(); renderAccount(); } Snd.bad(); }
 $("accSignIn").addEventListener("click", async () => { $("accErr").hidden = true; const e = $("accEmail").value.trim(), p = $("accPass").value; if (!e || !p) return; $("accSignIn").disabled = true; try{ await Cloud.signIn(e, p); Snd.buy(); }catch(err){ accError(err); } $("accSignIn").disabled = false; renderAccount(); });
-$("accSignUp").addEventListener("click", async () => { $("accErr").hidden = true; const e = $("accEmail").value.trim(), p = $("accPass").value; if (!e || !p) return; if (p.length < 6){ accError({ message: "password" }); return; } $("accSignUp").disabled = true; try{ await Cloud.signUp(e, p); Snd.fanfare(); confettiRain(60); }catch(err){ accError(err); } $("accSignUp").disabled = false; renderAccount(); });
+$("accSignUp").addEventListener("click", async () => { $("accErr").hidden = true; const e = $("accEmail").value.trim(), p = $("accPass").value; if (!e || !p) return; if (p.length < 6){ accError({ message: "password" }); return; } $("accSignUp").disabled = true; try{ const r = await Cloud.signUp(e, p); if (r === "ok"){ Snd.fanfare(); confettiRain(60); } else { Snd.hint(); } }catch(err){ accError(err); } $("accSignUp").disabled = false; renderAccount(); });
+$("accResend").addEventListener("click", async () => { try{ await Cloud.resend(); toast(T.acc.resent); }catch(err){ accError(err); } });
+$("accForgot").addEventListener("click", async () => { const e = $("accEmail").value.trim(); if (!e){ toast(T.acc.needEmail); return; } try{ await Cloud.forgot(e); toast(tpl(T.acc.resetSent, { e })); }catch(err){ accError(err); } });
+$("accNewPassBtn").addEventListener("click", async () => { const p = $("accNewPass").value; if (p.length < 6){ accError({ message: "password" }); return; } try{ await Cloud.setPassword(p); toast(T.acc.passChanged); Snd.fanfare(); renderAccount(); }catch(err){ accError(err); } });
+$("accAdmin").addEventListener("click", () => go("admin"));
 $("accSync").addEventListener("click", async () => { await Cloud.save(true); await Cloud.pushProfile(); toast(T.acc.synced); Snd.buy(); });
 $("accOut").addEventListener("click", async () => { await Cloud.signOut(); toast(T.acc.out); });
 
@@ -2081,6 +2159,28 @@ $("bdToday").addEventListener("click", () => { board.tab = "today"; renderRankin
 $("bdModeDaily").addEventListener("click", () => { board.mode = "daily"; renderRanking(); }); $("bdModeBlitz").addEventListener("click", () => { board.mode = "blitz"; renderRanking(); });
 $("bdPrev").addEventListener("click", () => { board.day = dayFromIndex(Math.max(0, dayIndex(board.day) - 1)); renderRanking(); }); $("bdNext").addEventListener("click", () => { if (board.day < today){ board.day = dayFromIndex(dayIndex(board.day) + 1); renderRanking(); } });
 
+// ===== Administration =====
+async function renderAdmin(){
+  $("adTitle").textContent = T.adm.title; const body = $("adBody"); body.innerHTML = "";
+  const card = (v, l) => { const c = document.createElement("div"); c.className = "adcard"; const b = document.createElement("b"); b.textContent = v; const s = document.createElement("span"); s.textContent = l; c.append(b, s); return c; };
+  const sect = t => { const h = document.createElement("div"); h.className = "sect"; h.textContent = t; return h; };
+  const grid = cards => { const g = document.createElement("div"); g.className = "adgrid"; cards.forEach(c => g.appendChild(c)); return g; };
+  const st = store.get("kalku:stats") || {}; const bb = store.get("kalku:blitz") || {};
+  body.appendChild(sect(T.adm.local)); body.appendChild(grid([card(wallet.level, T.lvl), card(nf(wallet.coins), T.coins), card(st.played || 0, T.pr.played), card(st.streak || 0, T.streak), card(bb.successes || 0, T.pr.best), card(hist.length, T.rk.history)]));
+  if (!Cloud.ready() || !Cloud.user || !Cloud.admin){ const p = document.createElement("p"); p.className = "note"; p.textContent = Cloud.ready() && Cloud.user ? T.adm.denied : T.adm.localNote; body.appendChild(p); return; }
+  const ld = document.createElement("p"); ld.className = "note"; ld.textContent = T.adm.loading; body.appendChild(ld);
+  let d; try{ d = await Cloud.stats(); }catch(e){ ld.textContent = T.adm.denied + " " + (e.message || ""); return; }
+  ld.remove();
+  body.appendChild(sect(T.adm.players)); body.appendChild(grid([card(nf(d.players || 0), T.adm.players), card(nf(d.new1 || 0), T.adm.new1), card(nf(d.new7 || 0), T.adm.new7), card(nf(d.saves || 0), T.adm.saves)]));
+  body.appendChild(sect(T.home.daily)); body.appendChild(grid([card(nf(d.daily_today || 0), T.adm.dailyToday), card(nf(d.daily_done || 0), T.adm.dailyDone), card(d.daily_avg || 0, T.adm.dailyAvg), card(nf(d.blitz_today || 0), T.adm.blitzToday), card(d.blitz_avg || 0, T.adm.blitzAvg), card(d.blitz_max || 0, T.adm.blitzMax)]));
+  const bars = (vals, labels, title) => { body.appendChild(sect(title)); const w = document.createElement("div"); w.className = "adbars"; const mx = Math.max(1, ...vals); vals.forEach(v => { const i = document.createElement("i"); i.style.height = (v / mx * 100) + "%"; i.dataset.v = v; w.appendChild(i); }); body.appendChild(w); const x = document.createElement("div"); x.className = "adx"; labels.forEach(l => { const sp = document.createElement("span"); sp.textContent = l; x.appendChild(sp); }); body.appendChild(x); };
+  if (Array.isArray(d.daily_dist)) bars(d.daily_dist.map(Number), d.daily_dist.map((_, i) => i), T.adm.dist);
+  if (Array.isArray(d.days) && d.days.length) bars(d.days.map(x => (x.daily || 0) + (x.blitz || 0)), d.days.map(x => x.day.slice(8)), T.adm.days);
+  body.appendChild(sect(T.adm.top)); const tl = document.createElement("div"); tl.className = "board"; (d.top || []).forEach((r, i) => tl.appendChild(rowEl({ ...r, rank: i + 1, completed: true }, "daily", false, false))); if (!(d.top || []).length){ const p = document.createElement("p"); p.className = "note"; p.textContent = T.adm.none; tl.appendChild(p); } body.appendChild(tl);
+  body.appendChild(sect(T.adm.eco)); body.appendChild(grid([card(nf(Math.round(d.coins || 0)), T.adm.coins), card(nf(Math.round(d.gems || 0)), T.adm.gems), card(nf(Math.round(d.tickets || 0)), T.adm.tickets), card(d.avg_level || 0, T.adm.avgLevel), card(d.max_level || 0, T.adm.maxLevel), card(nf(d.skins_owned || 0), T.adm.skins), card(nf(d.codes_used || 0), T.adm.codes), card(nf(d.spins || 0), T.adm.spins)]));
+}
+$("adRefresh").addEventListener("click", renderAdmin);
+
 // ===== Boutique =====
 function rarBadge(r){ if (!r) return ""; return `<span class="rar ${r}">${T.rarity[r]}</span>`; }
 let shopTab = "items";
@@ -2093,9 +2193,9 @@ function renderShop(){
   const boardRow = (host, list, ownedList, current, names, onEquip) => { host.innerHTML = ""; list.forEach(x => {
     const it = document.createElement("div"); it.className = "item"; const ic = document.createElement("div"); ic.className = "ic"; ic.textContent = x.icon || "🎁";
     const tx = document.createElement("div"); tx.className = "tx"; const b = document.createElement("b"); b.textContent = names[x.id]; if (x.rar) b.insertAdjacentHTML("beforeend", rarBadge(x.rar));
-    const owned = ownedList.includes(x.id); const price = x.rar ? PRICE_BY_RAR[x.rar] : 0; const sp = document.createElement("span"); sp.textContent = owned ? (current === x.id ? T.equipped : "") : `${price} ◎`; tx.append(b, sp);
-    const buy = document.createElement("button"); buy.className = "buy" + (owned ? " own" : ""); buy.textContent = owned ? (current === x.id ? T.equipped : T.equip) : `${price} ◎`; buy.disabled = (owned && current === x.id) || (!owned && wallet.coins < price);
-    buy.addEventListener("click", () => { if (!owned){ if (wallet.coins < price){ toast(`${T.need} ${price - wallet.coins} ◎`); return; } wallet.coins -= price; ownedList.push(x.id); Snd.buy(); const c = centerOf(buy); burst(c.x, c.y, 50, 45); } onEquip(x.id); saveWallet(); renderShop(); });
+    const owned = ownedList.includes(x.id); const price = x.rar ? PRICE_BY_RAR[x.rar] : 0; const sp = document.createElement("span"); sp.textContent = owned ? (current === x.id ? T.shop2.inUse : "") : `${nf(price)} ◎`; tx.append(b, sp);
+    const buy = document.createElement("button"); buy.className = "buy" + (owned ? " own" : ""); buy.textContent = owned ? (current === x.id ? T.shop2.inUse : T.shop2.useNow) : T.shop2.buy; buy.disabled = (owned && current === x.id) || (!owned && wallet.coins < price);
+    buy.addEventListener("click", async () => { if (!owned){ if (wallet.coins < price){ toast(`${T.need} ${nf(price - wallet.coins)} ◎`); return; } const ok = await sheet(tpl(T.shop2.buyTitle, { n: names[x.id] }), tpl(T.shop2.buyText, { p: nf(price), r: nf(wallet.coins - price) }), T.shop2.buy, T.no); if (!ok) return; wallet.coins -= price; ownedList.push(x.id); Snd.buy(); const c = centerOf(buy); burst(c.x, c.y, 50, 45); toast(tpl(T.shop2.bought, { n: names[x.id] })); } onEquip(x.id); saveWallet(); renderShop(); });
     it.append(ic, tx, buy); host.appendChild(it); }); };
   boardRow($("themesS"), THEMES, wallet.themes, wallet.theme, T.themes, id => { wallet.theme = id; applyTheme(); Bip.line2("themeSet", "wow", 3000); });
   boardRow($("btnsS"), BTNS, wallet.btns, wallet.btn, T.btns, id => { wallet.btn = id; applyBtn(); });
@@ -2113,18 +2213,22 @@ function renderShop(){
   const sk = $("skins"); sk.innerHTML = "";
   SKINS.forEach(s => {
     const it = document.createElement("div"); it.className = "item";
-    const sw = document.createElement("div"); sw.className = "sw"; sw.style.background = s.grad ? `linear-gradient(135deg,${s.grad[0]},${s.grad[1]})` : "linear-gradient(135deg,var(--accent),var(--accent-2))";
-    if (s.icon){ const h = document.createElement("span"); h.textContent = s.icon; h.style.cssText = "position:absolute;top:-.6rem;right:-.5rem;font-size:1.2rem"; sw.appendChild(h); }
+    const pv = document.createElement("div"); pv.className = "pv"; pv.appendChild(bipPreview(s));
     const unlockLv = Object.entries(UNLOCKS).find(([lv, id]) => id === s.id);
-    const tx = document.createElement("div"); tx.className = "tx"; const b = document.createElement("b"); b.innerHTML = ""; b.textContent = T.skins[s.id]; if (s.price) b.insertAdjacentHTML("beforeend", rarBadge(rarityOfPrice(s.price)));
-    const sp = document.createElement("span"); sp.textContent = (s.price ? `${s.price} ◎` : T.free) + (unlockLv && !wallet.owned.includes(s.id) ? ` (${T.unlockAt} ${unlockLv[0]})` : ""); tx.append(b, sp);
+    const tx = document.createElement("div"); tx.className = "tx"; const b = document.createElement("b"); b.textContent = T.skins[s.id]; if (s.price) b.insertAdjacentHTML("beforeend", rarBadge(rarityOfPrice(s.price)));
     const owned = wallet.owned.includes(s.id), wearing = wallet.skin === s.id;
-    const buy = document.createElement("button"); buy.className = "buy" + (owned ? " own" : ""); buy.textContent = wearing ? T.owned : owned ? T.wear : `${s.price} ◎`; buy.disabled = wearing || (!owned && wallet.coins < s.price);
-    buy.addEventListener("click", () => {
-      if (!owned){ if (wallet.coins < s.price){ toast(`${T.need} ${s.price - wallet.coins} ◎`); return; } wallet.coins -= s.price; wallet.owned.push(s.id); Snd.buy(); const c = centerOf(buy); burst(c.x, c.y, 40, HUES[3]); setTimeout(checkAch, 400); }
-      wallet.skin = s.id; saveWallet(); applySkin(); Bip.line("wear", "laugh", 3000); renderShop();
+    const sp = document.createElement("span"); sp.textContent = wearing ? T.shop2.worn : owned ? T.shop2.ownedNot : (s.price ? `${nf(s.price)} ◎` : T.free) + (unlockLv ? `  (${T.unlockAt} ${unlockLv[0]})` : ""); tx.append(b, sp);
+    const buy = document.createElement("button"); buy.className = "buy" + (owned ? " own" : ""); buy.textContent = wearing ? T.shop2.worn : owned ? T.shop2.wear : T.shop2.buy; buy.disabled = wearing || (!owned && wallet.coins < s.price);
+    buy.addEventListener("click", async () => {
+      if (!owned){
+        if (wallet.coins < s.price){ toast(`${T.need} ${nf(s.price - wallet.coins)} ◎`); return; }
+        const ok = await sheet(tpl(T.shop2.buyTitle, { n: T.skins[s.id] }), tpl(T.shop2.buyText, { p: nf(s.price), r: nf(wallet.coins - s.price) }), T.shop2.buy, T.no); if (!ok) return;
+        wallet.coins -= s.price; wallet.owned.push(s.id); saveWallet(); Snd.buy(); const c = centerOf(buy); burst(c.x, c.y, 40, HUES[3]); setTimeout(checkAch, 400);
+        const wear = await sheet(tpl(T.shop2.bought, { n: T.skins[s.id] }), "", T.shop2.wearNow, T.shop2.later, true); if (!wear){ renderShop(); return; }
+      }
+      wallet.skin = s.id; saveWallet(); applySkin(); Bip.line("wear", "laugh", 3000); toast(`${T.skins[s.id]} : ${T.shop2.worn}`); renderShop();
     });
-    it.append(sw, tx, buy); sk.appendChild(it);
+    it.append(pv, tx, buy); sk.appendChild(it);
   });
   const packRow = (list, key, label, unit) => { const host = $(key); host.innerHTML = ""; list.forEach(p => {
     const it = document.createElement("div"); it.className = "item"; const ic = document.createElement("div"); ic.className = "ic"; ic.textContent = unit;
@@ -2165,7 +2269,7 @@ function pickPrize(){
   const r = weightedRarity();
   const pools = { skin: SKINS.filter(s => s.price > 0 && rarityOfPrice(s.price) === r && !wallet.owned.includes(s.id)), theme: THEMES.filter(t => t.rar === r && !wallet.themes.includes(t.id)), music: MUSICS.filter(m => m.rar === r && !wallet.musics.includes(m.id)), buttons: BTNS.filter(b => b.rar === r && !wallet.btns.includes(b.id)), decor: DECORS.filter(d => d.rar === r && !wallet.decors.includes(d.id)) };
   const kinds = Object.entries(pools).filter(([k, v]) => v.length);
-  if (kinds.length && Math.random() < .62){ const [kind, pool] = rand(kinds); return { kind, rar: r, item: rand(pool) }; }
+  if (kinds.length && Math.random() < .5){ const [kind, pool] = rand(kinds); return { kind, rar: r, item: rand(pool) }; }
   const cur = { bronze:[{ kind:"coins", n:40 }, { kind:"coins", n:60 }, { kind:"consumable", id:"hint", n:1 }, { kind:"consumable", id:"eraser", n:2 }], silver:[{ kind:"coins", n:120 }, { kind:"gems", n:2 }, { kind:"consumable", id:"redo", n:1 }], gold:[{ kind:"gems", n:5 }, { kind:"consumable", id:"second", n:1 }, { kind:"coins", n:250 }], diamond:[{ kind:"gems", n:12 }, { kind:"coins", n:400 }] };
   return Object.assign({ rar: r }, rand(cur[r]));
 }
@@ -2286,7 +2390,7 @@ const chestReady = () => wallet.chestDay !== today;
 async function openChest(){
   if (!chestReady()) { toast(T.chest.opened); return; }
   const st = store.get("kalku:stats") || { streak: 0 }; const streak = Math.max(1, st.streak || 1);
-  const coins = 30 + 10 * Math.min(10, streak); const tix = Math.random() < .2 + Math.min(.3, streak * .02) ? 1 : 0; const gems = Math.random() < .15 ? 1 : 0;
+  const coins = 30 + 10 * Math.min(10, streak); const tix = Math.random() < .08 + Math.min(.17, streak * .015) ? 1 : 0; const gems = Math.random() < .1 ? 1 : 0;
   wallet.chestDay = today; wallet.coins += coins; wallet.c.coinsEarned += coins; wallet.tickets += tix; wallet.gems += gems; saveWallet();
   Snd.fanfare(); confettiRain(70); const c = centerOf($("hChest")); burst(c.x, c.y, 80, 45); replay(Bip.el, "dance");
   const lines = [`+${coins} ◎`, `+${XP_CHEST} ${T.xp}`]; if (tix) lines.push(`+1 🎟`); if (gems) lines.push(`+1 ◆`);
@@ -2303,7 +2407,9 @@ function renderHome(){
   $("hRouletteT").textContent = T.home.roulette; $("hShopT").textContent = T.home.shop; $("hTrophT").textContent = T.home.trophies; $("hBoardT").textContent = T.home.board; $("hFoot").textContent = T.home.foot;
   $("hChestT").textContent = chestReady() ? T.chest.ready : T.chest.opened; $("hChestIco").classList.toggle("ready", chestReady()); $("hChestBadge").hidden = !chestReady(); renderXp();
   const ready = ACH.filter(a => !wallet.ach.includes(a.id) && a.get(wallet.c) >= a.need).length; $("hTrophBadge").hidden = !ready; $("hTrophBadge").textContent = ready;
-  const dec = $("hDecor"); dec.innerHTML = ""; DECORS.filter(d => wallet.decors.includes(d.id)).forEach((d, i) => { const s = document.createElement("span"); s.className = "decor"; s.textContent = d.icon; s.style.left = d.x; s.style.top = d.y; s.style.animationDelay = (i * .4) + "s"; s.title = T.decors[d.id]; dec.appendChild(s); });
+  const dec = $("hDecor"); dec.innerHTML = ""; wallet.decorPos = wallet.decorPos || {}; const editing = $("stage").classList.contains("editing");
+  DECORS.filter(d => wallet.decors.includes(d.id)).forEach((d, i) => { const p = wallet.decorPos[d.id] || {}; if (p.hidden && !editing) return; const s = document.createElement("span"); s.className = "decor" + (p.hidden ? " off" : ""); s.dataset.id = d.id; s.textContent = d.icon; s.style.left = p.x || d.x; s.style.top = p.y || d.y; s.style.animationDelay = (i * .4) + "s"; s.title = T.decors[d.id]; dec.appendChild(s); });
+  $("decoBtn").textContent = editing ? T.deco.done : "✏️"; $("decoBtn").hidden = !wallet.decors.length && !editing; $("decoHint").hidden = !editing; $("decoHint").textContent = wallet.decors.length ? T.deco.hint : T.deco.none;
   renderCurrencies();
 }
 ["hDaily","hBlitz","hRoulette","hShop","hTroph","hBoard","hProfile","hSettings"].forEach(id => $(id).addEventListener("click", () => {
@@ -2314,15 +2420,25 @@ $("sCoins").addEventListener("click", () => { shopTab = "items"; go("shop"); });
 function renderMusBtn(){ $("gMus").setAttribute("aria-pressed", String(Music.on)); }
 $("gMus").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (Music.on){ Snd.ensure(); Music.start(); Bip.line2("music", "laugh", 2600); } });
 
+// Édition du décor : glisser pour placer, toucher pour cacher
+$("decoBtn").addEventListener("click", () => { const st = $("stage"); st.classList.toggle("editing"); Bip.bub.classList.remove("show"); renderHome(); Snd.tap(); if (!st.classList.contains("editing")) saveWallet(); });
+(() => {
+  let drag = null;
+  $("hDecor").addEventListener("pointerdown", e => { if (!$("stage").classList.contains("editing")) return; const el = e.target.closest(".decor"); if (!el) return; e.preventDefault(); const r = $("stage").getBoundingClientRect(); drag = { el, id: el.dataset.id, sx: e.clientX, sy: e.clientY, moved: false, r }; el.setPointerCapture && el.setPointerCapture(e.pointerId); });
+  document.addEventListener("pointermove", e => { if (!drag) return; const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy; if (Math.hypot(dx, dy) > 6) drag.moved = true; if (!drag.moved) return; const x = Math.max(0, Math.min(92, (e.clientX - drag.r.left) / drag.r.width * 100)), y = Math.max(-8, Math.min(80, (e.clientY - drag.r.top) / drag.r.height * 100)); drag.el.style.left = x + "%"; drag.el.style.top = y + "%"; drag.el.style.transform = "none"; });
+  document.addEventListener("pointerup", e => { if (!drag) return; wallet.decorPos = wallet.decorPos || {}; const p = wallet.decorPos[drag.id] || {}; if (drag.moved){ p.x = drag.el.style.left; p.y = drag.el.style.top; } else { p.hidden = !p.hidden; drag.el.classList.toggle("off", !!p.hidden); Snd.tap(); } wallet.decorPos[drag.id] = p; saveWallet(); drag = null; });
+})();
+
 // ===== Navigation =====
 function go(id){
   document.body.classList.remove("combo"); $("light").classList.remove("on");
   if (screen === "game"){ if (blitz.running){ clearInterval(blitz.timer); blitzSave(); blitz.running = false; applyMusic(); } if (mode === "daily" && startTs){ daily.elapsed += Date.now() - startTs; startTs = null; saveDaily(); } }
-  screen = id; ["home","game","shop","roulette","trophies","profile","board"].forEach(s => { const el = $("scr-" + s); el.hidden = s !== id; if (s === id){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
+  $("stage").classList.remove("editing");
+  screen = id; ["home","game","shop","roulette","trophies","profile","board","admin"].forEach(s => { const el = $("scr-" + s); el.hidden = s !== id; if (s === id){ el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter"); } });
   if (Bip.bub) Bip.bub.classList.remove("show"); clearTimeout(Bip.timer);
   if (id === "game") Bip.mount("bipSlotGame", "bubble"); else if (id === "profile") Bip.mount("bipSlotProfile", "pBubble"); else Bip.mount("bipSlotHome", "hBubble");
   Music.setPart(id === "game" ? "daily" : (id === "shop" || id === "roulette") ? id : "home");
-  if (id === "home") renderHome(); else if (id === "shop") renderShop(); else if (id === "roulette") renderRoulette(); else if (id === "trophies") renderTrophies(); else if (id === "profile"){ renderProfile(); renderAccount(); } else if (id === "board") renderRanking();
+  if (id === "home") renderHome(); else if (id === "shop") renderShop(); else if (id === "roulette") renderRoulette(); else if (id === "trophies") renderTrophies(); else if (id === "profile"){ renderProfile(); renderAccount(); } else if (id === "board") renderRanking(); else if (id === "admin") renderAdmin();
   try{ window.scrollTo(0, 0); }catch(e){} Snd.tap();
 }
 function startDaily(){ mode = "daily"; go("game"); dailyStart(); if (firstVisit && !dailyDone()){ firstVisit = false; store.set("kalku:seen", 1); setTimeout(() => Bip.sequence(T.bip.tutorial), 500); } else if (!dailyDone()) setTimeout(greet, 400); }
