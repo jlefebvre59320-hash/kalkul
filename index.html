@@ -597,6 +597,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <link rel="stylesheet" href="arcade.css">
 <link rel="stylesheet" href="mobile.css">
 <link rel="stylesheet" href="realms.css">
+<link rel="stylesheet" href="navigation.css">
 </head>
 
 <body>
@@ -1544,7 +1545,7 @@ const Bip = {
   wake(){ if (!this.asleep) return; this.asleep = false; this.el.classList.remove("asleep"); this.line2("wake", "wow", 3000); }
 };
 document.addEventListener("pointerdown", e => { Bip.look(e.clientX, e.clientY); resetIdle(); });
-Bip.el.addEventListener("click", () => { if (Bip.seq){ Bip.advance(); return; } if (screen === "game"){ if (game === "let") lHint(false); else hint(); } else { if(typeof reactBip === "function") reactBip(); else Bip.joke(); } });
+Bip.el.addEventListener("click", () => { if (Bip.seq){ Bip.advance(); return; } if (screen === "game"){ if (game === "let") lHint(false); else hint(); } else { if(screen === "hub" || screen === "home") $("customizeUniverse").click(); else if(typeof reactBip === "function") reactBip(); else Bip.joke(); } });
 Bip.el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); Bip.el.click(); } });
 let idleTimer, sleepTimer;
 function resetIdle(){
@@ -2367,7 +2368,7 @@ function renderHome(){
   renderCurrencies();
 }
 ["hDaily","hBlitz","hRoulette","hShop","hTroph","hBoard","hProfile","hSettings"].forEach(id => $(id).addEventListener("click", () => {
-  if (id === "hDaily") startDaily(); else if (id === "hBlitz") startBlitzScreen(); else if (id === "hProfile") go("hub"); else if (id === "hBoard"){ board.tab = "today"; board.mode = game === "let" ? lModeKey("ldaily") : "daily"; go("board"); } else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : "profile");
+  if (id === "hDaily") startDaily(); else if (id === "hBlitz") startBlitzScreen(); else if (id === "hProfile") navigateBack(); else if (id === "hBoard"){ board.tab = "today"; board.mode = game === "let" ? lModeKey("ldaily") : "daily"; go("board"); } else go(id === "hRoulette" ? "roulette" : id === "hShop" ? "shop" : id === "hTroph" ? "trophies" : "profile");
 }));
 $("gCoins").addEventListener("click", () => go("shop"));
 $("sCoins").addEventListener("click", () => { shopTab = "items"; go("shop"); }); $("sGems").addEventListener("click", () => { shopTab = "packs"; go("shop"); }); $("sTix").addEventListener("click", () => go("roulette"));
@@ -2652,6 +2653,7 @@ $("decoBtn").addEventListener("click", () => { const st = $("stage"); st.classLi
 
 // ===== Navigation =====
 function go(id){
+  if(typeof rememberNavigation === "function") rememberNavigation(id);
   document.body.classList.remove("combo"); $("light").classList.remove("on");
   if (screen === "game"){ if (mode === "daily" && startTs){ daily.elapsed += Date.now() - startTs; startTs = null; saveDaily(); } if (game === "let" && mode === "ldaily" && LB.active){ LB.active = false; clearInterval(LB.timer); } }
   $("stage").classList.remove("editing");
@@ -2670,8 +2672,8 @@ function startBlitzScreen(){
   if (game === "let"){ mode = "lblitz"; go("game"); if (lblitz.running){ showOnly("lboard"); $("hud").hidden = false; $("bar").hidden = false; lRender(); } else lBlitzIntro(); return; }
   mode = "blitz"; go("game"); if (blitz.running){ showOnly("board"); $("hud").hidden = false; $("bar").hidden = false; renderBoard(); renderHud(); } else blitzIntro();
 }
-$("back").addEventListener("click", () => go("home"));
-document.querySelectorAll(".icon.back").forEach(b => b.addEventListener("click", () => go("home")));
+$("back").addEventListener("click", () => navigateBack());
+document.querySelectorAll(".icon.back").forEach(b => b.addEventListener("click", () => navigateBack()));
 $("startBlitz").addEventListener("click", () => game === "let" ? lBlitzStart() : blitzStart()); $("againBlitz").addEventListener("click", () => game === "let" ? lBlitzStart() : blitzStart());
 $("goBlitz").addEventListener("click", () => { board.tab = "today"; board.mode = game === "let" ? lModeKey("ldaily") : "daily"; go("board"); });
 $("rankBlitz").addEventListener("click", () => { board.tab = "today"; board.mode = game === "let" ? lModeKey("lblitz") : "blitz"; go("board"); });
@@ -2702,6 +2704,8 @@ function applyLang(l){
 <script src="arcade.js"></script>
 <script src="mobile.js"></script>
 <script src="realms.js"></script>
+<script src="navigation.js"></script>
+<script src="studio-shop.js"></script>
 <script>
 // ===== Démarrage =====
 let firstVisit = !store.get("kalku:seen");

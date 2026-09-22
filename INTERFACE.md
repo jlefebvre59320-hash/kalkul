@@ -66,3 +66,13 @@ Dix accessoires SVG supplémentaires : canard perché, Saturne, banane, moustach
 Test navigateur : trois palettes différentes affectées simultanément ; fond de Mon univers inchangé pendant la modification de Kalku/Lettra ; chaque accueil restitue sa propre palette ; conservation de Kalku après rechargement ; accessoire canard visible. Palettes de référence rétablies après les tests. Console sans erreur et validation syntaxique de tous les nouveaux scripts et des scripts inline.
 
 Publier aussi `realms.js` et `realms.css` ; service worker v18.
+
+## Navigation et déblocages du studio
+
+L’accueil garde deux boutons nommés Compte et Réglages, qui ouvrent la bonne section du profil. La barre du bas affiche Accueil, et les écrans secondaires utilisent « ‹ Retour » avec l’historique des sections visitées. Les accueils de jeux ont aussi un bouton Changer de jeu. Cliquer Bip sur un accueil ouvre le studio ; ses indices en partie restent inchangés.
+
+Les nouvelles couleurs, yeux, vêtements, accessoires et ambiances supplémentaires se débloquent désormais en boutique avec des pièces. Les options de base, nom, genre, caractère et mouvements restent gratuits. Les objets verrouillés sont signalés et renvoient vers leur catégorie en boutique ; Retour rouvre le studio. Le tirage aléatoire utilise uniquement les options possédées. Les essais gratuits des versions précédentes ne constituent pas des achats. Les tenues déjà acquises dans l’ancien catalogue sont conservées.
+
+Les nouveaux achats utilisent `wallet.studioOwned` et le portefeuille existant, avec contrôles de solde et de doublon. Comme l’économie existante, la validation reste côté client. Cache v19 ; publier aussi navigation.js, navigation.css et studio-shop.js.
+
+Validation : navigation Lettra/boutique/Retour et studio/objet verrouillé/boutique/Retour testée dans le navigateur ; présentation 320×740 contrôlée ; console sans erreur. Tests isolés de l’historique et des achats (fonds insuffisants, débit exact, possession, doublon, identifiant inconnu) réussis. Syntaxe de tous les scripts et scripts inline validée.

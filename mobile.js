@@ -15,7 +15,7 @@ const styleGroups=[
 for(const [key,title,choices] of styleGroups){const field=document.createElement('fieldset'),legend=document.createElement('legend');legend.textContent=title;field.append(legend);for(const [value,label] of choices){const b=document.createElement('button');b.type='button';b.className='style-chip';b.dataset.key=key;b.dataset.value=value;b.textContent=label;if(value.startsWith('#')){const dot=document.createElement('i');dot.style.background=value;dot.setAttribute('aria-hidden','true');b.prepend(dot);}b.onclick=()=>{bipStyle[key]=value;saveBipStyle();};field.append(b);} $('styleOptions').append(field);}
 $('bipName').oninput=e=>{bipStyle.name=e.target.value.trim().slice(0,20)||'Bip';saveBipStyle();};
 $('bipGender').onchange=e=>{bipStyle.gender=e.target.value;saveBipStyle();};
-function saveBipStyle(){store.set('kalku:bip-style',bipStyle);applySkin();renderMobile();renderStudio();}
+function saveBipStyle(){if(typeof validateStudioStyle==='function')validateStudioStyle();store.set('kalku:bip-style',bipStyle);applySkin();renderMobile();renderStudio();}
 function applyBipStyle(){
  const el=Bip.el;if(!el)return;
  if(bipStyle.color!=='skin'&&/^#[\da-f]{6}$/i.test(bipStyle.color)){ $('g1').setAttribute('stop-color',bipStyle.color);$('g2').setAttribute('stop-color',bipStyle.color); }
@@ -31,6 +31,7 @@ function renderStudio(){
  if(!customDialog.open)return;
  $('studioName').textContent=bipStyle.name+' · '+({neutral:'iel',female:'elle',male:'il'}[bipStyle.gender]||'iel');
  $('styleOptions').querySelectorAll('button[data-key]').forEach(b=>b.setAttribute('aria-pressed',String(bipStyle[b.dataset.key]===b.dataset.value)));
+ if(typeof renderStudioLocks==='function')renderStudioLocks();
  const copy=Bip.el.cloneNode(true);copy.removeAttribute('id');copy.removeAttribute('role');copy.removeAttribute('tabindex');copy.setAttribute('aria-hidden','true');
  copy.querySelectorAll('[id]').forEach(n=>{const old=n.id;n.id='studio-'+old;copy.querySelectorAll('[fill]').forEach(f=>{if(f.getAttribute('fill')===`url(#${old})`)f.setAttribute('fill',`url(#studio-${old})`);});});
  $('studioAvatar').replaceChildren(copy);
@@ -59,7 +60,7 @@ for(const [icon,label,mood,motion,line] of [['♥','Câlin','happy','bounce','Un
  const b=document.createElement('button');b.type='button';b.textContent=icon+' '+label;b.onclick=()=>{Bip.say(line,mood,3000);$('studioMessage').textContent=line;renderStudio();const svg=$('studioAvatar').firstElementChild;if(!reduceMotion&&bipStyle.motion!=='still')replay(svg,motion);Snd.tap();};reactionBar.append(b);
 }
 document.querySelector('.studio-preview').after(reactionBar);
-const shuffleStyle=document.createElement('button');shuffleStyle.type='button';shuffleStyle.className='chip';shuffleStyle.textContent='↻ Surprends-moi';shuffleStyle.onclick=()=>{for(const [key,,choices] of styleGroups){if(['color','eyes','outfit','accessory'].includes(key))bipStyle[key]=choices[Math.floor(Math.random()*choices.length)][0];}saveBipStyle();};reactionBar.append(shuffleStyle);
+const shuffleStyle=document.createElement('button');shuffleStyle.type='button';shuffleStyle.className='chip';shuffleStyle.textContent='↻ Surprends-moi';shuffleStyle.onclick=()=>{for(const [key,,choices] of styleGroups){if(['color','eyes','outfit','accessory'].includes(key)){const available=choices.filter(([v])=>typeof ownsStudioStyle!=='function'||ownsStudioStyle(key,v));bipStyle[key]=available[Math.floor(Math.random()*available.length)][0];};}saveBipStyle();};reactionBar.append(shuffleStyle);
 for(const g of ['num','let']){
  const card=document.querySelector('.arcade-card.'+g);card.addEventListener('click',e=>{if(!e.target.closest('button'))launchFromHub(g,'home');});
 }
