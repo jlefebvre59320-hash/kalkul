@@ -1,0 +1,42 @@
+/* L'univers du joueur devient la première destination. */
+.hub{max-width:64rem!important;gap:1.15rem}
+.hub .logo{margin:.25rem 0!important;display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.hub .logo h1{font-size:2rem!important}
+.hub .logo p{font-size:.85rem!important;text-align:right;margin:0!important;max-width:12rem}
+.universe-card{position:relative;overflow:hidden;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:1.7rem;background:var(--panel);box-shadow:0 12px 35px var(--tile-glow);padding:1.25rem}
+.universe-heading{display:flex;justify-content:space-between;align-items:center;gap:.6rem;position:relative;z-index:2}
+.eyebrow{font-size:.65rem;letter-spacing:.12em;font-weight:800;margin:0;color:var(--soft)}
+.universe-heading h2{font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.1;margin:.4rem 0;letter-spacing:-.04em;overflow-wrap:anywhere}
+.level-badge{flex:none;background:var(--ink);color:var(--panel);font-weight:800;border-radius:999px;padding:.55rem .8rem;font-size:.75rem;transform:rotate(5deg)}
+.hub .universe-stage{isolation:isolate;position:relative;min-height:205px!important;display:grid;place-items:center;margin:.2rem -.3rem!important;overflow:hidden;border-radius:1.25rem;background:radial-gradient(ellipse at 50% 65%,color-mix(in srgb,var(--accent) 20%,transparent),transparent 65%)}
+.universe-orbit{position:absolute;width:210px;height:72px;bottom:24px;border:2px dashed color-mix(in srgb,var(--accent) 30%,transparent);border-radius:50%;transform:rotate(-9deg);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.hub .universe-stage .slot{width:112px!important;height:125px!important;z-index:2;filter:drop-shadow(0 16px 14px var(--tile-glow));transform:rotate(-6deg);transition:transform .25s}
+.hub .universe-stage .slot:hover{transform:rotate(5deg) scale(1.05)}
+.hub .universe-stage .hbubble{position:absolute;right:.5rem;top:.4rem;max-width:40%;font-size:.75rem;z-index:3;background:var(--panel);padding:.5rem;border:1px solid var(--line);border-radius:.8rem}
+.skin-tag{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);color:var(--soft);font-size:.72rem;font-weight:700;background:var(--panel);padding:.2rem .6rem;border-radius:1rem}
+.scene-star{position:absolute;color:var(--accent);font-size:2.5rem}.star-one{top:25%;left:17%;transform:rotate(-12deg)}.star-two{top:15%;right:17%;font-size:1.7rem}
+#hubDecor{position:absolute;inset:0;z-index:1;pointer-events:none}.universe-decor{position:absolute;font-size:2rem;filter:drop-shadow(0 7px 5px rgb(0 0 0 / .13))}
+.universe-progress{display:grid;grid-template-columns:auto 1fr;gap:.35rem .8rem;align-items:center;margin:1rem 0;font-size:.75rem;font-weight:700;color:var(--soft)}
+#universeXpBar{width:100%;height:8px;accent-color:var(--accent);border:0;border-radius:1rem;overflow:hidden}
+#universeXpBar::-webkit-progress-bar{background:var(--line)}#universeXpBar::-webkit-progress-value{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+#universeNext{grid-column:1/-1;text-align:right;font-size:.68rem}
+.universe-actions{display:grid;grid-template-columns:1.15fr 1fr;gap:.6rem}
+.universe-actions .btn{min-height:48px;height:auto;padding:.7rem .4rem;font-size:.8rem}
+.universe-editor{border-top:1px solid var(--line);margin-top:1rem;padding-top:.5rem}.universe-editor h3{font-size:.85rem;margin:.7rem 0}.universe-chips{display:flex;flex-wrap:wrap;gap:.4rem}.universe-chips p{font-size:.8rem;color:var(--soft)}#universeShop{margin-top:.8rem;width:100%}
+.reward-strip{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.reward-strip button{display:flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:1rem;background:var(--panel);padding:.85rem .7rem;text-align:left;min-width:0;color:var(--ink)}
+.reward-strip button>span:nth-child(2){flex:1;min-width:0}.reward-strip b,.reward-strip small{display:block}.reward-strip b{font-size:.77rem}.reward-strip small{font-size:.67rem;color:var(--soft);margin-top:.2rem}.reward-strip .reward-icon{font-size:1.5rem}.reward-strip button:disabled{opacity:.65;cursor:default}
+.surprise-card{background:linear-gradient(125deg,#23204F,#48367C);color:#fff;border-radius:1.4rem;padding:1.15rem;position:relative;overflow:hidden}
+.surprise-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}.surprise-top .eyebrow{color:#D8D2FF}.surprise-top .chip{color:#fff;background:#ffffff12;border:1px solid #ffffff30;min-height:36px;font-size:.7rem;padding:.3rem .6rem}
+.surprise-card h2{font-size:1.25rem;margin:.65rem 0 1rem;letter-spacing:-.025em}
+.surprise-puzzle{display:flex;align-items:center;gap:.75rem;justify-content:space-between}.surprise-puzzle>span:first-child{font-size:1.05rem;font-weight:700;letter-spacing:.04em}.surprise-puzzle b{font-size:1.7rem;color:#FFE795;background:#ffffff15;border:1px solid #ffffff20;border-radius:.7rem;padding:.3rem .7rem}
+.surprise-bottom{display:flex;gap:.7rem;justify-content:space-between;align-items:center;border-top:1px solid #ffffff22;padding-top:1rem;margin-top:1rem}.surprise-bottom b,.surprise-bottom small{display:block}.surprise-bottom b{color:#FFE795;font-size:.8rem}.surprise-bottom small{color:#D8D2FF;font-size:.63rem;margin-top:.25rem}.surprise-bottom .btn.primary{background:#E7FA94;color:#26253A;font-size:.77rem;padding:.65rem .85rem;min-height:44px;height:auto;flex:none;box-shadow:none}
+.hub .today-heading{margin:.2rem 0 -.4rem}.hub .daily-card{padding:.9rem}.hub .daily-card .card-heading h2{font-size:1.15rem}.hub .daily-card .card-heading p{font-size:.75rem}.hub .daily-card .daily-state{margin:.6rem 0 .3rem}
+.challenge-dialog{width:min(94vw,440px);max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:1.5rem;padding:1.2rem;background:var(--panel);color:var(--ink);box-shadow:0 30px 100px #0006}
+.challenge-dialog::backdrop{background:#111329b3;backdrop-filter:blur(5px)}.challenge-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}.challenge-top h2{font-size:.85rem;letter-spacing:.05em;margin:0}#challengeRules{font-size:.8rem;color:var(--soft)}
+.challenge-goal{text-align:center;padding:.6rem}.challenge-goal small{display:block;font-size:.65rem;color:var(--soft);letter-spacing:.1em}.challenge-goal b{font-size:3.5rem;color:var(--accent);line-height:1.2}
+.challenge-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.6rem 0}.challenge-tiles button{border:1px solid var(--tile-edge);border-bottom-width:3px;background:var(--tile);color:var(--ink);border-radius:.8rem;height:60px;font-size:1.6rem;font-weight:800}.challenge-tiles button:disabled{opacity:.4}
+.challenge-ops{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}.challenge-ops button{height:44px;border:1px solid var(--line);border-radius:.6rem;background:var(--op);color:var(--op-ink);font-size:1.25rem;font-weight:700}
+.challenge-tiles button[aria-pressed=true],.challenge-ops button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);outline:2px solid var(--accent);outline-offset:2px}#challengeMessage{min-height:2.6rem;font-size:.8rem;text-align:center;color:var(--soft)}.challenge-controls{display:flex;gap:.5rem}.challenge-controls button{flex:1;font-size:.8rem;min-height:46px;height:auto;padding:.5rem}
+@media(min-width:800px){.hub{display:grid!important;grid-template-columns:1.1fr 1fr;align-content:start;gap:1rem 1.4rem}.hub[hidden]{display:none!important}.hub>.topbar,.hub>.logo{grid-column:1/-1}.hub>.universe-card{grid-column:1;grid-row:3/6;align-self:start}.hub>.reward-strip{grid-column:2;grid-row:3}.hub>.surprise-card{grid-column:2;grid-row:4}.hub>.today-heading{grid-column:1/-1;grid-row:6}.hub>.daily-cards{grid-column:1/-1;grid-row:7}.hub .universe-stage{min-height:235px!important}.hub .universe-stage .slot{width:140px!important;height:154px!important}.hub>.logo{margin:.7rem 0!important}.hub .daily-cards{grid-template-columns:1fr 1fr}}
+@media(max-width:359px){.reward-strip{grid-template-columns:1fr}.surprise-bottom{flex-wrap:wrap}.surprise-bottom .btn{width:100%}.surprise-puzzle>span:first-child{font-size:.85rem}.universe-card{padding:1rem}.universe-actions{grid-template-columns:1fr}.hub .logo p{font-size:.7rem!important}.universe-stage .hbubble{max-width:36%!important;font-size:.65rem!important}}
