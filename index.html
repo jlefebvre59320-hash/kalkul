@@ -548,7 +548,7 @@ html[data-game="let"] .brand,html[data-game="let"] .home .logo h1{font-family:"B
   .blob,.pt,.tnum,.tnum.roll,.tnum.hit,.node.earn .on,.node.cur b,.tile.pop,.tile.shake,.tile.in,.op.in,.tile.hint,.op.hint,.total,.rstars .on,.home .logo h1,.bip .body,.bip .eyes,.bip.bounce,.bip.dance,.bip.wiggle,.bip.droop,.bip.asleep .body,.banner.go,.flash.go,.bar.low i,.bump,.float,.card[data-anim] > *,body.quake,.wipe.go .panel,.wipe.go .wtext,.decor,.screen.enter,.prize,.ripple,.slot::after,body.combo::before,.wipe .lines,.wipe .ring,.chest-ico.ready,.target::after,.btn.primary::before,.bubble .tw::after{animation:none !important}
   .tile,.op,.btn,.toast,.bubble,.hbubble,.bip .pupils,.scrim,.sheet,body,.big,.sq{transition:none}
 }
-html[data-game="let"] /* ===== Direction artistique « Plateau TV » : feutre, html[data-game="let"] laiton, html[data-game="let"] ambre, html[data-game="let"] tuiles à volets ===== */
+/* ===== Direction artistique « Plateau TV » : feutre, html[data-game="let"] laiton, html[data-game="let"] ambre, html[data-game="let"] tuiles à volets ===== */
 html[data-game="let"]{
   --bg:#F5EBD6; --panel:#FFF7E8; --ink:#1F1B1A; --soft:#6E6257; --line:#E4D3B4;
   --accent:#F2A93B; --accent-2:#F76F5E; --accent-ink:#1F1B1A;
@@ -556,7 +556,8 @@ html[data-game="let"]{
   --op:#E9D7B3; --op-ink:#4A3B1E; --brass:#C99A3A; --brass-2:#7A5A1C; --felt:#1D4B4C;
   --star:#F2A93B; --star-off:#D9CBB0; --coin:#D98E14; --gem:#2FB5B0; --ticket:#F76F5E; --focus:#F2A93B;
   --blob-a:#F2C97A; --blob-b:#9AD3C6; --blob-c:#F9B8A9; --face:#1F1B1A; --scrim:rgba(31,27,26,.55);
-}html[data-game="let"] @media (prefers-color-scheme: dark){
+}
+@media (prefers-color-scheme: dark){
   html[data-game="let"]:not([data-theme="light"]):not([data-board]){
     --bg:#0E2A2B; --panel:#153A3B; --ink:#FFF3D6; --soft:#B9C7BF; --line:#22504F;
     --accent:#F2A93B; --accent-2:#FF7E6B; --accent-ink:#1F1B1A;
@@ -580,7 +581,8 @@ html[data-game="let"][data-theme="dark"]:not([data-board]){
 .target{background:radial-gradient(120% 100% at 50% 0%,#245E5F,var(--felt) 70%);border:3px solid var(--brass);box-shadow:0 0 0 2px var(--brass-2),inset 0 0 40px rgba(0,0,0,.45),0 14px 30px rgba(0,0,0,.35);border-radius:1rem}html[data-game="let"] .target::before{content:"";position:absolute;inset:.35rem;border-radius:.6rem;border:2px dotted rgba(242,201,122,.45);pointer-events:none}html[data-game="let"] .target::after{display:none}html[data-game="let"] .target .tlabel, html[data-game="let"] .target .lreveal small{color:#F2D9A4}html[data-game="let"] .target .tnum{color:#FFE8A8;text-shadow:0 0 12px rgba(255,200,90,.85),0 0 40px rgba(255,180,60,.5),0 3px 0 #7A5A1C;animation:none}html[data-game="let"] .tnum.hit{color:#9BF0B8;text-shadow:0 0 18px rgba(120,255,170,.9)}html[data-game="let"] .target .compose .ph, html[data-game="let"] .target .lreveal{color:#FFE8A8}html[data-game="let"] .lbar, html[data-game="let"] .bar{background:#0A1E1F;border-color:var(--brass-2)}html[data-game="let"] .lbar i, html[data-game="let"] .bar i{background:linear-gradient(90deg,#F2A93B,#FF7E6B)}html[data-game="let"] /* nœuds du chemin : ampoules */
 .node b{background:#0A1E1F;border:2px solid var(--brass-2);color:#F2D9A4}html[data-game="let"] .node.cur b{background:radial-gradient(circle at 40% 35%,#FFE8A8,#F2A93B);color:#1F1B1A;box-shadow:0 0 0 4px rgba(242,169,59,.35),0 0 22px rgba(255,200,90,.8)}html[data-game="let"] .node.done b{background:radial-gradient(circle at 40% 35%,#FFE8A8,#F2A93B);color:#1F1B1A}html[data-game="let"] .node.ten.done.s0 b{background:#3A3A3E;color:#8B8B90}html[data-game="let"] /* boutons */
 .btn.primary, html[data-game="let"] .big:not(.alt), html[data-game="let"] .buy, html[data-game="let"] .bubble .act, html[data-game="let"] .cta{background:linear-gradient(180deg,#FFC463,#F2A93B);color:#1F1B1A;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 0 #8A5410,0 14px 26px rgba(0,0,0,.25)}html[data-game="let"] .btn.primary::before{display:none}html[data-game="let"] .btn.primary:active, html[data-game="let"] .big:not(.alt):active{transform:translateY(4px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 2px 0 #8A5410,0 8px 16px rgba(0,0,0,.25)}html[data-game="let"] .big.alt, html[data-game="let"] .sq, html[data-game="let"] .btn:not(.primary){border:2px solid var(--brass-2);box-shadow:0 4px 0 var(--brass-2),0 10px 20px rgba(0,0,0,.12)}html[data-game="let"] .big .ico, html[data-game="let"] .sq .ico{filter:drop-shadow(0 3px 4px rgba(0,0,0,.25))}html[data-game="let"] .gcard.num{background:radial-gradient(120% 120% at 20% 0%,#2C7C7B,#123F40 70%)}html[data-game="let"] .gcard.let{background:radial-gradient(120% 120% at 20% 0%,#B04A3E,#5A2320 70%)}html[data-game="let"] .gcard{border:3px solid var(--brass);box-shadow:0 0 0 2px var(--brass-2),0 12px 30px rgba(0,0,0,.35);color:#FFF3D6}html[data-game="let"] .gcard .gi{background:rgba(0,0,0,.28);border:2px solid var(--brass);color:#FFE8A8;font-family:"Unbounded",Arial,sans-serif}html[data-game="let"] .gcard .st{background:rgba(0,0,0,.3);color:#FFE8A8}html[data-game="let"] /* ON AIR */
-.big:not(.alt) b::before{content:"";display:inline-block;width:.55rem;height:.55rem;border-radius:50%;background:#E2262A;margin-right:.45rem;box-shadow:0 0 8px #FF5A5F;animation:onair 1.4s ease-in-out infinite;vertical-align:.15rem}html[data-game="let"] @keyframes onair{50%{opacity:.35;box-shadow:none}}
+.big:not(.alt) b::before{content:"";display:inline-block;width:.55rem;height:.55rem;border-radius:50%;background:#E2262A;margin-right:.45rem;box-shadow:0 0 8px #FF5A5F;animation:onair 1.4s ease-in-out infinite;vertical-align:.15rem}
+@keyframes onair{50%{opacity:.35;box-shadow:none}}
 /* cartes, html[data-game="let"] bulles */
 .pcard, html[data-game="let"] .grp, html[data-game="let"] .item, html[data-game="let"] .brow, html[data-game="let"] .reward, html[data-game="let"] .prize, html[data-game="let"] .stat, html[data-game="let"] .adcard, html[data-game="let"] .pro, html[data-game="let"] .sheet{border-radius:.9rem}html[data-game="let"] .bubble, html[data-game="let"] .hbubble{border:2px solid var(--brass-2);border-radius:.9rem;background:var(--panel)}html[data-game="let"] .bubble::before, html[data-game="let"] .hbubble::before{border-right-color:var(--brass-2)}html[data-game="let"] .xp{border:2px solid var(--brass-2);background:#0A1E1F}html[data-game="let"] .xp .track i{background:linear-gradient(90deg,#F2A93B,#FF7E6B)}html[data-game="let"] .xp #xpTitle, html[data-game="let"] .xp .xpt{color:#F2D9A4;text-shadow:none}html[data-game="let"] .hud b{color:#FFE8A8}html[data-game="let"] .hud .pill{background:#0A1E1F;border-color:var(--brass-2);color:#F2D9A4}html[data-game="let"] .banner{background:linear-gradient(180deg,#FFC463,#F2A93B);color:#1F1B1A;border:3px solid var(--brass-2);font-family:"Unbounded",Arial,sans-serif}html[data-game="let"] .banner.boss{background:linear-gradient(180deg,#FF9F7E,#E2574C)}html[data-game="let"] .toast{background:#1F1B1A;color:#FFE8A8;border:2px solid var(--brass)}html[data-game="let"] .total{background:linear-gradient(180deg,#FFE8A8,#F2A93B);-webkit-background-clip:text;background-clip:text}html[data-game="let"] .stage .slot{filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))}html[data-game="let"] .decor{filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}html[data-game="let"] .wheelwrap canvas{box-shadow:0 0 0 6px var(--brass),0 0 0 9px var(--brass-2),0 20px 50px rgba(0,0,0,.4)}html[data-game="let"] .needle{border-top-color:#E2574C}
 /* nœud papillon de Bip (présentateur) */
@@ -590,6 +592,8 @@ html[data-game="let"] #bowtie{display:block}
 html[data-game="let"] .big.done b::before{display:none}
 html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="let"] .tnum, html[data-game="let"] .total, html[data-game="let"] .ltile, html[data-game="let"] .compose .cl, html[data-game="let"] .banner, html[data-game="let"] .xp .lv{font-family:"Unbounded","Bricolage Grotesque",Arial,sans-serif}
 </style>
+<link rel="stylesheet" href="ux.css">
+<link rel="stylesheet" href="universe.css">
 </head>
 
 <body>
@@ -656,10 +660,29 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
     <button class="icon" id="hubSettings" type="button" aria-label="Réglages"><span data-ico="gear"></span></button>
   </div>
   <div class="logo"><h1 style="margin:0;font-size:clamp(2.4rem,12vw,3.4rem);font-weight:800;letter-spacing:-.04em;line-height:1">Kalku</h1><p id="hubTag" style="margin:.1rem 0 0;color:var(--soft);font-weight:600;font-size:.92rem"></p></div>
-  <div class="stage" id="hubStage"><div class="slot" id="bipSlotHub"></div><div class="hbubble" id="hubBubble"></div></div>
-  <div class="cards">
-    <button class="gcard num" id="pickNum" type="button"><span class="gi">6</span><span><b>Kalku</b><small id="numDesc"></small><span class="st" id="numState"></span></span></button>
-    <button class="gcard let" id="pickLet" type="button"><span class="gi">Aa</span><span><b>Lettra</b><small id="letDesc"></small><span class="st" id="letState"></span></span></button>
+  <section class="universe-card" aria-labelledby="universeTitle">
+    <div class="universe-heading"><div><p class="eyebrow" id="universeEyebrow"></p><h2 id="universeTitle"></h2></div><span id="universeLevel" class="level-badge"></span></div>
+    <div class="stage universe-stage" id="hubStage"><div class="universe-orbit" aria-hidden="true"></div><span class="scene-star star-one" aria-hidden="true">✦</span><span class="scene-star star-two" aria-hidden="true">✧</span><div id="hubDecor" aria-hidden="true"></div><div class="slot" id="bipSlotHub"></div><div class="hbubble" id="hubBubble"></div><span id="universeSkin" class="skin-tag"></span></div>
+    <div class="universe-progress"><span id="universeXp"></span><progress id="universeXpBar" value="0" max="100"></progress><span id="universeNext"></span></div>
+    <div class="universe-actions"><button type="button" id="customizeUniverse" class="btn primary" aria-expanded="false" aria-controls="universeEditor"></button><button type="button" id="universeCollection" class="btn"></button></div>
+    <div id="universeEditor" class="universe-editor" hidden><div id="universeOptions"></div><button class="chip" id="universeShop" type="button"></button></div>
+  </section>
+  <section class="reward-strip" aria-label="Récompenses"><button id="hubChest" type="button"><span class="reward-icon" aria-hidden="true">🎁</span><span><b id="hubChestTitle"></b><small id="hubChestText"></small></span><span aria-hidden="true">↗</span></button><button id="hubWheel" type="button"><span class="reward-icon" aria-hidden="true">🎟</span><span><b id="hubWheelTitle"></b><small id="hubWheelText"></small></span><span aria-hidden="true">↗</span></button></section>
+  <section class="surprise-card" aria-labelledby="surpriseTitle"><div class="surprise-top"><span class="eyebrow" id="surpriseTag"></span><button id="shuffleChallenge" type="button" class="chip"></button></div><h2 id="surpriseTitle"></h2><div class="surprise-puzzle"><span id="surpriseNumbers"></span><span aria-hidden="true">→</span><b id="surpriseTarget"></b></div><div class="surprise-bottom"><div><b id="surpriseReward"></b><small id="surpriseRemaining"></small></div><button class="btn primary" type="button" id="playChallenge"></button></div></section>
+  <div class="today-heading"><span id="todayLabel"></span><span id="todayDate"></span></div>
+  <div class="cards daily-cards">
+    <article class="daily-card num">
+      <div class="card-heading"><span class="game-symbol" aria-hidden="true">6</span><div><h2>Kalku</h2><p id="numDesc"></p></div><span class="game-type" id="numType"></span></div>
+      <p class="daily-state" id="numState"></p><progress id="numProgress" max="10" value="0"></progress>
+      <button class="btn primary" id="pickNum" type="button"></button>
+      <div class="card-links"><button id="numBlitz" type="button"></button><button id="numHome" type="button"></button></div>
+    </article>
+    <article class="daily-card let">
+      <div class="card-heading"><span class="game-symbol" aria-hidden="true">Aa</span><div><h2>Lettra</h2><p id="letDesc"></p></div><span class="game-type" id="letType"></span></div>
+      <p class="daily-state" id="letState"></p><progress id="letProgress" max="10" value="0"></progress>
+      <button class="btn primary" id="pickLet" type="button"></button>
+      <div class="card-links"><button id="letBlitz" type="button"></button><button id="letHome" type="button"></button></div>
+    </article>
   </div>
   <div class="quick"><button class="big alt" id="hubAcc" type="button" style="padding:.7rem .7rem"><span><b id="hubAccT" style="font-size:1rem"></b><small id="hubAccS"></small></span><span class="ico">☁️</span></button><button class="big alt" id="hubRank" type="button" style="padding:.7rem .7rem"><span><b id="hubRankT" style="font-size:1rem"></b><small id="hubRankS"></small></span><span class="ico">🏅</span></button><button class="big alt" id="hubFriends" type="button" style="padding:.7rem .7rem"><span><b id="hubFrT" style="font-size:1rem"></b><small id="hubFrS"></small></span><span class="ico">👥</span></button></div>
   <div class="sect" id="hubThemeT" style="margin:.2rem 0 0"></div>
@@ -729,6 +752,8 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
     </div>
     <div class="tiles" id="tiles"></div>
     <div class="ops" id="ops"></div>
+    <p id="calcPreview" class="calc-preview" role="status"></p>
+    <div id="calcHistory" class="calc-history" aria-live="polite"></div>
     <div class="actions">
       <button class="btn" id="undo" type="button"></button>
       <button class="btn" id="reset" type="button"></button>
@@ -753,14 +778,14 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
       <button class="btn" id="lshuffle" type="button"></button>
       <button class="btn primary" id="lsubmit" type="button"></button>
     </div>
-    <div class="bag" id="lbag"></div>
+    <p class="word-help" id="wordHelp"></p><div class="bag" id="lbag"></div>
     <div class="dictload" id="dictload" hidden></div>
   </div>
 
   <section class="card" id="dailyResult" hidden>
     <h2 id="rtitle"></h2>
     <p class="total"><span id="rtotal"></span><small>/9</small></p>
-    <p class="rstars" id="rstars"></p>
+    <p class="result-insight" id="resultInsight"></p><p class="rstars" id="rstars"></p>
     <div class="stats">
       <div><b id="rtime"></b><span id="rtimel"></span></div>
       <div><b id="streak"></b><span id="streakl"></span></div>
@@ -828,7 +853,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <main class="screen" id="scr-trophies" hidden>
   <div class="topbar"><button class="icon back" type="button" aria-label="Retour"><span data-ico="back"></span></button><div class="mid" id="trTitle"></div><span class="icon cur gems"><b data-ico="gem"></b> <span class="gemsV">0</span></span></div>
   <p class="note" id="trNote"></p>
-  <div class="scroll" id="trophyList"></div>
+  <div class="collection-links"><button class="chip" id="collectionShop" type="button"></button><button class="chip" id="collectionWheel" type="button"></button></div><div class="scroll" id="trophyList"></div>
 </main>
 
 <!-- CLASSEMENT -->
@@ -883,7 +908,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
         <div class="chips" id="accResendRow" hidden><button class="chip" id="accResend" type="button"></button></div>
       </div>
       <div id="accReset" class="pick" style="flex-direction:column;align-items:stretch;gap:.3rem" hidden><p class="rnote" id="accResetL" style="padding:0"></p><input class="name" id="accNewPass" type="password" autocomplete="new-password"><button class="buy" id="accNewPassBtn" type="button" style="align-self:flex-start"></button></div>
-      <div id="accLogged" hidden>
+      <p class="rnote sync-status" id="syncStatus" role="status"></p><div id="accLogged" hidden>
         <div class="row"><span class="ri">✅</span><span class="rl" id="accWho"></span></div>
         <button class="row" type="button" id="accSync"><span class="ri">🔄</span><span class="rl"></span><span class="chev">›</span></button>
         <button class="row" type="button" id="accOut"><span class="ri">🚪</span><span class="rl"></span><span class="chev">›</span></button>
@@ -911,6 +936,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
       <p class="rnote" id="sndMsg" hidden></p>
     </section>
 
+    <section class="grp"><h3>Bip</h3><div class="row"><label id="bipModeLabel" for="bipMode"></label><select id="bipMode"><option value="quiet"></option><option value="chatty"></option></select></div><p class="rnote" id="bipModeNote"></p></section>
     <section class="grp">
       <h3><span class="gi">🌐</span><span id="grpLang"></span></h3>
       <div class="row"><div class="segl"><button type="button" data-lang="fr">Français</button><button type="button" data-lang="en">English</button></div></div>
@@ -932,7 +958,14 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
   </div>
 </main>
 
-<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle"><h3 id="shTitle"></h3><p id="shText"></p><div class="row"><button class="btn primary" id="shOk" type="button"></button><button class="btn" id="shCancel" type="button"></button></div></div></div>
+<dialog id="challengeDialog" class="challenge-dialog" aria-labelledby="challengeHeading"><div class="challenge-top"><h2 id="challengeHeading"></h2><button id="closeChallenge" class="icon" type="button" aria-label="Fermer">✕</button></div><p id="challengeRules"></p><div class="challenge-goal"><small id="challengeTargetLabel"></small><b id="challengeTarget"></b></div><div id="challengeTiles" class="challenge-tiles"></div><div id="challengeOps" class="challenge-ops"></div><p id="challengeMessage" role="status"></p><div class="challenge-controls"><button id="undoChallenge" type="button" class="btn"></button><button id="resetChallenge" type="button" class="btn"></button><button id="nextChallenge" type="button" class="btn primary" hidden></button></div></dialog>
+<nav class="bottom-nav" id="mainNav" aria-label="Navigation principale">
+<button type="button" data-destination="hub"><span aria-hidden="true">◈</span><span data-nav-label="play"></span></button>
+<button type="button" data-destination="board"><span aria-hidden="true">▤</span><span data-nav-label="ranking"></span></button>
+<button type="button" data-destination="trophies"><span aria-hidden="true">◇</span><span data-nav-label="collection"></span></button>
+<button type="button" data-destination="profile"><span aria-hidden="true">◉</span><span data-nav-label="profile"></span></button>
+</nav>
+<div class="scrim" id="scrim" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle"><h3 id="shTitle"></h3><p id="shText"></p><div class="row"><button class="btn primary" id="shOk" type="button"></button><button class="btn" id="shCancel" type="button"></button></div></div></div>
 <div class="toast" id="toast" role="status"></div>
 <p class="sr" id="live" aria-live="polite"></p>
 
@@ -951,33 +984,33 @@ const COIN_PER_STAR = 10, COIN_PERFECT = 40, COIN_STREAK_CAP = 50, BLITZ_COIN_DI
 const XP_PER_STAR = 25, XP_PERFECT = 80, XP_STREAK = 20, XP_EXACT = 15, XP_SPEED = 20, XP_BLITZ_DIV = 8, XP_BLITZ_CAP = 400, XP_COMBO = 10, XP_SPIN = 5, XP_TROPHY = 50, XP_CHEST = 40;
 const xpNeed = lvl => 100 + (lvl - 1) * 60;
 const UNLOCKS = { 3:"glasses", 5:"pirate", 8:"robot", 12:"unicorn", 16:"disco", 20:"astro" };
-const PRICES = { eraser: 40, loupe: 35, hint: 60, second: 90, hourglass: 80, redo: 120, x2: 150, shield: 250 };
+const PRICES = { eraser: 200, loupe: 175, hint: 300, second: 450, hourglass: 400, redo: 600, x2: 750, shield: 1250 };
 const UNDO_DAILY = 3, UNDO_BLITZ = 2, ERASER_UNDOS = 3;
-const PRICE_BY_RAR = { bronze: 600, silver: 1500, gold: 3500, diamond: 8000 };
+const PRICE_BY_RAR = { bronze: 3000, silver: 7500, gold: 17500, diamond: 40000 };
 const ITEM_ICONS = { eraser:"🧽", loupe:"🔍", hint:"💡", second:"⏳", hourglass:"⌛", redo:"♻", x2:"✖️", shield:"🛡" };
 const TICKET_GEMS = 8;
 const RARITY = { bronze:{ w:70 }, silver:{ w:22 }, gold:{ w:7 }, diamond:{ w:1 } };
-const rarityOfPrice = p => p <= 800 ? "bronze" : p <= 1200 ? "silver" : p <= 1680 ? "gold" : "diamond";
+const rarityOfPrice = p => p <= 4000 ? "bronze" : p <= 6000 ? "silver" : p <= 8400 ? "gold" : "diamond";
 const SKINS = [
   { id:"classic",   price:0,   grad:null, parts:[], icon:"" },
-  { id:"neon",      price:480, grad:["#00E5FF","#FF3DAB"], parts:[], icon:"✨" },
-  { id:"antenna",   price:600, grad:null, parts:["hatAntenna"], icon:"📡" },
-  { id:"glasses",   price:720, grad:null, parts:["glasses"], icon:"👓" },
-  { id:"cap",       price:800, grad:null, parts:["hatCap"], icon:"🧢" },
-  { id:"gold",      price:1000, grad:["#FFD54F","#FF8F00"], parts:[], icon:"🥇" },
-  { id:"ghost",     price:1040, grad:["#F5F5FF","#C5CAE9"], parts:["cGhostTail"], opacity:.8, icon:"👻" },
-  { id:"snowman",   price:1040, grad:["#FFFFFF","#CFD8DC"], parts:["cSnowman"], icon:"⛄" },
-  { id:"chef",      price:1120, grad:null, parts:["cChef"], icon:"👨‍🍳" },
-  { id:"cactus",    price:1120, grad:["#66BB6A","#2E7D32"], parts:["cCactus"], icon:"🌵" },
-  { id:"pineapple", price:1200, grad:["#FFD54F","#F9A825"], parts:["cPineapple"], pattern:"patDiamond", icon:"🍍" },
-  { id:"pirate",    price:1200, grad:null, parts:["cPirate"], icon:"🏴‍☠️" },
-  { id:"ninja",     price:1280, grad:["#455A64","#263238"], parts:["cNinja","cNinjaTails"], icon:"🥷" },
-  { id:"robot",     price:1400, grad:["#B0BEC5","#546E7A"], parts:["cRobotEyes"], robot:true, icon:"🤖" },
-  { id:"wizard",    price:1520, grad:["#7E57C2","#4527A0"], parts:["cWizard"], icon:"🧙" },
-  { id:"crown",     price:1600, grad:["#B388FF","#7C4DFF"], parts:["hatCrown"], icon:"👑" },
-  { id:"disco",     price:1680, grad:["#ECEFF1","#90A4AE"], parts:["cDisco"], pattern:"patDots", icon:"🕺" },
-  { id:"unicorn",   price:1800, grad:["#FFFFFF","#F8BBD0"], parts:["cUnicorn","cMane"], icon:"🦄" },
-  { id:"astro",     price:1920, grad:["#FFFFFF","#B3E5FC"], parts:["cAstro","cAstroPack"], icon:"🚀" }
+  { id:"neon",      price:2400, grad:["#00E5FF","#FF3DAB"], parts:[], icon:"✨" },
+  { id:"antenna",   price:3000, grad:null, parts:["hatAntenna"], icon:"📡" },
+  { id:"glasses",   price:3600, grad:null, parts:["glasses"], icon:"👓" },
+  { id:"cap",       price:4000, grad:null, parts:["hatCap"], icon:"🧢" },
+  { id:"gold",      price:5000, grad:["#FFD54F","#FF8F00"], parts:[], icon:"🥇" },
+  { id:"ghost",     price:5200, grad:["#F5F5FF","#C5CAE9"], parts:["cGhostTail"], opacity:.8, icon:"👻" },
+  { id:"snowman",   price:5200, grad:["#FFFFFF","#CFD8DC"], parts:["cSnowman"], icon:"⛄" },
+  { id:"chef",      price:5600, grad:null, parts:["cChef"], icon:"👨‍🍳" },
+  { id:"cactus",    price:5600, grad:["#66BB6A","#2E7D32"], parts:["cCactus"], icon:"🌵" },
+  { id:"pineapple", price:6000, grad:["#FFD54F","#F9A825"], parts:["cPineapple"], pattern:"patDiamond", icon:"🍍" },
+  { id:"pirate",    price:6000, grad:null, parts:["cPirate"], icon:"🏴‍☠️" },
+  { id:"ninja",     price:6400, grad:["#455A64","#263238"], parts:["cNinja","cNinjaTails"], icon:"🥷" },
+  { id:"robot",     price:7000, grad:["#B0BEC5","#546E7A"], parts:["cRobotEyes"], robot:true, icon:"🤖" },
+  { id:"wizard",    price:7600, grad:["#7E57C2","#4527A0"], parts:["cWizard"], icon:"🧙" },
+  { id:"crown",     price:8000, grad:["#B388FF","#7C4DFF"], parts:["hatCrown"], icon:"👑" },
+  { id:"disco",     price:8400, grad:["#ECEFF1","#90A4AE"], parts:["cDisco"], pattern:"patDots", icon:"🕺" },
+  { id:"unicorn",   price:9000, grad:["#FFFFFF","#F8BBD0"], parts:["cUnicorn","cMane"], icon:"🦄" },
+  { id:"astro",     price:9600, grad:["#FFFFFF","#B3E5FC"], parts:["cAstro","cAstroPack"], icon:"🚀" }
 ];
 const ALL_PARTS = ["hatAntenna","hatCap","hatCrown","glasses","cGhostTail","cAstroPack","cMane","cNinjaTails","cRobotEyes","cPirate","cNinja","cAstro","cWizard","cChef","cDisco","cUnicorn","cPineapple","cCactus","cSnowman"];
 const THEMES = [
@@ -1053,7 +1086,7 @@ const today = dayKey(now);
 const yesterday = dayKey(new Date(now.getTime() - 86400000));
 const dayFromIndex = i => dayKey(new Date(LAUNCH + i * 86400000));
 const dayIndex = k => Math.round((Date.UTC(+k.slice(0,4), +k.slice(5,7) - 1, +k.slice(8,10)) - LAUNCH) / 86400000);
-const puzzleNo = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - LAUNCH)/86400000) + 1;
+const puzzleNo = dayIndex(today) + 1;
 
 // Générateurs et solveur
 function hash(str){ let h = 2166136261; for (let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
@@ -1340,13 +1373,33 @@ function floatAt(el, text, color){
   const c = centerOf(el); const f = document.createElement("div"); f.className = "float"; f.innerHTML = iconify(text); if (color) f.style.color = color;
   f.style.left = (c.x - 30) + "px"; f.style.top = (c.y + 14) + "px"; document.body.appendChild(f); setTimeout(() => f.remove(), 1300);
 }
+let sheetQueue = Promise.resolve();
 function sheet(title, text, okLabel, cancelLabel, win){
-  return new Promise(res => {
+  const result = sheetQueue.then(() => new Promise(res => {
+    const previousFocus = document.activeElement;
+    const backgrounds = [...document.querySelectorAll("main, #mainNav")].map(el => [el, el.inert]);
+    backgrounds.forEach(([el]) => el.inert = true);
     $("shTitle").textContent = title; $("shText").innerHTML = iconify(text.replace(/[<>&]/g, ch => ({"<":"&lt;",">":"&gt;","&":"&amp;"})[ch])); $("shOk").textContent = okLabel; $("shCancel").textContent = cancelLabel;
-    $("shCancel").hidden = !cancelLabel; document.querySelector(".sheet").classList.toggle("win", !!win); $("scrim").classList.add("show");
-    const done = v => { $("scrim").classList.remove("show"); $("shOk").onclick = $("shCancel").onclick = null; res(v); };
-    $("shOk").onclick = () => done(true); $("shCancel").onclick = () => done(false);
-  });
+    $("shCancel").hidden = !cancelLabel; document.querySelector(".sheet").classList.toggle("win", !!win); $("scrim").hidden = false; $("scrim").classList.add("show");
+    const done = v => {
+      $("scrim").classList.remove("show"); $("scrim").hidden = true;
+      $("shOk").onclick = $("shCancel").onclick = null;
+      document.removeEventListener("keydown", onKey);
+      backgrounds.forEach(([el, was]) => el.inert = was);
+      if (previousFocus && previousFocus.isConnected) previousFocus.focus(); res(v);
+    };
+    const onKey = e => {
+      if (e.key === "Escape" && cancelLabel){ e.preventDefault(); done(false); }
+      if (e.key === "Tab"){
+        const buttons = cancelLabel ? [$("shOk"), $("shCancel")] : [$("shOk")];
+        e.preventDefault(); const i = buttons.indexOf(document.activeElement);
+        buttons[(i + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    $("shOk").onclick = () => done(true); $("shCancel").onclick = () => done(false); $("shOk").focus();
+  }));
+  sheetQueue = result.catch(() => {}); return result;
 }
 let toastTimer; function toast(t){ const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2400); }
 
@@ -1464,9 +1517,9 @@ const Bip = {
     if (dur) this.timer = setTimeout(() => { this.bub.classList.remove("show"); this.mood("happy"); }, dur);
   },
   pick(arr, key){ let i = Math.floor(Math.random() * arr.length); if (arr.length > 1 && i === this.last[key]) i = (i + 1) % arr.length; this.last[key] = i; return arr[i]; },
-  line(cat, mood, ms){ const arr = T.bip[cat] || []; if (arr.length) this.say(this.pick(arr, cat), mood, ms || 3800); },
-  line2(cat, mood, ms, vars){ const arr = (T.bip2 || {})[cat] || []; if (arr.length) this.say(tpl(this.pick(arr, "2" + cat), vars), mood, ms || 3800); },
-  joke(){ const j = T.jokes; if (j && j.length) this.say(this.pick(j, "joke"), "laugh", 5200); },
+  line(cat, mood, ms){ if (!bipChatty() && ["idle","hello","undo"].includes(cat)) return; const arr = T.bip[cat] || []; if (arr.length) this.say(this.pick(arr, cat), mood, ms || 3800); },
+  line2(cat, mood, ms, vars){ if (!bipChatty() && ["homeIdle","nearMiss","overshoot","twoTilesFar","wake","morning","evening","night","weekend"].includes(cat)) return; const arr = (T.bip2 || {})[cat] || []; if (arr.length) this.say(tpl(this.pick(arr, "2" + cat), vars), mood, ms || 3800); },
+  joke(){ if (!bipChatty()) return; const j = T.jokes; if (j && j.length) this.say(this.pick(j, "joke"), "laugh", 5200); },
   sequence(lines){ this.seq = { lines, i: 0 }; this.say(lines[0], "happy", 0, "▸"); clearTimeout(this.seqTimer); this.seqTimer = setTimeout(() => this.advance(), 6500); },
   advance(){ if (!this.seq) return false; clearTimeout(this.seqTimer); this.seq.i++; if (this.seq.i >= this.seq.lines.length){ this.seq = null; this.bub.classList.remove("show"); return true; } this.say(this.seq.lines[this.seq.i], this.seq.i === 2 ? "laugh" : "happy", 0, "▸"); this.seqTimer = setTimeout(() => this.advance(), 6500); return true; },
   ask(text, yesLabel, noLabel, onYes){
@@ -1484,7 +1537,7 @@ const Bip = {
   wake(){ if (!this.asleep) return; this.asleep = false; this.el.classList.remove("asleep"); this.line2("wake", "wow", 3000); }
 };
 document.addEventListener("pointerdown", e => { Bip.look(e.clientX, e.clientY); resetIdle(); });
-Bip.el.addEventListener("click", () => { if (Bip.seq){ Bip.advance(); return; } if (screen === "game") hint(); else { Math.random() < .5 ? Bip.line2("homeIdle", "happy", 3200) : Bip.joke(); } });
+Bip.el.addEventListener("click", () => { if (Bip.seq){ Bip.advance(); return; } if (screen === "game"){ if (game === "let") lHint(false); else hint(); } else { Math.random() < .5 ? Bip.line2("homeIdle", "happy", 3200) : Bip.joke(); } });
 Bip.el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); Bip.el.click(); } });
 let idleTimer, sleepTimer;
 function resetIdle(){
@@ -1509,6 +1562,7 @@ const Director = {
     this.last = Date.now(); this.cool[cat] = Date.now(); Bip.say(tpl(Bip.pick(arr, "3" + cat), vars || {}), mood || "happy", 5600); return true;
   },
   tick(){
+    if (!bipChatty()) return;
     if (Bip.asleep || Bip.seq || document.hidden || $("scrim").classList.contains("show") || (Bip.bub && Bip.bub.classList.contains("show"))) return;
     if (Date.now() - this.last < 14000) return;
     const c = [];
@@ -1569,7 +1623,7 @@ function armStuck(){ clearTimeout(stuckTimer); stuckTimer = setTimeout(() => { i
 function proposeHint(cat){ B.asked = true; Bip.ask((T.bip2[cat] || [T.askHint])[0], T.yes, T.no, () => hint()); }
 function isPrime(n){ if (n < 2) return false; for (let i = 2; i * i <= n; i++) if (n % i === 0) return false; return true; }
 function commentTarget(){
-  if (mode !== "daily") return;
+  if (mode !== "daily" || !bipChatty()) return;
   wallet.taught = wallet.taught || {}; if (!wallet.taught.daily){ wallet.taught.daily = true; saveWallet(); if (!Bip.seq && !firstVisit) setTimeout(() => Director.say("daily_start_first", "happy", {}, 0, true), 900); return; }
   if (Math.random() < .5){ setTimeout(() => Director.say("daily_start", "think", { i: daily.idx + 1 }, 20000, true), 900); return; }
   const t = B.target;
@@ -1611,7 +1665,7 @@ function renderBoard(){
   const ol = $("ops"); ol.innerHTML = "";
   OPS.forEach((o, oi) => {
     const b = document.createElement("button"); b.type = "button"; b.className = "op" + (B.fresh ? " in" : ""); if (B.fresh) b.style.animationDelay = (270 + oi * 40) + "ms"; b.textContent = o.s; b.dataset.k = o.k;
-    b.setAttribute("aria-label", o.k); b.setAttribute("aria-pressed", String(B.selOp === o.k)); b.disabled = B.hit;
+    b.setAttribute("aria-label", ({"+":lang === "fr" ? "Additionner" : "Add", "-":lang === "fr" ? "Soustraire" : "Subtract", "*":lang === "fr" ? "Multiplier" : "Multiply", "/":lang === "fr" ? "Diviser" : "Divide"})[o.k]); b.setAttribute("aria-pressed", String(B.selOp === o.k)); b.disabled = B.hit;
     b.addEventListener("click", () => tapOp(o.k)); ol.appendChild(b);
   });
   $("undo").innerHTML = ""; $("undo").append(document.createTextNode(T.undo)); { const c = document.createElement("small"); c.style.cssText = "display:block;font-size:.72rem;font-weight:600;opacity:.8"; c.textContent = "↶ " + B.undoLeft; $("undo").appendChild(c); }
@@ -1619,14 +1673,14 @@ function renderBoard(){
   $("reset").textContent = T.reset; $("reset").disabled = !B.history.length || B.hit || (B.undoLeft <= 0 && wallet.items.eraser <= 0);
   const bb = best(); const lock = $("lock"); lock.innerHTML = ""; lock.append(document.createTextNode(`${T.check} ${bb.v}`));
   const sm = document.createElement("small"); sm.textContent = bb.d === 0 ? T.exact : `${T.gap} ${bb.d}`; lock.appendChild(sm); lock.disabled = B.hit;
-  B.fresh = false; renderBag();
+  B.fresh = false; renderBag(); renderCalculation();
 }
 function renderBag(){
   const bag = $("bag"); bag.innerHTML = "";
   const add = (label, count, fn, enabled) => { const b = document.createElement("button"); b.type = "button"; b.className = "bagi"; b.textContent = label; if (count !== null){ const c = document.createElement("b"); c.textContent = "×" + count; b.appendChild(c); } b.disabled = !enabled; if (fn) b.addEventListener("click", fn); bag.appendChild(b); };
   const active = boardActive() && !B.hit && !B.busy && !locking;
-  add(`💡 ${T.bag.free}`, null, () => hint(false), active);
-  if (wallet.items.hint) add(`💡 ${T.bag.useHint}`, wallet.items.hint, () => hint(true), active);
+  add(`💡 ${uxText().hint} · ${mode === "daily" ? uxText().starCap : "−5 s"}`, null, () => hint(false), active);
+  if (wallet.items.hint) add(`💡 ${uxText().tokenHint}`, wallet.items.hint, () => hint(true), active);
   if (wallet.items.loupe) add(`🔍 ${T.bag.loupe}`, wallet.items.loupe, loupe, active);
   if (wallet.items.eraser) add(`🧽 ${T.bag.eraser}`, wallet.items.eraser, useEraser, active);
   if (mode === "blitz" && wallet.items.hourglass) add(`⏭ ${T.bag.hourglass}`, wallet.items.hourglass, hourglass, blitz.running && !B.hit);
@@ -1677,7 +1731,9 @@ function tapTile(i){
     if (r === null){ B.selOp = null; renderBoard(); $("tiles").children[i].classList.add("shake"); Snd.bad(); buzz([40,30,40]); B.invalids++; wallet.c.errors++; if (mode === "daily"){ daily.errors++; saveDaily(); } else { blitz.errors++; blitzSave(); } saveWallet(); if (B.invalids % 3 === 0) Bip.line2("invalidStreak", "sad", 3600); else Bip.line("invalid", "sad", 2600); return; }
     const from = B.selA; B.busy = true;
     animateMerge(from, i, () => {
-      B.history.push(B.tiles.map(t => ({...t})));
+      const previous = B.tiles.map(t => ({...t}));
+      previous.calculation = { a: B.tiles[from].v, op: B.selOp, b: B.tiles[i].v, result: r };
+      B.history.push(previous);
       B.tiles[from].alive = false; B.tiles[i].v = r; B.popIdx = i; B.selA = null; B.selOp = null; B.busy = false;
       Snd.merge(); buzz(12); { const el = $("tiles").children[i]; if (el){ const c = centerOf(el); burst(c.x, c.y, 18, HUES[mode === "daily" ? Math.min(daily.idx, 2) : (blitz.level - 1) % 3]); } }
       if (r === B.target){ onHit(); return; }
@@ -1786,7 +1842,8 @@ function dailyFinish(fresh){
   }
   showOnly("dailyResult"); if (fresh) $("dailyResult").dataset.anim = "1"; else delete $("dailyResult").dataset.anim;
   $("rtitle").textContent = T.ser.done; $("rtotal").textContent = daily.successes; $("rtotal").nextElementSibling.textContent = "/" + SERIES_LEN;
-  const rs = $("rstars"); rs.innerHTML = ""; daily.stars.forEach((s, j) => { const sp = document.createElement("span"); sp.className = s === 3 ? "on" : "off"; sp.textContent = s === 3 ? "★" : s > 0 ? "☆" : "·"; sp.style.animationDelay = (.3 + j * .06) + "s"; rs.appendChild(sp); });
+  renderResultInsight("daily", daily.successes);
+  const rs = $("rstars"); rs.className = "rstars"; rs.innerHTML = ""; daily.stars.forEach((s, j) => { const sp = document.createElement("span"); sp.className = s === 3 ? "on" : "off"; sp.textContent = s === 3 ? "★" : s > 0 ? "☆" : "·"; sp.style.animationDelay = (.3 + j * .06) + "s"; rs.appendChild(sp); });
   $("rtime").textContent = fmtTime(daily.elapsed); $("rtimel").textContent = T.time;
   $("streak").textContent = `✗ ${daily.errors}`; $("streakl").textContent = T.und.errors;
   $("played").textContent = `↔ ${daily.moves}`; $("playedl").textContent = T.ser.moves;
@@ -1814,7 +1871,7 @@ function dailySub(){
   if (dailyDone()) return tpl(T.home.dailyDone, { s: daily.successes, t: nextIn() });
   return daily.idx > 0 ? tpl(T.home.dailyGo, { i: daily.idx + 1 }) : tpl(T.home.dailyNew, { n: puzzleNo });
 }
-function tick(){ $("countdown").textContent = nextIn(); if (screen === "home") $("hDailySub").textContent = game === "let" ? ldailySub() : dailySub(); if (screen === "hub"){ $("numState").textContent = dailySub(); $("letState").textContent = ldailySub(); } }
+function tick(){ $("countdown").textContent = nextIn(); if (screen === "home") $("hDailySub").textContent = game === "let" ? ldailySub() : dailySub(); if (screen === "hub"){ renderUX(); } }
 setInterval(() => { if (mode === "daily" && startTs && screen === "game") renderMeta(); }, 1000);
 
 // ===== Blitz : 5 minutes exactement, horloge murale, reprise fiable =====
@@ -1914,7 +1971,7 @@ async function blitzResumeCheck(){
 
 // ===== Comptes en ligne (Supabase) =====
 const Cloud = {
-  sb: null, user: null, timer: null,
+  sb: null, user: null, timer: null, syncState: "local",
   ready(){ return !!this.sb; },
   init(){
     if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) return;
@@ -1954,7 +2011,15 @@ const Cloud = {
   },
   save(now){
     if (!this.user) return Promise.resolve(); clearTimeout(this.timer);
-    const doit = async () => { try{ await this.sb.from("saves").upsert({ id: this.user.id, data: this.snapshot(), updated_at: new Date().toISOString() }); }catch(e){} };
+    const uid = this.user.id;
+    const doit = async () => {
+      if (!this.user || this.user.id !== uid) return false;
+      this.syncState = "saving"; renderSyncStatus();
+      try{ const { error } = await this.sb.from("saves").upsert({ id: uid, data: this.snapshot(), updated_at: new Date().toISOString() }); if (error) throw error;
+        this.syncState = "saved"; renderSyncStatus(); return true;
+      }catch(e){ this.syncState = "error"; renderSyncStatus(); return false; }
+    };
+    this.syncState = "pending"; renderSyncStatus();
     if (now) return doit(); this.timer = setTimeout(doit, 3000); return Promise.resolve();
   },
   async pushProfile(){ if (!this.user) return; try{ const row = { id: this.user.id, name: wallet.name || null, skin: wallet.skin, level: wallet.level, updated_at: new Date().toISOString() }; if (wallet.friendCode && wallet.friendCodeUid === this.user.id) row.code = wallet.friendCode; await this.sb.from("profiles").upsert(row); }catch(e){} },
@@ -1978,6 +2043,7 @@ function renderAccount(){
   $("accSync").querySelector(".rl").textContent = T.acc.sync; $("accOut").querySelector(".rl").textContent = T.acc.out; $("accAdmin").querySelector(".rl").textContent = T.acc.admin; $("accAdmin").hidden = !Cloud.admin; $("accFriends").querySelector(".rl").textContent = T.fr_.title;
   $("accPending").hidden = !Cloud.pending || !!Cloud.user; $("accResendRow").hidden = !Cloud.pending || !!Cloud.user; if (Cloud.pending) $("accPending").textContent = tpl(T.acc.pending, { e: Cloud.pending }); $("accResend").textContent = T.acc.resend;
   $("accReset").hidden = !Cloud.recovery; $("accResetL").textContent = T.acc.newPass; $("accNewPass").placeholder = T.acc.pass; $("accNewPassBtn").textContent = T.acc.newPassBtn;
+  renderSyncStatus();
   if (Cloud.user) $("accWho").textContent = tpl(T.acc.who, { e: Cloud.user.email || "" });
 }
 function accError(e){ const m = String(e && e.message || e || ""); const el = $("accErr"); el.hidden = false; el.textContent = /not confirmed/i.test(m) ? T.acc.notConfirmed : /invalid|credentials/i.test(m) ? T.acc.badLogin : /password/i.test(m) ? T.acc.weakPass : /already|registered|exists/i.test(m) ? T.acc.exists : m ? m : T.acc.netErr; if (/not confirmed/i.test(m)){ Cloud.pending = $("accEmail").value.trim(); renderAccount(); } Snd.bad(); }
@@ -1987,7 +2053,7 @@ $("accResend").addEventListener("click", async () => { try{ await Cloud.resend()
 $("accForgot").addEventListener("click", async () => { const e = $("accEmail").value.trim(); if (!e){ toast(T.acc.needEmail); return; } try{ await Cloud.forgot(e); toast(tpl(T.acc.resetSent, { e })); }catch(err){ accError(err); } });
 $("accNewPassBtn").addEventListener("click", async () => { const p = $("accNewPass").value; if (p.length < 6){ accError({ message: "password" }); return; } try{ await Cloud.setPassword(p); toast(T.acc.passChanged); Snd.fanfare(); renderAccount(); }catch(err){ accError(err); } });
 $("accAdmin").addEventListener("click", () => go("admin")); $("accFriends").addEventListener("click", () => go("friends"));
-$("accSync").addEventListener("click", async () => { await Cloud.save(true); await Cloud.pushProfile(); toast(T.acc.synced); Snd.buy(); });
+$("accSync").addEventListener("click", async () => { const ok = await Cloud.save(true); if (ok){ await Cloud.pushProfile(); toast(T.acc.synced); Snd.buy(); } else { toast(uxText().syncError); Snd.bad(); } });
 $("accOut").addEventListener("click", async () => { await Cloud.signOut(); toast(T.acc.out); });
 
 // ===== Classement : aujourd’hui, historique, progression personnelle =====
@@ -2218,6 +2284,7 @@ function renderTrophies(){
 
 // ===== Profil =====
 function renderProfile(){
+  renderUX();
   $("prTitle").textContent = T.pr.title; $("pName").value = wallet.name || ""; $("pName").placeholder = T.pr.ph;
   $("pLvl").textContent = `${T.lvl} ${wallet.level}  ${titleFor(wallet.level)}  ·  ${wallet.xp}/${xpNeed(wallet.level)} ${T.xp}`.replace("  ·  ", "   "); $("pXpFill").style.width = Math.min(100, wallet.xp / xpNeed(wallet.level) * 100) + "%";
   const st = store.get("kalku:stats") || { streak: 0, played: 0, bestTime: null }; const bb = store.get("kalku:blitz") || { level: 0, score: 0 };
@@ -2271,9 +2338,9 @@ async function openChest(){
   const st = store.get("kalku:stats") || { streak: 0 }; const streak = Math.max(1, st.streak || 1);
   const coins = 30 + 10 * Math.min(10, streak); const tix = Math.random() < .08 + Math.min(.17, streak * .015) ? 1 : 0; const gems = Math.random() < .1 ? 1 : 0;
   wallet.chestDay = today; wallet.coins += coins; wallet.c.coinsEarned += coins; wallet.tickets += tix; wallet.gems += gems; saveWallet();
-  Snd.fanfare(); confettiRain(70); const c = centerOf($("hChest")); burst(c.x, c.y, 80, 45); replay(Bip.el, "dance");
+  Snd.fanfare(); confettiRain(70); const c = centerOf($(screen === "hub" ? "hubChest" : "hChest")); burst(c.x, c.y, 80, 45); replay(Bip.el, "dance");
   const lines = [`+${coins} ◎`, `+${XP_CHEST} ${T.xp}`]; if (tix) lines.push(`+1 🎟`); if (gems) lines.push(`+1 ◆`);
-  renderHome(); await sheet(T.chest.title, `${T.chest.got}\n${lines.join("\n")}`, T.lv.ok, "", true); addXp(XP_CHEST);
+  if (screen === "hub") renderUniverse(); else renderHome(); await sheet(T.chest.title, `${T.chest.got}\n${lines.join("\n")}`, T.lv.ok, "", true); addXp(XP_CHEST);
 }
 $("hChest").addEventListener("click", openChest);
 
@@ -2337,12 +2404,12 @@ function lRender(fresh){
   LB.order.forEach((li, k) => { const b = document.createElement("button"); b.type = "button"; b.className = "ltile" + (LB.compose.includes(li) ? " used" : "") + (fresh ? " in" : ""); if (fresh) b.style.animationDelay = (k * 40) + "ms"; b.textContent = LB.letters[li]; b.disabled = !LB.active || LB.busy || LB.compose.includes(li); b.addEventListener("click", () => lTap(li)); tl.appendChild(b); });
   const c = $("compose"); c.innerHTML = "";
   if (!LB.compose.length){ const p = document.createElement("span"); p.className = "ph"; p.textContent = T.let.composeHint; c.appendChild(p); }
-  LB.compose.forEach((li, k) => { const s = document.createElement("span"); s.className = "cl"; s.textContent = LB.letters[li]; s.addEventListener("click", () => { if (!LB.active || LB.busy) return; LB.compose.splice(k); lRender(); Snd.tap(); }); c.appendChild(s); });
+  LB.compose.forEach((li, k) => { const s = document.createElement("button"); s.type = "button"; s.className = "cl"; s.textContent = LB.letters[li]; s.setAttribute("aria-label", `${uxText().removeLetter} ${LB.letters[li]}`); s.addEventListener("click", () => { if (!LB.active || LB.busy) return; LB.compose.splice(k); lRender(); Snd.tap(); }); c.appendChild(s); });
   $("lclear").textContent = T.let.clear; $("lshuffle").textContent = T.let.shuffle; $("lsubmit").textContent = `${T.let.submit}${LB.compose.length ? " · " + LB.compose.length : ""}`.replace(" · ", "  "); $("lsubmit").disabled = !LB.active || LB.busy || LB.compose.length < LET_MIN;
   $("lclear").disabled = !LB.active || LB.busy || !LB.compose.length; $("lshuffle").disabled = !LB.active || LB.busy;
-  lRenderBag();
+  $("wordHelp").textContent = uxText().wordHelp; lRenderBag();
 }
-function lRenderBag(){ const bag = $("lbag"); bag.innerHTML = ""; const add = (label, count, fn, en) => { const b = document.createElement("button"); b.type = "button"; b.className = "bagi"; b.textContent = label; if (count !== null){ const c = document.createElement("b"); c.textContent = "×" + count; b.appendChild(c); } b.disabled = !en; if (fn) b.addEventListener("click", fn); bag.appendChild(b); }; add(`💡 ${T.let.hintFree}`, null, () => lHint(false), LB.active && !LB.busy); if (wallet.items.hint) add(`💡 ${T.bag.useHint}`, wallet.items.hint, () => lHint(true), LB.active && !LB.busy); if (mode === "lblitz" && wallet.items.hourglass) add(`⏭ ${T.bag.hourglass}`, wallet.items.hourglass, lSkip, LB.active && !LB.busy); }
+function lRenderBag(){ const bag = $("lbag"); bag.innerHTML = ""; const add = (label, count, fn, en) => { const b = document.createElement("button"); b.type = "button"; b.className = "bagi"; b.textContent = label; if (count !== null){ const c = document.createElement("b"); c.textContent = "×" + count; b.appendChild(c); } b.disabled = !en; if (fn) b.addEventListener("click", fn); bag.appendChild(b); }; add(`💡 ${uxText().hint} · ${mode === "ldaily" ? uxText().halfPoints : "−5 s"}`, null, () => lHint(false), LB.active && !LB.busy); if (wallet.items.hint) add(`💡 ${uxText().tokenHint}`, wallet.items.hint, () => lHint(true), LB.active && !LB.busy); if (mode === "lblitz" && wallet.items.hourglass) add(`⏭ ${T.bag.hourglass}`, wallet.items.hourglass, lSkip, LB.active && !LB.busy); }
 function lTick(){
   if (!LB.active) return; const left = (mode === "lblitz" ? lblitz.endAt : LB.endAt) - Date.now(); const total = mode === "ldaily" ? LET_ROUND_MS : BLITZ_DURATION;
   $("lbarFill").style.width = Math.max(0, left / total * 100) + "%"; $("lbar").classList.toggle("low", left <= (mode === "ldaily" ? 10000 : 30000));
@@ -2422,6 +2489,7 @@ function lFinish(fresh){
   }
   showOnly("dailyResult"); if (fresh) $("dailyResult").dataset.anim = "1"; else delete $("dailyResult").dataset.anim;
   $("rtitle").textContent = T.let.done; $("rtotal").textContent = ldaily.points; $("rtotal").nextElementSibling.textContent = " " + T.pts;
+  renderResultInsight(lModeKey("ldaily"), ldaily.points);
   const rs = $("rstars"); rs.innerHTML = ""; rs.className = "words"; ldaily.words.forEach((w, j) => { const sp = document.createElement("span"); const best = ldaily.bests[j]; if (!w){ sp.className = "miss"; sp.textContent = best || "—"; } else { sp.textContent = w; if (best && w.length >= best.length) sp.className = "best"; } rs.appendChild(sp); });
   $("rtime").textContent = fmtTime(ldaily.elapsed); $("rtimel").textContent = T.time;
   $("streak").textContent = `✗ ${ldaily.errors}`; $("streakl").textContent = T.und.errors;
@@ -2488,11 +2556,11 @@ function renderHub(){
   $("hubRankT").textContent = T.rk.title; $("hubRankS").textContent = T.hub.rankSub; $("hubFrT").textContent = T.fr_.title; $("hubFrS").textContent = T.fr_.hubSub; $("hubThemeT").textContent = T.pr.themes; $("hubFoot").textContent = T.hub.foot;
   const th = $("hubThemes"); th.innerHTML = ""; THEMES.filter(t => wallet.themes.includes(t.id)).forEach(t => { const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", String(wallet.theme === t.id)); b.textContent = `${t.icon} ${T.themes[t.id]}`; b.addEventListener("click", () => { wallet.theme = t.id; saveWallet(); applyTheme(); renderHub(); Snd.tap(); }); th.appendChild(b); });
   const more = document.createElement("button"); more.type = "button"; more.className = "chip more"; more.textContent = `+ ${T.pr.more}`; more.addEventListener("click", () => { shopTab = "board"; go("shop"); }); th.appendChild(more);
-  renderCurrencies();
+  renderCurrencies(); renderUX();
 }
 function setGame(g){ game = g; wallet.game = g; saveWallet(); document.documentElement.dataset.game = g; }
-$("pickNum").addEventListener("click", () => { setGame("num"); go("home"); });
-$("pickLet").addEventListener("click", () => { setGame("let"); go("home"); });
+$("pickNum").addEventListener("click", () => launchFromHub("num", "daily"));
+$("pickLet").addEventListener("click", () => launchFromHub("let", "daily"));
 $("hubProfile").addEventListener("click", () => go("profile")); $("hubSettings").addEventListener("click", () => go("profile")); $("hubAcc").addEventListener("click", () => go("profile"));
 $("hubRank").addEventListener("click", () => { board.tab = "today"; board.mode = game === "let" ? lModeKey("ldaily") : "daily"; go("board"); });
 $("hubFriends").addEventListener("click", () => go("friends"));
@@ -2585,7 +2653,7 @@ function go(id){
   if (id === "game") Bip.mount(game === "let" ? "bipSlotLet" : "bipSlotGame", game === "let" ? "lbubble" : "bubble"); else if (id === "profile") Bip.mount("bipSlotProfile", "pBubble"); else if (id === "hub") Bip.mount("bipSlotHub", "hubBubble"); else Bip.mount("bipSlotHome", "hBubble");
   Music.setPart(id === "game" ? ((mode === "blitz" && blitz.running) || (mode === "lblitz" && lblitz.running) ? "blitz" : "daily") : (id === "shop" || id === "roulette") ? id : "home");
   if (id === "hub") renderHub(); else if (id === "home") renderHome(); else if (id === "shop") renderShop(); else if (id === "roulette") renderRoulette(); else if (id === "trophies") renderTrophies(); else if (id === "profile"){ renderProfile(); renderAccount(); } else if (id === "board") renderRanking(); else if (id === "admin") renderAdmin(); else if (id === "friends") renderFriends();
-  try{ window.scrollTo(0, 0); }catch(e){} Snd.tap();
+  renderUX(); try{ window.scrollTo(0, 0); }catch(e){} Snd.tap();
 }
 function startDaily(){
   if (game === "let"){ mode = "ldaily"; go("game"); lDailyStart(); return; }
@@ -2618,9 +2686,13 @@ function applyLang(l){
   if (changed){ ldaily = store.get("kalku:lday:" + today + ":" + lang); if (!ldaily || ldaily.day !== today || ldaily.lang !== lang) ldaily = newLDaily(); if (screen === "game" && game === "let"){ LB.active = false; clearInterval(LB.timer); go("hub"); return; } }
   if (screen === "hub") renderHub(); else if (screen === "home") renderHome(); else if (screen === "game" && game === "let"){ if (mode === "ldaily"){ if (ldailyDone()) lFinish(false); else lRender(); } else if (lblitz.result && !$("blitzResult").hidden) lRenderBlitzResult(); else if (!lblitz.running) lBlitzIntro(); renderMeta(); } else if (screen === "game"){ if (mode === "daily"){ if (dailyDone()) dailyFinish(false); else renderBoard(); } else { if (blitz.running){ renderBoard(); renderHud(); } else if (blitz.result && !$("blitzResult").hidden) renderBlitzResult(); else blitzIntro(); } renderMeta(); }
   else if (screen === "shop") renderShop(); else if (screen === "roulette") renderRoulette(); else if (screen === "trophies") renderTrophies(); else if (screen === "board") renderRanking(); else if (screen === "profile"){ renderProfile(); renderAccount(); }
-  renderXp(); renderCurrencies();
+  renderXp(); renderCurrencies(); renderUX();
 }
 
+</script>
+<script src="ux.js"></script>
+<script src="universe.js"></script>
+<script>
 // ===== Démarrage =====
 let firstVisit = !store.get("kalku:seen");
 saveWallet(); applySkin(); applyTheme(); applyBtn(); applyMusic(); renderXp(); applyLang(lang); go("hub"); renderMusBtn(); Cloud.init();
