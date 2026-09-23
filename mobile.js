@@ -19,7 +19,7 @@ function saveBipStyle(){if(typeof validateStudioStyle==='function')validateStudi
 function applyBipStyle(){
  const el=Bip.el;if(!el)return;
  if(bipStyle.color!=='skin'&&/^#[\da-f]{6}$/i.test(bipStyle.color)){ $('g1').setAttribute('stop-color',bipStyle.color);$('g2').setAttribute('stop-color',bipStyle.color); }
- el.querySelectorAll('#pupils circle').forEach(n=>n.setAttribute('fill',/^#[\da-f]{6}$/i.test(bipStyle.eyes)?bipStyle.eyes:'#1B1740'));
+ el.querySelectorAll('#pupils circle:not([data-eye-glint])').forEach(n=>n.setAttribute('fill',/^#[\da-f]{6}$/i.test(bipStyle.eyes)?bipStyle.eyes:'#1B1740'));
  el.dataset.motion=bipStyle.motion;el.setAttribute('aria-label',`${bipStyle.name} · touche pour une réaction`);
  let layer=el.querySelector('.personal-style');if(!layer){layer=document.createElementNS('http://www.w3.org/2000/svg','g');layer.classList.add('personal-style');el.append(layer);}
  layer.innerHTML=bipLayers(bipStyle);
@@ -51,7 +51,8 @@ const reactionLines={playful:['J’ai mis mes neurones en baskets. On y va ?','P
 let reactionIndex=0;
 function reactBip(){
  const lines=reactionLines[bipStyle.personality]||reactionLines.playful;
- const text=lang==='fr'?lines[(reactionIndex++)%lines.length]:['You and me. A great team!','One little win, one big smile.','Let’s try something new!'][(reactionIndex++)%3];
+ const text=lang==='fr'?Bip.pick(lines,'studio-'+bipStyle.personality):['You and me. A great team!','One little win, one big smile.','Let’s try something new!'][(reactionIndex++)%3];
+ reactionIndex++;
  Bip.say(text, ['laugh','wow','happy'][reactionIndex%3],3400);
  if(!reduceMotion&&bipStyle.motion!=='still')replay(Bip.el,bipStyle.motion==='lively'?'dance':'wiggle');
  if(customDialog.open){$('studioMessage').textContent=text;renderStudio();}

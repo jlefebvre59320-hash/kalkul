@@ -6,8 +6,8 @@ function itemArtwork(item){
  }
  const style={...bipStyle,[item.key]:item.value};
  const svg=bipPreview(SKINS.find(s=>s.id===wallet.skin)||SKINS[0]);
- if(style.color!=='skin')svg.querySelectorAll('linearGradient stop').forEach(n=>n.setAttribute('stop-color',style.color));
- svg.querySelectorAll('[id^=pupils] circle').forEach(n=>n.setAttribute('fill',style.eyes));
+ if(style.color!=='skin')svg.querySelectorAll('[id^=g1_],[id^=g2_]').forEach(n=>n.setAttribute('stop-color',style.color));
+ svg.querySelectorAll('[id^=pupils] circle:not([data-eye-glint])').forEach(n=>n.setAttribute('fill',style.eyes));
  const layer=document.createElementNS('http://www.w3.org/2000/svg','g');layer.innerHTML=bipLayers(style);svg.append(layer);return svg;
 }
 const itemDialog=document.createElement('dialog');itemDialog.id='itemDialog';itemDialog.setAttribute('aria-labelledby','itemTitle');itemDialog.innerHTML='<header class="studio-head"><div><small>LE DRESSING DE BIP</small><h2 id="itemTitle"></h2></div><button type="button" id="closeItem" aria-label="Fermer l’aperçu">✕</button></header><div id="itemArt"></div><p id="itemDescription"></p><div class="item-budget"><span>Ton solde</span><b id="itemBalance"></b></div><p id="itemNote" role="status"></p><button type="button" class="btn primary" id="itemAction"></button><button type="button" class="btn" id="itemShop">Voir la boutique</button>';

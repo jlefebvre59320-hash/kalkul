@@ -599,6 +599,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <link rel="stylesheet" href="realms.css">
 <link rel="stylesheet" href="navigation.css">
 <link rel="stylesheet" href="polish.css">
+<link rel="stylesheet" href="bip-volume.css">
 </head>
 
 <body>
@@ -615,9 +616,13 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <svg class="bip" id="bip" viewBox="0 -16 100 116" role="button" tabindex="0" aria-label="Bip">
   <defs>
     <linearGradient id="bipGrad" x1="0" y1="0" x2="1" y2="1"><stop id="g1" offset="0" stop-color="var(--accent)"/><stop id="g2" offset="1" stop-color="var(--accent-2)"/></linearGradient>
+
+    <radialGradient id="bipVolume" cx=".32" cy=".22" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".58"/><stop offset=".4" stop-color="#fff" stop-opacity=".04"/><stop offset=".78" stop-color="#27134b" stop-opacity=".12"/><stop offset="1" stop-color="#160e36" stop-opacity=".48"/></radialGradient>
+    <linearGradient id="bipShine" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".78"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
     <pattern id="patDots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.2" fill="#fff" opacity=".55"/></pattern>
     <pattern id="patDiamond" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 6 L6 0 L12 6 L6 12 Z" fill="none" stroke="#6D4C00" stroke-width="1.4" opacity=".5"/></pattern>
   </defs>
+  <ellipse data-bip-shadow="true" cx="50" cy="97" rx="32" ry="4" fill="#211039" opacity=".16"/>
   <g id="costBack">
     <g id="cGhostTail" hidden><path d="M12 72 Q20 98 30 84 Q40 104 50 88 Q60 104 70 84 Q80 98 88 72 Z" fill="url(#bipGrad)" opacity=".85"/></g>
     <g id="cAstroPack" hidden><rect x="14" y="30" width="72" height="62" rx="16" fill="#B0BEC5"/><rect x="22" y="40" width="10" height="30" rx="4" fill="#78909C"/><rect x="68" y="40" width="10" height="30" rx="4" fill="#78909C"/></g>
@@ -627,13 +632,16 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
   <g class="body">
     <path class="main" id="bodyMain" d="M50 6 C78 6 94 26 94 50 C94 78 74 94 50 94 C26 94 6 78 6 50 C6 26 22 6 50 6Z" fill="url(#bipGrad)"/>
     <path id="bodyPattern" d="M50 6 C78 6 94 26 94 50 C94 78 74 94 50 94 C26 94 6 78 6 50 C6 26 22 6 50 6Z" fill="none" hidden/>
+    <path d="M50 6 C78 6 94 26 94 50 C94 78 74 94 50 94 C26 94 6 78 6 50 C6 26 22 6 50 6Z" fill="url(#bipVolume)" pointer-events="none"/>
+    <path d="M20 31Q26 10 51 12Q71 12 80 27Q48 14 20 31Z" fill="url(#bipShine)" opacity=".72"/>
+    <path d="M15 57Q18 80 39 87" fill="none" stroke="#fff" opacity=".26" stroke-width="2" stroke-linecap="round"/>
     <g id="hatAntenna" hidden><path d="M50 6 L50 -6" stroke="var(--face)" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="-9" r="5" fill="#FFD54F"/></g>
     <g id="hatCap" hidden><path d="M24 22 Q50 -8 76 22 Z" fill="var(--face)"/><path d="M20 21 L84 21 L92 27 L20 27 Z" fill="var(--face)"/><path d="M26 22 Q50 -2 74 22 Z" fill="var(--accent-2)" opacity=".35"/></g>
     <g id="hatCrown" hidden><path d="M28 14 L36 -4 L46 10 L50 -10 L54 10 L64 -4 L72 14 Z" fill="#FFC633" stroke="#B8860B" stroke-width="2" stroke-linejoin="round"/><circle cx="36" cy="-4" r="3" fill="#FF5A5F"/><circle cx="64" cy="-4" r="3" fill="#FF5A5F"/><circle cx="50" cy="-10" r="3" fill="#4FC3F7"/></g>
   </g>
   <g class="eyes" id="eyes">
     <ellipse cx="36" cy="44" rx="10.5" ry="12.5" fill="#fff"/><ellipse cx="64" cy="44" rx="10.5" ry="12.5" fill="#fff"/>
-    <g class="pupils" id="pupils"><circle cx="37" cy="46" r="5.2" fill="#1B1740"/><circle cx="65" cy="46" r="5.2" fill="#1B1740"/></g>
+    <g class="pupils" id="pupils"><circle cx="37" cy="46" r="5.2" fill="#1B1740"/><circle cx="65" cy="46" r="5.2" fill="#1B1740"/><circle data-eye-glint="true" cx="35" cy="43" r="1.9" fill="#fff"/><circle data-eye-glint="true" cx="63" cy="43" r="1.9" fill="#fff"/></g>
   </g>
   <g id="glasses" hidden><rect x="22" y="33" width="26" height="22" rx="7" fill="none" stroke="var(--face)" stroke-width="3.5"/><rect x="52" y="33" width="26" height="22" rx="7" fill="none" stroke="var(--face)" stroke-width="3.5"/><path d="M48 42 L52 42" stroke="var(--face)" stroke-width="3.5"/></g>
   <path class="browL" id="browL" d="M25 28 L44 25" stroke="var(--face)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
@@ -977,6 +985,8 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <div class="toast" id="toast" role="status"></div>
 <p class="sr" id="live" aria-live="polite"></p>
 
+<script src="word-seeds.js"></script>
+<script src="variety.js"></script>
 <script>
 // ===== Réglages à remplir avant diffusion =====
 const SHARE_URL = "";
@@ -1109,6 +1119,21 @@ function apply(a, op, b){
 function reachable(nums, rnd, iters){
   const reach = new Map();
   for (let it = 0; it < iters; it++){
+    let arr = nums.map(v=>({v,steps:0})); const steps = 1 + Math.floor(rnd()*5);
+    for (let s = 0; s < steps && arr.length > 1; s++){
+      const i = Math.floor(rnd()*arr.length); let j = Math.floor(rnd()*(arr.length-1)); if (j >= i) j++;
+      const r = apply(arr[i].v, OPS[Math.floor(rnd()*4)].k, arr[j].v);
+      if (r === null || r > 9999) continue;
+      const depth=arr[i].steps+arr[j].steps+1;
+      arr = arr.filter((_, k) => k !== i && k !== j); arr.push({v:r,steps:depth});
+      if (!nums.includes(r) && (!reach.has(r) || reach.get(r) > depth)) reach.set(r, depth);
+    }
+  }
+  return [...reach.entries()];
+}
+function legacyReachable(nums, rnd, iters){
+  const reach = new Map();
+  for (let it = 0; it < iters; it++){
     let arr = nums.slice(); const steps = 1 + Math.floor(rnd()*5);
     for (let s = 0; s < steps && arr.length > 1; s++){
       const i = Math.floor(rnd()*arr.length); let j = Math.floor(rnd()*(arr.length-1)); if (j >= i) j++;
@@ -1138,8 +1163,8 @@ const PERM_A = 2311, PERM_C = 1729;                                   // 2311 es
 const permIndex = k => (((k % SPACE) * PERM_A) + PERM_C) % SPACE;
 const sig = (nums, target) => nums.slice().sort((a, b) => a - b).join("-") + ">" + target;
 const TIERS = [[20,99,2],[20,99,2],[20,99,2],[100,299,3],[100,299,3],[100,299,3],[300,699,3],[300,699,3],[300,699,3],[500,999,4]];
-function targetFor(nums, rnd, tier, avoid){
-  const cands = reachable(nums, rnd, 3000).filter(([v]) => !avoid || !avoid.includes(v));
+function targetFor(nums, rnd, tier, avoid, legacy=false){
+  const cands = (legacy ? legacyReachable : reachable)(nums, rnd, 3000).filter(([v]) => !avoid || !avoid.includes(v));
   const pools = [cands.filter(([v, st]) => v >= tier[0] && v <= tier[1] && st >= tier[2]), cands.filter(([v]) => v >= tier[0] && v <= tier[1]), cands.filter(([v]) => v >= 20)];
   for (const pool of pools){ const p = pool.slice().sort((a, b) => a[0] - b[0]); for (let tries = 0; tries < 12 && p.length; tries++){ const pick = p.splice(Math.floor(rnd() * p.length), 1)[0][0]; if (solve(nums, pick)) return pick; } }
   return null;
@@ -1149,10 +1174,10 @@ function seriesForDay(day){
   if (seriesCache[day]) return seriesCache[day];
   const D = dayIndex(day), out = [];
   for (let j = 0; j < SERIES_LEN; j++){
-    const g = D * SERIES_LEN + j; const nums = numsAt(permIndex(g)); const rnd = mulberry32(hash(`${day}#${j}`));
+    const g = D * SERIES_LEN + j; const nums = day >= "2026-09-23" ? Variety.numbers(g) : numsAt(permIndex(g)); const rnd = mulberry32(hash(`${day}#${j}`));
     const cycle = Math.floor(g / SPACE); const avoid = [];
     for (let c = 0; c < cycle; c++){ const prev = seriesCache._t && seriesCache._t[g - (c + 1) * SPACE]; if (prev) avoid.push(prev); }
-    let t = targetFor(nums, rnd, TIERS[j], avoid); if (t === null) t = targetFor(nums, mulberry32(hash(`${day}#${j}#b`)), TIERS[j], null); if (t === null) t = nums[0] + nums[1];
+    let t = targetFor(nums, rnd, TIERS[j], day < "2026-09-23" ? avoid : out.map(p=>p.target), day < "2026-09-23"); if (t === null) t = targetFor(nums, mulberry32(hash(`${day}#${j}#b`)), TIERS[j], null, day < "2026-09-23"); if (t === null) t = nums[0] + nums[1];
     seriesCache._t = seriesCache._t || {}; seriesCache._t[g] = t;
     out.push({ nums, target: t, sig: sig(nums, t) });
   }
@@ -1165,12 +1190,12 @@ function genBlitz(level){
   const boss = isBoss(level); const tier = boss ? [200 + level * 20, 500 + level * 40, 3] : [Math.min(400, 15 + level * 12), Math.min(900, 40 + level * 40), Math.min(1 + Math.floor(level / 2), 3)];
   let last = null;
   for (let attempt = 0; attempt < 25; attempt++){
-    const nums = numsAt(Math.floor(Math.random() * SPACE)); const t = targetFor(nums, Math.random, tier, null); if (t === null) continue;
+    const nums = Variety.randomNumbers(Math.random); const t = targetFor(nums, Math.random, tier, null); if (t === null) continue;
     const sg = sig(nums, t); last = { nums, target: t, sig: sg, repeated: false };
     if (!usedSigs.includes(sg)){ rememberSig(sg); return last; }
   }
   if (last){ last.repeated = true; return last; }
-  const nums = numsAt(Math.floor(Math.random() * SPACE)); return { nums, target: nums[4] + nums[5], sig: "", repeated: true };
+  const nums = Variety.randomNumbers(Math.random); return { nums, target: nums[4] + nums[5], sig: "", repeated: true };
 }
 function solve(nums, target){
   const memo = new Set(); let budget = 80000;
@@ -1481,7 +1506,7 @@ function applySkin(){
 let pvCount = 0;
 function bipPreview(sk){
   const id = "pv" + (++pvCount); let html = $("bipTpl").innerHTML;
-  ["bipGrad","g1","g2","patDots","patDiamond","bodyMain","bodyPattern","eyes","pupils","mouth","browL","browR","glasses","costBack","costFront"].concat(ALL_PARTS).forEach(k => { html = html.split(`id="${k}"`).join(`id="${k}_${id}"`).split(`#${k})`).join(`#${k}_${id})`); });
+  ["bipVolume","bipShine","bipGrad","g1","g2","patDots","patDiamond","bodyMain","bodyPattern","eyes","pupils","mouth","browL","browR","glasses","costBack","costFront"].concat(ALL_PARTS).forEach(k => { html = html.split(`id="${k}"`).join(`id="${k}_${id}"`).split(`#${k})`).join(`#${k}_${id})`); });
   const wrap = document.createElement("div"); wrap.innerHTML = html; const svg = wrap.firstElementChild; svg.removeAttribute("id"); svg.removeAttribute("role"); svg.removeAttribute("tabindex"); svg.classList.remove("bip"); svg.setAttribute("aria-hidden", "true");
   const q = k => svg.querySelector(`#${k}_${id}`);
   q("g1").setAttribute("stop-color", sk.grad ? sk.grad[0] : "var(--accent)"); q("g2").setAttribute("stop-color", sk.grad ? sk.grad[1] : "var(--accent-2)");
@@ -1510,6 +1535,7 @@ const Bip = {
   el: bipNode, bub: null, timer: null, seq: null, last: {}, asleep: false,
   mount(slotId, bubId){ $(slotId).appendChild(this.el); this.bub = $(bubId); },
   mood(m){
+    this.el.dataset.mood=m;
     const mouth = $("mouth"); mouth.setAttribute("d", MOUTH[m] || MOUTH.happy); mouth.setAttribute("fill", (m === "laugh" || m === "wow") ? "var(--face)" : "none");
     const t = { happy:["",""], laugh:["translate(0,-3px)","translate(0,-3px)"], think:["rotate(-14deg) translate(0,2px)","translate(0,-2px)"], wow:["translate(0,-6px)","translate(0,-6px)"], sad:["rotate(12deg) translate(0,3px)","rotate(-12deg) translate(0,3px)"] }[m] || ["",""];
     $("browL").style.transform = t[0]; $("browR").style.transform = t[1];
@@ -1523,7 +1549,11 @@ const Bip = {
     const dur = ms ? ms + Math.min(2500, words.length * 42) : 0;
     if (dur) this.timer = setTimeout(() => { this.bub.classList.remove("show"); this.mood("happy"); }, dur);
   },
-  pick(arr, key){ let i = Math.floor(Math.random() * arr.length); if (arr.length > 1 && i === this.last[key]) i = (i + 1) % arr.length; this.last[key] = i; return arr[i]; },
+  pick(arr, key){
+    this.bags=this.bags||{};let bag=this.bags[key];
+    if(!bag||!bag.length){bag=arr.map((_,i)=>i);for(let j=bag.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[bag[j],bag[k]]=[bag[k],bag[j]];}if(bag.length>1&&bag[bag.length-1]===this.last[key])[bag[0],bag[bag.length-1]]=[bag[bag.length-1],bag[0]];this.bags[key]=bag;}
+    const i=bag.pop();this.last[key]=i;return arr[i];
+  },
   line(cat, mood, ms){ if (!bipChatty() && ["idle","hello","undo"].includes(cat)) return; const arr = T.bip[cat] || []; if (arr.length) this.say(this.pick(arr, cat), mood, ms || 3800); },
   line2(cat, mood, ms, vars){ if (!bipChatty() && ["homeIdle","nearMiss","overshoot","twoTilesFar","wake","morning","evening","night","weekend"].includes(cat)) return; const arr = (T.bip2 || {})[cat] || []; if (arr.length) this.say(tpl(this.pick(arr, "2" + cat), vars), mood, ms || 3800); },
   joke(){ if (!bipChatty()) return; const j = T.jokes; if (j && j.length) this.say(this.pick(j, "joke"), "laugh", 5200); },
@@ -1538,7 +1568,7 @@ const Bip = {
     this.bub.append(document.createElement("br"), y, n); this.bub.classList.add("show"); replay(this.el, "bounce"); Snd.hint();
     this.timer = setTimeout(() => { this.bub.classList.remove("show"); this.mood("happy"); }, 9000);
   },
-  look(x, y){ const c = centerOf(this.el); const dx = x - c.x, dy = y - c.y, d = Math.hypot(dx, dy) || 1, k = Math.min(6, d / 30); $("pupils").style.transform = `translate(${dx/d*k}px, ${dy/d*k}px)`; },
+  look(x, y){ if(reduceMotion||this.el.dataset.motion==="still")return; const c = centerOf(this.el); const dx = x - c.x, dy = y - c.y, d = Math.hypot(dx, dy) || 1, k = Math.min(6, d / 30); $("pupils").style.transform = `translate(${dx/d*k}px, ${dy/d*k}px)`; },
   lookAt(el){ const c = centerOf(el); this.look(c.x, c.y); },
   sleep(){ if (this.asleep) return; this.asleep = true; this.el.classList.add("asleep"); this.say("Zzz…", "happy", 0); },
   wake(){ if (!this.asleep) return; this.asleep = false; this.el.classList.remove("asleep"); this.line2("wake", "wow", 3000); }
@@ -1828,6 +1858,7 @@ async function dailyLock(d){
 }
 const dailyEntry = completed => ({ day: today, mode: "daily", successes: daily.successes, errors: daily.errors, moves: daily.moves, time: daily.elapsed, completed, resumed: daily.resumed, name: wallet.name || "" });
 function dailyFinish(fresh){
+  if($("wordDiscoveries"))$("wordDiscoveries").hidden=true;
   setHue(HUES[3]); if (screen !== "game") return;
   const total = daily.stars.reduce((a, s) => a + (s || 0), 0), perfect = daily.successes === SERIES_LEN;
   let st = store.get("kalku:stats") || { last: null, streak: 0, played: 0, bestTime: null };
@@ -2378,17 +2409,25 @@ $("gMus").addEventListener("click", () => { Music.toggle(); renderMusBtn(); if (
 const LET_ROUNDS = 10, LET_ROUND_MS = 45000, LET_MIN = 3, LRUN_KEY = "kalku:lblitzrun";
 const HUES_LET = [40, 300, 150, 45];
 const LETTERS = { fr: { v: "AAAAAAAAAEEEEEEEEEEEEEEEIIIIIIIIOOOOOOUUUUUUY", c: "BBCCDDDFFGGHHJKLLLLLMMMNNNNNNPPPQRRRRRRRSSSSSSSTTTTTTVVWXZ" }, en: { v: "AAAAAAAAAEEEEEEEEEEEEIIIIIIIIIOOOOOOOOUUUUY", c: "BBCCDDDDFFGGGHHJKLLLLMMNNNNNNPPQRRRRRRSSSSSSTTTTTTVVWWXYZ" } };
-function drawLetters(rnd, L){ const a = LETTERS[L] || LETTERS.fr; const nv = 3 + Math.floor(rnd() * 3); const out = []; for (let i = 0; i < nv; i++) out.push(a.v[Math.floor(rnd() * a.v.length)]); for (let i = 0; i < 9 - nv; i++) out.push(a.c[Math.floor(rnd() * a.c.length)]); for (let i = out.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; } return out; }
+function legacyDrawLetters(rnd, L){ const a = LETTERS[L] || LETTERS.fr; const nv = 3 + Math.floor(rnd() * 3); const out = []; for (let i = 0; i < nv; i++) out.push(a.v[Math.floor(rnd() * a.v.length)]); for (let i = 0; i < 9 - nv; i++) out.push(a.c[Math.floor(rnd() * a.c.length)]); for (let i = out.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; } return out; }
+function drawLetters(rnd,L,avoid){
+ const key='kalku:letter-history:'+L, random=rnd===Math.random;
+ const history=avoid || (random ? store.get(key)||[] : []);
+ const letters=Variety.letters(rnd,L,history);
+ if(random)store.set(key,[...history,Variety.signature(letters)].slice(-240));
+ return letters;
+}
 const lseriesCache = {};
-function lseriesFor(day, L){ const k = day + "|" + L; if (lseriesCache[k]) return lseriesCache[k]; const out = []; for (let j = 0; j < LET_ROUNDS; j++) out.push(drawLetters(mulberry32(hash(`${day}#L${L}#${j}`)), L)); lseriesCache[k] = out; return out; }
+function lseriesFor(day, L){ const k = day + "|" + L; if (lseriesCache[k]) return lseriesCache[k]; const out = []; for (let j = 0; j < LET_ROUNDS; j++) out.push(day < "2026-09-23" ? legacyDrawLetters(mulberry32(hash(`${day}#L${L}#${j}`)), L) : drawLetters(mulberry32(hash(`${day}#L${L}#${j}#v2`)), L,out.map(Variety.signature))); lseriesCache[k] = out; return out; }
 const Dict = {
   lang: null, set: null, byLen: null, loading: null,
   async load(L){
-    if (this.lang === L && this.set) return true; if (this.loading) return this.loading;
-    this.loading = (async () => { try{ const r = await fetch(L === "fr" ? "mots-fr.txt" : "words-en.txt"); if (!r.ok) throw 0; const arr = (await r.text()).split("\n").filter(Boolean); this.set = new Set(arr); this.byLen = {}; arr.forEach(w => { (this.byLen[w.length] = this.byLen[w.length] || []).push(w); }); this.lang = L; return true; }catch(e){ return false; } finally { this.loading = null; } })();
+    if (this.lang === L && this.set) return true; if (this.loading){ await this.loading; if(this.lang===L&&this.set)return true; return this.load(L); }
+    this.loading = (async () => { try{ const r = await fetch(L === "fr" ? "mots-fr.txt" : "words-en.txt"); if (!r.ok) throw 0; const arr = (await r.text()).split("\n").filter(Boolean); this.set = new Set(arr); this.byLen = {}; arr.forEach(w => { (this.byLen[w.length] = this.byLen[w.length] || []).push(w); }); this.anagrams=Variety.wordIndex(arr); this.lang = L; return true; }catch(e){ return false; } finally { this.loading = null; } })();
     return this.loading;
   },
-  best(letters){ if (!this.byLen) return ""; const counts = {}; letters.forEach(l => counts[l] = (counts[l] || 0) + 1); for (let n = 9; n >= LET_MIN; n--){ for (const w of (this.byLen[n] || [])) if (canBuild(w, counts)) return w; } return ""; }
+  solutions(letters){return this.anagrams ? Variety.solutions(letters,this.anagrams) : [];},
+  best(letters){return this.solutions(letters)[0]||"";}
 };
 function canBuild(w, counts){ const c = Object.assign({}, counts); for (const ch of w){ if (!c[ch]) return false; c[ch]--; } return true; }
 const dictReady = () => !!(Dict.set && Dict.lang === lang);
@@ -2497,6 +2536,7 @@ function lFinish(fresh){
   showOnly("dailyResult"); if (fresh) $("dailyResult").dataset.anim = "1"; else delete $("dailyResult").dataset.anim;
   $("rtitle").textContent = T.let.done; $("rtotal").textContent = ldaily.points; $("rtotal").nextElementSibling.textContent = " " + T.pts;
   renderResultInsight(lModeKey("ldaily"), ldaily.points);
+  renderWordDiscoveries();
   const rs = $("rstars"); rs.innerHTML = ""; rs.className = "words"; ldaily.words.forEach((w, j) => { const sp = document.createElement("span"); const best = ldaily.bests[j]; if (!w){ sp.className = "miss"; sp.textContent = best || "—"; } else { sp.textContent = w; if (best && w.length >= best.length) sp.className = "best"; } rs.appendChild(sp); });
   $("rtime").textContent = fmtTime(ldaily.elapsed); $("rtimel").textContent = T.time;
   $("streak").textContent = `✗ ${ldaily.errors}`; $("streakl").textContent = T.und.errors;
@@ -2706,6 +2746,7 @@ function applyLang(l){
 <script src="navigation.js"></script>
 <script src="studio-shop.js"></script>
 <script src="polish.js"></script>
+<script src="discoveries.js"></script>
 <script>
 // ===== Démarrage =====
 let firstVisit = !store.get("kalku:seen");

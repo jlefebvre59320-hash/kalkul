@@ -8,7 +8,7 @@ let universeRenderKey = "", surprise = null, practiceBoard = null;
 function surpriseDay(){ return new Date().toISOString().slice(0,10); }
 function rewardsLeft(){ const r = wallet.surpriseRewards; return Math.max(0,3 - (r && r.day === surpriseDay() ? Number(r.count) || 0 : 0)); }
 function createSurprise(){
- const nums = numsAt(Math.floor(Math.random()*SPACE));
+ const nums = Variety.randomNumbers(Math.random);
  const target = targetFor(nums,Math.random,[40,250,2],surprise ? [surprise.target] : null) || nums[0]+nums[1];
  return {nums,target};
 }
