@@ -69,7 +69,7 @@ for(const g of ['num','let']){
  const card=document.querySelector('.arcade-card.'+g);card.addEventListener('click',e=>{if(!e.target.closest('button'))launchFromHub(g,'home');});
 }
 function renderMobile(){
- $('pickNum').textContent=lang==='fr'?'Entrer →':'Enter →';$('pickLet').textContent=lang==='fr'?'Entrer →':'Enter →';
+ $('pickNum').textContent=lang==='fr'?'Jouer →':'Play →';$('pickLet').textContent=lang==='fr'?'Jouer →':'Play →';
  $('pickNum').setAttribute('aria-label',lang==='fr'?'Ouvrir l’accueil de Kalku':'Open Kalku home');$('pickLet').setAttribute('aria-label',lang==='fr'?'Ouvrir l’accueil de Lettra':'Open Lettra home');
  $('hubTag').textContent=lang==='fr'?'Ton petit terrain de jeu.':'Your little playground.';
  $('surpriseTitle').textContent=lang==='fr'?'Un défi pour toi':'A challenge for you';
