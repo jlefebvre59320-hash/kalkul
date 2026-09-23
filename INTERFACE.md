@@ -76,3 +76,14 @@ Les nouvelles couleurs, yeux, vêtements, accessoires et ambiances supplémentai
 Les nouveaux achats utilisent `wallet.studioOwned` et le portefeuille existant, avec contrôles de solde et de doublon. Comme l’économie existante, la validation reste côté client. Cache v19 ; publier aussi navigation.js, navigation.css et studio-shop.js.
 
 Validation : navigation Lettra/boutique/Retour et studio/objet verrouillé/boutique/Retour testée dans le navigateur ; présentation 320×740 contrôlée ; console sans erreur. Tests isolés de l’historique et des achats (fonds insuffisants, débit exact, possession, doublon, identifiant inconnu) réussis. Syntaxe de tous les scripts et scripts inline validée.
+
+
+## Confort mobile et aperçu du dressing
+
+Le studio est organisé en Apparence, Identité, Caractère et Univers. La boutique présente les objets avec un aperçu illustré ; une fiche permet de les essayer visuellement, de voir le solde manquant, puis de débloquer et équiper séparément. Les objets verrouillés ne changent pas la tenue portée.
+
+Les volumes musique et effets se règlent séparément et sont mémorisés, avec un interrupteur de vibrations. La musique est désactivée par défaut pour les nouveaux utilisateurs et ses arrangements sont adoucis. Les deux accueils proposent des règles courtes avant de lancer une partie. Surfaces tactiles, focus clavier, zones sûres et dialogues ont été ajustés.
+
+Le cache v20 comprend les dictionnaires et les nouveaux fichiers polish.css/js. Une indication hors ligne et une proposition d’actualisation sont ajoutées. Manifest actualisé.
+
+Vérification navigateur : boutique à 375×667, accueil Lettra à 320×740 sans débordement horizontal, quatre sections du studio, aperçu verrouillé et fonds insuffisants, boutique puis retour au studio, règles Lettra, conservation du volume après rechargement. Console sans erreur sur ces parcours. Syntaxe de tous les scripts et existence des ressources de cache vérifiées. Les tests ne remplacent pas une validation sur appareils iOS/Android physiques ; aucun paquet natif n’est produit par cette itération.

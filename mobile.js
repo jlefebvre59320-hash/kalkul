@@ -22,10 +22,13 @@ function applyBipStyle(){
  el.querySelectorAll('#pupils circle').forEach(n=>n.setAttribute('fill',/^#[\da-f]{6}$/i.test(bipStyle.eyes)?bipStyle.eyes:'#1B1740'));
  el.dataset.motion=bipStyle.motion;el.setAttribute('aria-label',`${bipStyle.name} · touche pour une réaction`);
  let layer=el.querySelector('.personal-style');if(!layer){layer=document.createElementNS('http://www.w3.org/2000/svg','g');layer.classList.add('personal-style');el.append(layer);}
+ layer.innerHTML=bipLayers(bipStyle);
+}
+function bipLayers(style){
  const clothes={none:'',tee:'<path d="M13 75 L27 69 Q50 84 73 69 L87 75 L78 88 L70 84 L70 94 L30 94 L30 84 L22 88Z" fill="#F5F0E4"/><path d="M45 86L50 82L55 86L50 91Z" fill="#7856D8"/>',hoodie:'<path d="M18 73Q25 61 32 73Q50 86 68 73Q75 61 82 73L83 91Q50 104 17 91Z" fill="#7255B8"/><path d="M39 79L38 89M61 79L62 89" stroke="#F4E8FF" stroke-width="2"/><path d="M41 89L59 89L63 96L37 96Z" fill="#533C8B"/>',dress:'<path d="M32 74Q50 83 68 74L81 99Q50 109 19 99Z" fill="#DF729B"/><path d="M31 80Q50 86 69 80" fill="none" stroke="#FFDEA0" stroke-width="3"/>',stripes:'<path d="M18 76Q50 90 82 76L79 94Q50 105 21 94Z" fill="#FFF5DF"/><path d="M19 82Q50 95 81 82M20 90Q50 103 80 90" fill="none" stroke="#315D92" stroke-width="4"/>'};
  const accessories={none:'',glasses:'<g fill="none" stroke="#332650" stroke-width="3"><circle cx="36" cy="44" r="13"/><circle cx="64" cy="44" r="13"/><path d="M49 43H51"/></g>',headphones:'<path d="M12 49V36A38 35 0 0 1 88 36V49" fill="none" stroke="#302641" stroke-width="7"/><rect x="3" y="37" width="15" height="26" rx="7" fill="#AF95FF"/><rect x="82" y="37" width="15" height="26" rx="7" fill="#AF95FF"/>',flower:'<g fill="#EF88BA"><circle cx="78" cy="15" r="7"/><circle cx="86" cy="22" r="7"/><circle cx="81" cy="30" r="7"/><circle cx="71" cy="26" r="7"/><circle cx="70" cy="17" r="7"/></g><circle cx="78" cy="22" r="5" fill="#FFE191"/>',bow:'<path d="M30 10L49 18L31 27ZM70 10L51 18L69 27Z" fill="#D86FA3"/><circle cx="50" cy="18" r="5" fill="#FFE4A6"/>',crown:'<path d="M28 17L25 -3L40 7L50 -9L60 7L75 -3L72 17Z" fill="#FFDC79" stroke="#BA8129" stroke-width="2"/><circle cx="50" cy="8" r="3" fill="#AC75DC"/>'};
  Object.assign(accessories,window.FUN_ACCESSORIES||{});
- layer.innerHTML=(clothes[bipStyle.outfit]||'')+(accessories[bipStyle.accessory]||'');
+ return (clothes[style.outfit]||'')+(accessories[style.accessory]||'');
 }
 function renderStudio(){
  if(!customDialog.open)return;

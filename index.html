@@ -598,6 +598,7 @@ html[data-game="let"] h1, html[data-game="let"] .home .logo h1, html[data-game="
 <link rel="stylesheet" href="mobile.css">
 <link rel="stylesheet" href="realms.css">
 <link rel="stylesheet" href="navigation.css">
+<link rel="stylesheet" href="polish.css">
 </head>
 
 <body>
@@ -1084,7 +1085,7 @@ const fmtTime = ms => { const s = Math.floor(ms/1000); return `${Math.floor(s/60
 const nf = n => new Intl.NumberFormat(undefined).format(n);
 const nfc = n => n >= 1e6 ? (n/1e6).toFixed(1).replace(/\.0$/, "") + " M" : n >= 1e4 ? Math.round(n/1e3) + " k" : nf(n);
 const rand = arr => arr[Math.floor(Math.random()*arr.length)];
-const buzz = p => { try{ if (navigator.vibrate) navigator.vibrate(p); }catch(e){} };
+const buzz = p => { try{ if (navigator.vibrate && store.get("kalku:haptics") !== false && !reduceMotion) navigator.vibrate(p); }catch(e){} };
 const tpl = (s, vars) => { let t = s; Object.entries(vars || {}).forEach(([k, v]) => { t = t.split("{" + k + "}").join(v); }); return t; };
 
 const now = new Date();
@@ -1194,7 +1195,7 @@ function solve(nums, target){
 const Snd = {
   ctx: null, on: (store.get("kalku:sound") ?? true),
   ensure(){ try{ if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if (this.ctx.state === "suspended" || this.ctx.state === "interrupted"){ const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); } }catch(e){} },
-  tone(f, d, type, vol, slide){ if (!this.on || !this.ctx) return; vol = Math.min(.35, vol * 1.7); try{ const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+  tone(f, d, type, vol, slide){ if (!this.on || !this.ctx) return; vol = Math.min(.25, vol * 1.4) * (typeof comfortLevel === "function" ? comfortLevel("effects",.7) : .7); try{ const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
     o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(slide, t + d);
     g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(g).connect(this.ctx.destination); o.start(t); o.stop(t + d + .02); }catch(e){} },
   seq(fs, d, type, vol, gap){ fs.forEach((f, i) => setTimeout(() => this.tone(f, d, type, vol), i * gap)); },
@@ -1208,7 +1209,7 @@ const Snd = {
 
 // Musique générée : une piste par thème, un arrangement par écran, un style par joueur
 const MTHEME = {
-  classic:{ bpm:92,  prog:[[60,64,67],[55,59,62],[57,60,64],[53,57,60]], scale:[60,62,64,67,69,72,74,76], arp:"triangle", bass:"sine", perc:.5, echo:true },
+  classic:{ bpm:84,  prog:[[60,64,67],[55,59,62],[57,60,64],[53,57,60]], scale:[60,62,64,67,69,72,74,76], arp:"triangle", bass:"sine", perc:.5, echo:true },
   ocean:  { bpm:84,  prog:[[65,69,72,76],[60,64,67,71],[62,65,69,72],[58,62,65,69]], scale:[65,67,69,72,74,77,79,81], arp:"sine", bass:"sine", perc:.2, echo:true, bells:true },
   sakura: { bpm:76,  prog:[[57,60,64],[53,57,60],[60,64,67],[55,59,62]], scale:[57,59,60,64,65,69,71,72], arp:"triangle", bass:"triangle", perc:.15, echo:true, pluck:true },
   forest: { bpm:100, prog:[[55,59,62],[60,64,67],[52,55,59],[50,54,57]], scale:[55,57,59,62,64,67,69,71], arp:"triangle", bass:"triangle", perc:.6, echo:false, shaker:true },
@@ -1216,10 +1217,10 @@ const MTHEME = {
   retro:  { bpm:140, prog:[[57,60,64],[62,65,69],[64,68,71],[57,60,64]], scale:[57,59,60,62,64,65,68,69], arp:"square", bass:"square", perc:1, echo:false, fast:true },
   royal:  { bpm:96,  prog:[[62,66,69],[57,61,64],[59,62,66],[55,59,62]], scale:[62,64,66,69,71,74,76,78], arp:"triangle", bass:"sawtooth", perc:.4, echo:true, brass:true, lp:2200 },
   galaxy: { bpm:70,  prog:[[62,65,69,72],[55,59,62,66],[57,60,64,67],[53,57,60,64]], scale:[62,64,65,69,72,74,76,77], arp:"sine", bass:"sine", perc:0, echo:true, pad:true },
-  lettra: { bpm:104, prog:[[60,64,67,71],[57,61,64,67],[62,65,69,72],[55,59,62,65]], scale:[60,62,64,65,67,69,71,72], arp:"triangle", bass:"sawtooth", perc:.7, echo:true, show:true, lp:1800 }
+  lettra: { bpm:88, prog:[[60,64,67,71],[57,61,64,67],[62,65,69,72],[55,59,62,65]], scale:[60,62,64,65,67,69,71,72], arp:"triangle", bass:"sine", perc:.25, echo:true, show:true, lp:1800 }
 };
 const Music = {
-  on: (store.get("kalku:music") ?? true), out: null, wet: null, timer: null, next: 0, step: 0, style: "calm", part: "home",
+  on: (store.get("kalku:music") ?? false), out: null, wet: null, timer: null, next: 0, step: 0, style: "calm", part: "home",
   f(m){ return 440 * Math.pow(2, (m - 69) / 12); },
   theme(){ if (typeof game !== "undefined" && game === "let") return MTHEME.lettra; return MTHEME[(typeof wallet !== "undefined" && wallet.theme) || "classic"] || MTHEME.classic; },
   level(){ if (typeof mode === "undefined") return { tr: 0, k: 0 }; if (this.part === "blitz") return { tr: ((blitz.level - 1) % 4) * 3, k: Math.min(1.3, 1 + (blitz.level - 1) * .02) }; if (this.part === "daily") return { tr: [0, 5, 7][Math.min(2, daily.idx)] || 0, k: 1 + Math.min(2, daily.idx) * .05, idx: Math.min(2, daily.idx) }; return { tr: 0, k: 1 }; },
@@ -1232,7 +1233,7 @@ const Music = {
         const d = c.createDelay(1); d.delayTime.value = .34; const fb = c.createGain(); fb.gain.value = .32; const lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2000;
         d.connect(fb); fb.connect(d); d.connect(lp); lp.connect(this.out); this.wet = d;
       }
-      this.out.gain.cancelScheduledValues(c.currentTime); this.out.gain.setTargetAtTime(.13, c.currentTime, .5);
+      this.out.gain.cancelScheduledValues(c.currentTime); this.out.gain.setTargetAtTime(.16 * (typeof comfortLevel === "function" ? comfortLevel("music",.45) : .45), c.currentTime, .5);
       this.next = c.currentTime + .05; this.step = 0; this.timer = setInterval(() => this.tick(), 40);
     }catch(e){}
   },
@@ -1306,12 +1307,10 @@ const Music = {
   toggle(){ this.on = !this.on; store.set("kalku:music", this.on); if (this.on) this.start(); else this.stop(); }
 };
 // Déverrouillage audio : sur écran tactile, seul un pointerup/touchend/click compte comme geste utilisateur.
-const silent = new Audio("data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YdAHAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA=="); silent.loop = true; silent.volume = .02; silent.setAttribute("playsinline", "");
-let audioUnlocked = false;
 function unlockAudio(){
+  if(document.hidden || (!Snd.on && !Music.on))return;
   Snd.ensure();
   try{ const c = Snd.ctx; if (c){ const b = c.createBuffer(1, 1, 22050); const src = c.createBufferSource(); src.buffer = b; src.connect(c.destination); src.start(0); } }catch(e){}
-  if (!audioUnlocked){ try{ const p = silent.play(); if (p && p.then) p.then(() => { audioUnlocked = true; }).catch(() => {}); }catch(e){} }
   if (Music.on) Music.start();
 }
 ["pointerup","touchend","click","keydown"].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true }));
@@ -2706,6 +2705,7 @@ function applyLang(l){
 <script src="realms.js"></script>
 <script src="navigation.js"></script>
 <script src="studio-shop.js"></script>
+<script src="polish.js"></script>
 <script>
 // ===== Démarrage =====
 let firstVisit = !store.get("kalku:seen");

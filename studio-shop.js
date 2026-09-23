@@ -18,21 +18,23 @@ function openStudioShop(item){
 function renderStudioLocks(){
  for(const b of $('styleOptions').querySelectorAll('button[data-key]')){
   const item=studioCatalog.find(x=>x.key===b.dataset.key&&x.value===b.dataset.value);const owned=ownsStudioStyle(b.dataset.key,b.dataset.value);
-  b.classList.toggle('locked-style',!owned);b.setAttribute('aria-label',item?item.label+(owned?' · Possédé':' · Verrouillé, '+item.price+' pièces · Voir en boutique'):b.textContent);
+  b.classList.toggle('locked-style',!owned);b.setAttribute('aria-label',item?item.label+(owned?' · Possédé':' · Verrouillé, '+item.price+' pièces · Voir l’aperçu'):b.textContent);
   let lock=b.querySelector('.style-lock');if(!owned&&!lock){lock=document.createElement('small');lock.className='style-lock';lock.textContent='🔒';b.append(lock);}else if(owned&&lock)lock.remove();
  }
 }
-$('styleOptions').addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(!b||ownsStudioStyle(b.dataset.key,b.dataset.value))return;e.stopImmediatePropagation();e.preventDefault();openStudioShop(studioCatalog.find(x=>x.key===b.dataset.key&&x.value===b.dataset.value));},true);
-$('realmChoices').addEventListener('click',e=>{const b=e.target.closest('.realm-swatch');if(!b)return;const i=[...$('realmChoices').children].indexOf(b),p=REALMS[pickerRealm][i];if(!p||ownsRealm(pickerRealm,p[0]))return;e.stopImmediatePropagation();e.preventDefault();openStudioShop(studioCatalog.find(x=>x.scope===pickerRealm&&x.value===p[0]));},true);
+$('styleOptions').addEventListener('click',e=>{const b=e.target.closest('button[data-key]');if(!b||ownsStudioStyle(b.dataset.key,b.dataset.value))return;e.stopImmediatePropagation();e.preventDefault();openItemPreview(studioCatalog.find(x=>x.key===b.dataset.key&&x.value===b.dataset.value));},true);
+$('realmChoices').addEventListener('click',e=>{const b=e.target.closest('.realm-swatch');if(!b)return;const i=[...$('realmChoices').children].indexOf(b),p=REALMS[pickerRealm][i];if(!p||ownsRealm(pickerRealm,p[0]))return;e.stopImmediatePropagation();e.preventDefault();openItemPreview(studioCatalog.find(x=>x.scope===pickerRealm&&x.value===p[0]));},true);
 const studioShop=document.createElement('section');studioShop.id='studioShop';studioShop.innerHTML='<h2>Le dressing de Bip</h2><p>Gagne des pièces dans les défis, puis débloque tes créations. Les objets achetés restent dans ta collection.</p><div id="studioShopTabs"></div><div id="studioShopItems"></div><p id="studioShopStatus" role="status"></p>';
 document.querySelector('#scr-shop [data-tab=skins]').prepend(studioShop);let studioCategory='accessory';
 function renderStudioShop(){
  const categories={accessory:'Accessoires',outfit:'Vêtements',color:'Couleurs',eyes:'Yeux',realm:'Ambiances'};
  $('studioShopTabs').replaceChildren();for(const [key,label] of Object.entries(categories)){const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=label;b.setAttribute('aria-pressed',String(key===studioCategory));b.onclick=()=>{studioCategory=key;renderStudioShop();};$('studioShopTabs').append(b);}
  $('studioShopItems').replaceChildren();for(const item of studioCatalog.filter(x=>x.key===studioCategory)){
-  const row=document.createElement('div');row.className='studio-shop-item';const name=document.createElement('b');name.textContent=item.label;const b=document.createElement('button');b.type='button';b.className='chip';const owned=studioOwned().includes(item.id);b.textContent=owned?'Possédé ✓':item.price.toLocaleString('fr')+' ◎';b.disabled=owned||wallet.coins<item.price;b.setAttribute('aria-label',owned?item.label+' possédé':'Acheter '+item.label+' pour '+item.price+' pièces');
-  b.onclick=()=>{if(!purchaseStudioItem(item.id))return;$('studioShopStatus').textContent=item.label+' débloqué ! Disponible dans la personnalisation.';renderStudioShop();Snd.buy();};
-  const note=document.createElement('small');note.textContent=owned?'Dans ta collection':wallet.coins<item.price?'Encore '+(item.price-wallet.coins).toLocaleString('fr')+' pièces':'Débloquer définitivement';const text=document.createElement('div');text.append(name,note);row.append(text,b);$('studioShopItems').append(row);
+  const card=document.createElement('button');card.type='button';card.className='shop-art-card';card.setAttribute('aria-label','Voir '+item.label);
+  const art=document.createElement('div');art.className='shop-art';art.append(itemArtwork(item));
+  const name=document.createElement('b');name.textContent=item.label;
+  const price=document.createElement('span');price.className='shop-price';price.textContent=studioOwned().includes(item.id)?'Possédé ✓':item.price.toLocaleString('fr')+' ◎';
+  card.append(art,name,price);card.onclick=()=>openItemPreview(item);$('studioShopItems').append(card);
  }
 }
 // Les apparences essayées gratuitement dans l’ancienne version ne sont pas des achats.
